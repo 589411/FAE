@@ -1,179 +1,255 @@
+"use strict";
+
 class SpaceGame {
-    constructor() {
-        this.player = document.getElementById('player');
-        this.gameArea = document.querySelector('.game-area');
-        this.blueCountElement = document.getElementById('blueCount');
-        this.healthElement = document.getElementById('health');
-        this.startButton = document.getElementById('startGame');
-        this.blueCount = 0;
-        this.health = 100;
-        this.gameActive = false;
-        this.playerX = 375;
-        this.playerY = 430;
-        this.objects = [];
-        this.keys = {};
-        this.spawnRate = 1500;
-        this.redProbability = 0.7;
-        this.moveSpeed = 7;
+  constructor() {
+    // Cache DOM elements
+    this.player = document.getElementById("player");
+    this.gameArea = document.querySelector(".game-area");
+    this.blueCountElement = document.getElementById("blueCount");
+    this.healthElement = document.getElementById("health");
+    this.startButton = document.getElementById("startGame");
 
-        this.init();
+    // Initialize game state
+    this.blueCount = 0;
+    this.health = 100;
+    this.isGameActive = false;
+
+    // Player position
+    this.playerX = 375;
+    this.playerY = 430;
+
+    // All falling objects in the game
+    this.objects = [];
+
+    // Input control
+    this.keys = {};
+
+    // Difficulty and spawn parameters
+    this.spawnInterval = 1500;    // Interval in milliseconds at which asteroids/crystals appear
+    this.redProbability = 0.7;    // Probability of generating a red asteroid
+    this.minSpawnInterval = 800;  // Minimum spawn interval to stop it from getting too hard
+    this.spawnIntervalReduction = 10;   // By how many ms to reduce spawnInterval each time
+    this.probabilityIncrease = 0.001;    // Amount to increase redProbability each spawn
+
+    // Movement constants
+    this.playerMoveSpeed = 5;
+    this.playerMinX = 0;
+    this.playerMaxX = 750; // 800px wide minus 50px (player width?), adjust if necessary
+
+    // Called once
+    this.init();
+  }
+
+  // ------------------------------------------------
+  // Initialization
+  // ------------------------------------------------
+  init() {
+    // If the user didn't pass the password puzzle, redirect
+    if (!localStorage.getItem("passwordCompleted")) {
+      window.location.href = "question.html";
+      return;
     }
 
-    init() {
-        if (!localStorage.getItem('passwordCompleted')) {
-            window.location.href = 'question.html';
+    // Attach event listeners
+    this.startButton.addEventListener("click", () => this.startGame());
+    document.addEventListener("keydown", (e) => this.handleKeyDown(e));
+    document.addEventListener("keyup", (e) => this.handleKeyUp(e));
+  }
+
+  // ------------------------------------------------
+  // Start the Game
+  // ------------------------------------------------
+  startGame() {
+    // Avoid restarting if already running
+    if (this.isGameActive) return;
+
+    this.isGameActive = true;
+    this.blueCount = 0;
+    this.health = 100;
+
+    // Update UI
+    this.blueCountElement.textContent = this.blueCount;
+    this.healthElement.textContent = this.health;
+    this.startButton.disabled = true; // prevent repeated clicks
+
+    // Kick off loops
+    this.gameLoop();     // Movement & collisions
+    this.spawnObjects(); // Start spawning crystals/asteroids
+  }
+
+  // ------------------------------------------------
+  // Input Handling
+  // ------------------------------------------------
+  handleKeyDown(event) {
+    this.keys[event.key] = true;
+  }
+
+  handleKeyUp(event) {
+    this.keys[event.key] = false;
+  }
+
+  // ------------------------------------------------
+  // Player Movement
+  // ------------------------------------------------
+  movePlayer() {
+    if (this.keys["ArrowLeft"] && this.playerX > this.playerMinX) {
+      this.playerX -= this.playerMoveSpeed;
+    }
+    if (this.keys["ArrowRight"] && this.playerX < this.playerMaxX) {
+      this.playerX += this.playerMoveSpeed;
+    }
+
+    // Apply final position to DOM element
+    this.player.style.left = `${this.playerX}px`;
+    // Hard-coded bottom? If the game area changes, adapt accordingly
+    this.player.style.bottom = "20px";
+  }
+
+  // ------------------------------------------------
+  // Spawn Falling Objects
+  // ------------------------------------------------
+  spawnObjects() {
+    // If game ended mid-timer
+    if (!this.isGameActive) return;
+
+    // Create & style a new object
+    const object = document.createElement("div");
+    object.style.position = "absolute";
+    object.style.width = "30px";
+    object.style.height = "30px";
+    object.style.borderRadius = "50%";
+    object.style.left = `${Math.random() * 770}px`;  // or 770 if area is 800 wide?
+    object.style.top = "-30px";
+
+    // Decide whether it's red or blue
+    const isRed = Math.random() < this.redProbability;
+    if (isRed) {
+      object.classList.add("red-asteroid");
+    } else {
+      object.classList.add("blue-crystal");
+    }
+
+    this.gameArea.appendChild(object);
+
+    // Store the object in our array
+    this.objects.push({
+      element: object,
+      x: parseFloat(object.style.left),
+      y: -30,
+      speed: isRed ? 2 + Math.random() * 2 : 1.5 + Math.random(),
+      isRed: isRed
+    });
+
+    // Adjust difficulty over time
+    this.spawnInterval = Math.max(this.minSpawnInterval, this.spawnInterval - this.spawnIntervalReduction);
+    this.redProbability = Math.min(0.8, this.redProbability + this.probabilityIncrease);
+
+    // Schedule the next spawn
+    setTimeout(() => this.spawnObjects(), this.spawnInterval);
+  }
+
+  // ------------------------------------------------
+  // Move & Collisions
+  // ------------------------------------------------
+  moveObjects() {
+    // Iterate in reverse so we can safely remove them
+    for (let i = this.objects.length - 1; i >= 0; i--) {
+      const obj = this.objects[i];
+
+      // Move object downward
+      obj.y += obj.speed;
+      obj.element.style.top = `${obj.y}px`;
+
+      // Collision check
+      if (this.detectCollision(obj)) {
+        // Remove it from DOM & from array
+        this.gameArea.removeChild(obj.element);
+        this.objects.splice(i, 1);
+
+        // Handle effect
+        if (obj.isRed) {
+          // Red asteroid => damage
+          this.health -= 20;
+          this.healthElement.textContent = this.health;
+          if (this.health <= 0) {
+            this.endGame(false);
             return;
-        }
-
-        this.startButton.addEventListener('click', () => this.startGame());
-        document.addEventListener('keydown', (e) => this.handleKeyDown(e));
-        document.addEventListener('keyup', (e) => this.handleKeyUp(e));
-    }
-
-    startGame() {
-        if (this.gameActive) return;
-        
-        this.gameActive = true;
-        this.blueCount = 0;
-        this.health = 100;
-        this.blueCountElement.textContent = this.blueCount;
-        this.healthElement.textContent = this.health;
-        this.startButton.style.display = 'none';
-        
-        this.gameLoop();
-        this.spawnObjects();
-    }
-
-    handleKeyDown(e) {
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-            e.preventDefault();
-        }
-        this.keys[e.key] = true;
-    }
-
-    handleKeyUp(e) {
-        this.keys[e.key] = false;
-    }
-
-    movePlayer() {
-        if (this.keys['ArrowLeft'] && this.playerX > 0) {
-            this.playerX -= this.moveSpeed;
-        }
-        if (this.keys['ArrowRight'] && this.playerX < 750) {
-            this.playerX += this.moveSpeed;
-        }
-        
-        this.player.style.left = `${this.playerX}px`;
-    }
-
-    spawnObjects() {
-        if (!this.gameActive) return;
-
-        const object = document.createElement('div');
-        object.style.position = 'absolute';
-        object.style.width = '30px';
-        object.style.height = '30px';
-        object.style.borderRadius = '50%';
-        object.style.left = `${Math.random() * 770}px`;
-        object.style.top = '-30px';
-        
-        const isRed = Math.random() < this.redProbability;
-        if (isRed) {
-            object.classList.add('red-asteroid');
+          }
         } else {
-            object.classList.add('blue-crystal');
+          // Blue crystal => increment count
+          this.blueCount++;
+          this.blueCountElement.textContent = this.blueCount;
+          if (this.blueCount >= 10) {
+            this.endGame(true);
+            return;
+          }
         }
-        
-        this.gameArea.appendChild(object);
-        this.objects.push({
-            element: object,
-            x: parseFloat(object.style.left),
-            y: -30,
-            speed: isRed ? (3 + Math.random() * 2) : (2 + Math.random()),
-            isRed: isRed
-        });
+        continue;
+      }
 
-        this.spawnRate = Math.max(800, this.spawnRate - 10);
-        this.redProbability = Math.min(0.8, this.redProbability + 0.001);
-
-        setTimeout(() => this.spawnObjects(), this.spawnRate);
+      // If it falls out of the game area (past height of 500?), remove
+      if (obj.y > 500) {
+        this.gameArea.removeChild(obj.element);
+        this.objects.splice(i, 1);
+      }
     }
+  }
 
-    moveObjects() {
-        for (let i = this.objects.length - 1; i >= 0; i--) {
-            const object = this.objects[i];
-            object.y += object.speed;
-            object.element.style.top = `${object.y}px`;
+  detectCollision(object) {
+    const playerRect = this.player.getBoundingClientRect();
+    const objectRect = object.element.getBoundingClientRect();
 
-            if (this.checkCollision(object)) {
-                this.gameArea.removeChild(object.element);
-                this.objects.splice(i, 1);
-                
-                if (object.isRed) {
-                    this.health -= 20;
-                    this.healthElement.textContent = this.health;
-                    this.gameArea.classList.add('damage');
-                    setTimeout(() => this.gameArea.classList.remove('damage'), 200);
-                    
-                    if (this.health <= 0) {
-                        this.endGame(false);
-                        return;
-                    }
-                } else {
-                    this.blueCount++;
-                    this.blueCountElement.textContent = this.blueCount;
-                    if (this.blueCount >= 10) {
-                        this.endGame(true);
-                        return;
-                    }
-                }
-                continue;
-            }
+    // Check bounding boxes for overlap
+    return !(
+      playerRect.right < objectRect.left ||
+      playerRect.left > objectRect.right ||
+      playerRect.bottom < objectRect.top ||
+      playerRect.top > objectRect.bottom
+    );
+  }
 
-            if (object.y > 500) {
-                this.gameArea.removeChild(object.element);
-                this.objects.splice(i, 1);
-            }
-        }
+  // ------------------------------------------------
+  // End the Game
+  // ------------------------------------------------
+  endGame(success) {
+    this.isGameActive = false;
+    this.startButton.disabled = false;
+
+    // Clear objects from the screen
+    for (const obj of this.objects) {
+      this.gameArea.removeChild(obj.element);
     }
+    this.objects = [];
 
-    checkCollision(object) {
-        const playerRect = this.player.getBoundingClientRect();
-        const objectRect = object.element.getBoundingClientRect();
-
-        return !(playerRect.right < objectRect.left || 
-                playerRect.left > objectRect.right || 
-                playerRect.bottom < objectRect.top || 
-                playerRect.top > objectRect.bottom);
+    if (success) {
+      localStorage.setItem("gameCompleted", "true");
+      alert("恭喜！你已成功收集足夠的研究數據！");
+      window.location.href = "final.html";
+    } else {
+      alert("任務失敗！太空船受損過重！");
     }
+  }
 
-    endGame(success) {
-        this.gameActive = false;
-        this.startButton.style.display = 'block';
-        
-        if (success) {
-            localStorage.setItem('gameCompleted', 'true');
-            alert('恭喜！你已成功收集足夠的研究數據！');
-            window.location.href = 'final.html';
-        } else {
-            alert('任務失敗！太空船受損過重！');
-        }
-        
-        this.objects.forEach(object => {
-            this.gameArea.removeChild(object.element);
-        });
-        this.objects = [];
-    }
+  // ------------------------------------------------
+  // Main Game Loop
+  // ------------------------------------------------
+  gameLoop() {
+    if (!this.isGameActive) return;
 
-    gameLoop() {
-        if (!this.gameActive) return;
+    // Step 1: Move player
+    this.movePlayer();
 
-        this.movePlayer();
-        this.moveObjects();
-        requestAnimationFrame(() => this.gameLoop());
-    }
+    // Step 2: Move objects & handle collisions
+    this.moveObjects();
+
+    // Step 3: Schedule the next frame
+    requestAnimationFrame(() => this.gameLoop());
+  }
 }
 
+// ----------------------------------------------------
+// On Window Load
+// ----------------------------------------------------
 window.onload = () => {
-    new SpaceGame();
+  new SpaceGame();
 };
