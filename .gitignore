@@ -1,0 +1,28 @@
+# Development files
+*.md
+!README.md
+.DS_Store
+spec.md
+fap_bot.md
+future_ark_project.md
+
+# Development directories
+dev/
+docs/
+notes/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Local configuration
+.env
+.env.local
+config.local.js
