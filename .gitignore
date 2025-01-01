@@ -1,28 +1,43 @@
-# Development files
+######################################################
+# Documentation & Dev-Specific
+######################################################
 *.md
-!README.md
-.DS_Store
+!README.md          # Keep the main README
+.DS_Store           # macOS Finder files
 spec.md
 fap_bot.md
 future_ark_project.md
 
-# Development directories
 dev/
 docs/
 notes/
 
-# IDE and editor files
-.vscode/
-.idea/
-*.swp
-*.swo
+######################################################
+# IDE / Editor Settings
+######################################################
+.vscode/            # Visual Studio Code
+.idea/              # JetBrains IDEs
+*.swp               # Vim swap files
+*.swo               # Another Vim swap extension
 
-# Temporary files
+######################################################
+# Temporary Files
+######################################################
 *.tmp
 *.temp
 *~
+*.log
 
-# Local configuration
+######################################################
+# Local Environment / Config
+######################################################
 .env
 .env.local
 config.local.js
+
+######################################################
+# OS / System-Specific
+######################################################
+Thumbs.db           # Windows image cache
+ehthumbs.db         # Windows Explorer cache
+Desktop.ini         # Windows desktop config
