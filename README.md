@@ -1,17 +1,19 @@
-# Space Adventure Game
+# Future Ark Project (FAP)
 
-A simple space adventure game where you control a spaceship and dodge incoming asteroids.
+A space adventure game built with HTML, CSS, and JavaScript.
 
-## How to Play
+## Description
 
-1. Use the left and right arrow keys to move your spaceship
-2. Avoid the falling asteroids
-3. Score points by surviving longer and letting asteroids pass by
-4. Try to get the highest score possible!
+Future Ark Project is an interactive web-based game that takes players on a space exploration adventure. The game features multiple stages including:
+
+1. Welcome Screen
+2. Password Challenge
+3. Space Navigation Game
+4. Final Achievement
 
 ## Play Online
 
-You can play the game directly through GitHub Pages at: [your-username.github.io/FAP](https://your-username.github.io/FAP)
+Visit [https://589411.github.io/FAP](https://589411.github.io/FAP) to play the game.
 
 ## Local Development
 
@@ -19,3 +21,13 @@ To run this game locally:
 1. Clone this repository
 2. Open `index.html` in your web browser
 3. Start playing!
+
+## Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript
+
+## License
+
+MIT License
