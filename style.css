@@ -1,209 +1,304 @@
+/* -----------------------------------------------------
+ * Global & Reset
+ * ----------------------------------------------------- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+html,
 body {
-    background-color: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('stars-bg.jpg');
-    background-size: cover;
-    background-position: center;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
 }
 
+/* -----------------------------------------------------
+ * Body Background
+ * ----------------------------------------------------- */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ),
+    url('stars-bg.jpg') center / cover no-repeat;
+}
+
+/* A single container that houses content centrally */
 .welcome-container {
-    width: 90%;
-    max-width: 800px;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
+/* -----------------------------------------------------
+ * Image / Visualization
+ * ----------------------------------------------------- */
 .main-visual {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 2rem;
-    border-radius: 10px;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 2rem;
+  border-radius: 10px;
 }
 
+/* -----------------------------------------------------
+ * Headers & Titles
+ * ----------------------------------------------------- */
 .welcome-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: #4CAF50;
-    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #4CAF50;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
 }
 
+/* -----------------------------------------------------
+ * Form / Input
+ * ----------------------------------------------------- */
 .input-section {
-    margin: 2rem 0;
+  margin: 2rem 0;
 }
 
-input[type="text"], input[type="password"] {
-    padding: 10px 20px;
-    font-size: 1.1rem;
-    width: 80%;
-    max-width: 300px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 2px solid #4CAF50;
-    border-radius: 5px;
-    color: #fff;
-    margin-bottom: 1rem;
+input[type="text"],
+input[type="password"] {
+  width: 80%;
+  max-width: 300px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid #4CAF50;
+  border-radius: 5px;
+  color: #fff;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: #6df56d;
+}
+
+/* -----------------------------------------------------
+ * Buttons
+ * ----------------------------------------------------- */
 button {
-    padding: 10px 25px;
-    font-size: 1.1rem;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  padding: 10px 25px;
+  font-size: 1.1rem;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+  background-color: #45a049;
+  transform: scale(1.05);
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
+/* -----------------------------------------------------
+ * Mission Brief
+ * ----------------------------------------------------- */
 .mission-brief {
-    margin-top: 2rem;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  text-align: left; /* improved readability */
 }
 
 .mission-brief h2 {
-    color: #4CAF50;
-    margin-bottom: 1rem;
+  color: #4CAF50;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .mission-brief p {
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    text-align: left;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 .mission-brief ul {
-    text-align: left;
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .mission-brief li {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
-    position: relative;
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
 }
 
-.mission-brief li:before {
-    content: "•";
-    color: #4CAF50;
-    position: absolute;
-    left: 0.5rem;
+.mission-brief li::before {
+  content: "•";
+  color: #4CAF50;
+  position: absolute;
+  left: 0.5rem;
 }
 
-/* Game styles */
+/* -----------------------------------------------------
+ * Game Container
+ * ----------------------------------------------------- */
 .game-container {
-    width: 800px;
-    text-align: center;
+  width: 800px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .game-area {
-    width: 100%;
-    height: 500px;
-    background-color: rgba(17, 17, 17, 0.8);
-    position: relative;
-    overflow: hidden;
-    border: 2px solid #444;
-    border-radius: 10px;
-    margin: 20px 0;
+  width: 100%;
+  height: 500px;
+  background-color: rgba(17, 17, 17, 0.8);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #444;
+  border-radius: 10px;
+  margin: 20px 0;
+  transition: background-color 0.2s ease-in-out;
 }
 
+/* Slight flash effect when taking damage */
 .game-area.damage {
-    animation: damage-flash 0.2s;
+  animation: damage-flash 0.2s;
 }
 
 @keyframes damage-flash {
-    0% { background-color: rgba(255, 0, 0, 0.5); }
-    100% { background-color: rgba(17, 17, 17, 0.8); }
+  0% {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+  100% {
+    background-color: rgba(17, 17, 17, 0.8);
+  }
 }
 
 #player {
-    width: 50px;
-    height: 50px;
-    background-color: #fff;
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    transition: left 0.1s ease-out;
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transition: left 0.1s ease-out;
 }
 
+/* -----------------------------------------------------
+ * Score / Status
+ * ----------------------------------------------------- */
 .score-container {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0;
 }
 
 .score {
-    font-size: 24px;
-    color: #4CAF50;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    border: 1px solid #4CAF50;
+  font-size: 1.5rem;
+  color: #4CAF50;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid #4CAF50;
 }
 
+/* -----------------------------------------------------
+ * Falling Objects
+ * ----------------------------------------------------- */
 .red-asteroid {
-    background-color: #ff4444 !important;
-    box-shadow: 0 0 10px #ff0000;
+  background-color: #ff4444 !important;
+  box-shadow: 0 0 10px #f00;
 }
 
 .blue-crystal {
-    background-color: #44aaff !important;
-    box-shadow: 0 0 10px #0088ff;
-    transform: scale(0.7);
+  background-color: #44aaff !important;
+  box-shadow: 0 0 10px #0088ff;
+  transform: scale(0.7);
 }
 
-/* Password page specific styles */
+/* -----------------------------------------------------
+ * Password Page
+ * ----------------------------------------------------- */
 .password-container {
-    text-align: center;
+  text-align: center;
 }
 
 .password-hint {
-    margin: 2rem 0;
-    font-style: italic;
-    color: #888;
+  margin: 2rem 0;
+  font-style: italic;
+  color: #888;
 }
 
-/* Final page styles */
+/* -----------------------------------------------------
+ * Final Page
+ * ----------------------------------------------------- */
 .final-container {
-    text-align: center;
+  text-align: center;
 }
 
 .congratulations {
-    font-size: 2rem;
-    color: #4CAF50;
-    margin-bottom: 2rem;
-    animation: glow 2s ease-in-out infinite;
+  font-size: 2rem;
+  color: #4CAF50;
+  margin-bottom: 2rem;
+  animation: glow 2s ease-in-out infinite;
 }
 
 @keyframes glow {
-    0% { text-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
-    50% { text-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
-    100% { text-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+  0% {
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  }
+}
+
+/* -----------------------------------------------------
+ * Responsive Behavior
+ * ----------------------------------------------------- */
+@media screen and (max-width: 600px) {
+  .welcome-container {
+    padding: 1rem;
+  }
+
+  .welcome-content h1 {
+    font-size: 2rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .game-container {
+    width: 100%;
+  }
+
+  .score {
+    font-size: 1.25rem;
+  }
+
+  #player {
+    width: 40px;
+    height: 40px;
+  }
 }
