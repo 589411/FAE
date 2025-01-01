@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太空探險 - 任務完成</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="final-container">
+        <h1 class="congratulations">恭喜完成未來方舟探索計畫！</h1>
+        <div class="mission-brief">
+            <p>親愛的探險者 <span id="playerNameDisplay"></span>，</p>
+            <p>你已經成功完成了所有任務，抵達月球！</p>
+            <p>這不僅是你個人的成就，更是人類探索宇宙的重要一步。</p>
+            <p>未來方舟計劃的旅程才正要開始，期待你的下一次冒險！</p>
+        </div>
+        <button onclick="window.location.href='index.html'">重新開始</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 檢查是否完成遊戲
+            if (!localStorage.getItem('gameCompleted')) {
+                window.location.href = 'game.html';
+                return;
+            }
+
+            // 顯示玩家名字
+            const playerName = localStorage.getItem('playerName') || '探險者';
+            document.getElementById('playerNameDisplay').textContent = playerName;
+        });
+    </script>
+</body>
+</html>
