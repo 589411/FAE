@@ -12,8 +12,9 @@ class SpaceGame {
         this.playerY = 430;
         this.objects = [];
         this.keys = {};
-        this.spawnRate = 1500; // 生成物體的間隔（毫秒）
-        this.redProbability = 0.7; // 紅色隕石的生成機率
+        this.spawnRate = 1500;
+        this.redProbability = 0.7;
+        this.moveSpeed = 7;
 
         this.init();
     }
@@ -37,13 +38,16 @@ class SpaceGame {
         this.health = 100;
         this.blueCountElement.textContent = this.blueCount;
         this.healthElement.textContent = this.health;
-        this.startButton.disabled = true;
+        this.startButton.style.display = 'none';
         
         this.gameLoop();
         this.spawnObjects();
     }
 
     handleKeyDown(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+        }
         this.keys[e.key] = true;
     }
 
@@ -53,14 +57,13 @@ class SpaceGame {
 
     movePlayer() {
         if (this.keys['ArrowLeft'] && this.playerX > 0) {
-            this.playerX -= 5;
+            this.playerX -= this.moveSpeed;
         }
         if (this.keys['ArrowRight'] && this.playerX < 750) {
-            this.playerX += 5;
+            this.playerX += this.moveSpeed;
         }
         
         this.player.style.left = `${this.playerX}px`;
-        this.player.style.bottom = `${20}px`;
     }
 
     spawnObjects() {
@@ -74,7 +77,6 @@ class SpaceGame {
         object.style.left = `${Math.random() * 770}px`;
         object.style.top = '-30px';
         
-        // 決定物體類型
         const isRed = Math.random() < this.redProbability;
         if (isRed) {
             object.classList.add('red-asteroid');
@@ -87,11 +89,10 @@ class SpaceGame {
             element: object,
             x: parseFloat(object.style.left),
             y: -30,
-            speed: isRed ? (2 + Math.random() * 2) : (1.5 + Math.random()),
+            speed: isRed ? (3 + Math.random() * 2) : (2 + Math.random()),
             isRed: isRed
         });
 
-        // 隨著遊戲進行增加難度
         this.spawnRate = Math.max(800, this.spawnRate - 10);
         this.redProbability = Math.min(0.8, this.redProbability + 0.001);
 
@@ -109,15 +110,16 @@ class SpaceGame {
                 this.objects.splice(i, 1);
                 
                 if (object.isRed) {
-                    // 碰到紅色隕石扣血
                     this.health -= 20;
                     this.healthElement.textContent = this.health;
+                    this.gameArea.classList.add('damage');
+                    setTimeout(() => this.gameArea.classList.remove('damage'), 200);
+                    
                     if (this.health <= 0) {
                         this.endGame(false);
                         return;
                     }
                 } else {
-                    // 收集藍色晶體
                     this.blueCount++;
                     this.blueCountElement.textContent = this.blueCount;
                     if (this.blueCount >= 10) {
@@ -147,7 +149,7 @@ class SpaceGame {
 
     endGame(success) {
         this.gameActive = false;
-        this.startButton.disabled = false;
+        this.startButton.style.display = 'block';
         
         if (success) {
             localStorage.setItem('gameCompleted', 'true');
