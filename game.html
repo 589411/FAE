@@ -10,11 +10,19 @@
     <div class="game-container">
         <div class="game-header">
             <h1>太空飛行任務</h1>
-            <div class="score">得分: <span id="score">0</span></div>
+            <div class="score-container">
+                <div class="score">隕石分析: <span id="blueCount">0</span>/10</div>
+                <div class="score">生命值: <span id="health">100</span></div>
+            </div>
         </div>
         <div class="mission-brief">
-            <p>駕駛太空船躲避小行星，累積足夠分數即可抵達月球！</p>
-            <p>使用左右方向鍵控制太空船</p>
+            <p>任務說明：</p>
+            <ul>
+                <li>紅色隕石具有強烈輻射，必須閃避！</li>
+                <li>藍色能量晶體（較小）含有重要研究數據，需要收集10個完成分析</li>
+                <li>使用左右方向鍵控制太空船</li>
+                <li>收集完10個藍色晶體即可完成任務</li>
+            </ul>
         </div>
         <div class="game-area">
             <div id="player"></div>

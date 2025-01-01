@@ -95,6 +95,25 @@ button:hover {
     text-align: left;
 }
 
+.mission-brief ul {
+    text-align: left;
+    list-style-type: none;
+    padding: 0;
+}
+
+.mission-brief li {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.mission-brief li:before {
+    content: "•";
+    color: #4CAF50;
+    position: absolute;
+    left: 0.5rem;
+}
+
 /* Game styles */
 .game-container {
     width: 800px;
@@ -123,10 +142,31 @@ button:hover {
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 
+.score-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
 .score {
     font-size: 24px;
-    margin: 10px 0;
     color: #4CAF50;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid #4CAF50;
+}
+
+.red-asteroid {
+    background-color: #ff4444 !important;
+    box-shadow: 0 0 10px #ff0000;
+}
+
+.blue-crystal {
+    background-color: #44aaff !important;
+    box-shadow: 0 0 10px #0088ff;
+    transform: scale(0.7);
 }
 
 /* Password page specific styles */
