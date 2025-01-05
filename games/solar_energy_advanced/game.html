@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太陽能電池模擬器（進階版） - 遊戲</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="game-container">
+            <!-- 遊戲畫布 -->
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            
+            <!-- 狀態面板 -->
+            <div id="status-panel">
+                <div id="sun-status">太陽位置: 0°</div>
+                <div id="panel-status">太陽能板狀態: 角度 0° | 旋轉速度 2.0 | 手動模式</div>
+                <div id="efficiency">發電效率: 0%</div>
+                <div id="battery-level">電池電量: 0%</div>
+                <div id="appliances-status">耗電量: 0W</div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="index.html" class="btn btn-secondary">返回介紹</a>
+                <a href="conclusion.html" class="btn btn-primary">查看總結</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入遊戲相關腳本 -->
+    <script>
+        // 調試信息
+        console.log('開始載入腳本...');
+    </script>
+    <script src="js/components/Sun.js" onerror="console.error('無法載入 Sun.js')"></script>
+    <script src="js/components/SolarPanel.js" onerror="console.error('無法載入 SolarPanel.js')"></script>
+    <script src="js/components/Battery.js" onerror="console.error('無法載入 Battery.js')"></script>
+    <script src="js/components/Appliances.js" onerror="console.error('無法載入 Appliances.js')"></script>
+    <script src="js/game.js" onerror="console.error('無法載入 game.js')"></script>
+
+    <script>
+        // 檢查腳本是否正確載入
+        window.addEventListener('load', () => {
+            console.log('頁面載入完成');
+            try {
+                const game = new Game();
+                console.log('遊戲初始化成功');
+            } catch (error) {
+                console.error('遊戲初始化失敗:', error);
+            }
+        });
+    </script>
+</body>
+</html>

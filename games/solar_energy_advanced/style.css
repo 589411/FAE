@@ -1,0 +1,109 @@
+/* 基本樣式 */
+body {
+    background-color: #f0f2f5;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    padding: 20px;
+}
+
+.content-box {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 遊戲容器 */
+#game-container {
+    position: relative;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+#gameCanvas {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    margin-bottom: 20px;
+}
+
+/* 狀態面板 */
+#status-panel {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 250px;
+}
+
+#status-panel div {
+    margin-bottom: 8px;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+#sun-status { color: #ff9900; }
+#panel-status { color: #3498db; }
+#efficiency { color: #2ecc71; }
+#battery-level { color: #e74c3c; }
+#appliances-status { color: #9b59b6; }
+
+/* 內容區塊 */
+.content-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.content-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.content-section ul {
+    padding-left: 20px;
+}
+
+.content-section li {
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+/* 按鈕樣式 */
+.btn {
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    border-color: #95a5a6;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .content-section {
+        padding: 15px;
+    }
+    
+    #status-panel {
+        position: static;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
