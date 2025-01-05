@@ -1,0 +1,81 @@
+/* 全局樣式 */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* 遊戲容器 */
+#game-container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 遊戲畫布 */
+#gameCanvas {
+    border: 2px solid #333;
+    background-color: #87CEEB;  /* 天空藍 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* 面板共用樣式 */
+.panel {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 調試面板 */
+#debug-panel {
+    min-width: 250px;
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#debug-panel h3 {
+    margin: 0 0 10px 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+#debug-info {
+    font-family: monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+    color: #00ff00;
+    margin-bottom: 10px;
+}
+
+#fps-counter {
+    color: #ffff00;
+    font-family: monospace;
+}
+
+/* 狀態面板 */
+#status-panel {
+    min-width: 200px;
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#status-panel div {
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #333;
+    border-radius: 3px;
+}
+
+/* 特定狀態顏色 */
+#sun-status { color: #ffdd00; }
+#panel-status { color: #00ffff; }
+#efficiency { color: #00ff00; }
+#battery-level { color: #ff9900; }
+#building-status { color: #ff00ff; }

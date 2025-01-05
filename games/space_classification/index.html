@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太空物品分類遊戲</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ml_style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>太空物品分類遊戲</h1>
+        
+        <div class="steps">
+            <!-- 步驟1：分類說明 -->
+            <div id="step1" class="step active">
+                <h2>第一步：了解太空物品分類</h2>
+                <div class="example-items"></div>
+                <button onclick="showNextStep(2)">下一步</button>
+            </div>
+
+            <!-- 步驟2：實際操作分類 -->
+            <div id="step2" class="step">
+                <h2>第二步：實際操作分類</h2>
+                <div class="game-container">
+                    <div class="categories">
+                        <div class="category" data-category="tools">
+                            <h3>工具類</h3>
+                            <div class="category-items" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                            <div class="category-description">
+                                <p>適合維修和操作的工具</p>
+                                <p>例如：扳手、螺絲起子等</p>
+                            </div>
+                        </div>
+                        <div class="category" data-category="equipment">
+                            <h3>設備類</h3>
+                            <div class="category-items" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                            <div class="category-description">
+                                <p>用於研究和觀測的設備</p>
+                                <p>例如：顯微鏡、望遠鏡等</p>
+                            </div>
+                        </div>
+                        <div class="category" data-category="food">
+                            <h3>食品類</h3>
+                            <div class="category-items" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                            <div class="category-description">
+                                <p>維持生存的食品和飲品</p>
+                                <p>例如：太空食品、飲用水等</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items-to-sort">
+                        <h3>待分類物品</h3>
+                        <div class="items-container"></div>
+                    </div>
+                </div>
+                <button onclick="checkClassification()">檢查分類</button>
+                <button onclick="showNextStep(3)">下一步</button>
+            </div>
+
+            <!-- 步驟3：機器學習分類方式 -->
+            <div id="step3" class="step">
+                <h2>第三步：了解機器學習的分類方式</h2>
+                <div class="ml-explanation">
+                    <div class="feature-analysis">
+                        <h3>特徵分析</h3>
+                        <p>機器學習通過分析物品的以下特徵來進行分類：</p>
+                        <ul>
+                            <li>大小（小型、中型、大型）</li>
+                            <li>材質（金屬、塑膠、複合材料）</li>
+                            <li>用途（維修、研究、生存）</li>
+                        </ul>
+                    </div>
+                    <div class="rule-visualization">
+                        <h3>分類規則</h3>
+                        <!-- 決策樹可視化 -->
+                    </div>
+                </div>
+                <button onclick="showNextStep(4)">下一步</button>
+            </div>
+
+            <!-- 步驟4：測試分類 -->
+            <div id="step4" class="step">
+                <h2>第四步：測試新物品</h2>
+                <div class="test-container">
+                    <div class="new-item">
+                        <!-- 新物品將在這裡顯示 -->
+                    </div>
+                    <div class="ai-thinking">
+                        <!-- AI思考動畫將在這裡顯示 -->
+                    </div>
+                    <div class="result">
+                        <!-- 結果將在這裡顯示 -->
+                    </div>
+                </div>
+                <div class="test-buttons">
+                    <button onclick="loadNewExample()" class="more-examples-btn">更多例子</button>
+                    <button onclick="showNextStep(5)" class="conclusion-btn">查看結論</button>
+                </div>
+            </div>
+
+            <!-- 步驟5：總結與思考 -->
+            <div id="step5" class="step">
+                <h2>總結與延伸思考</h2>
+                
+                <div class="summary-section">
+                    <h3>機器學習的關鍵概念</h3>
+                    <ul class="concept-list">
+                        <li>
+                            <span class="concept-title">特徵識別</span>
+                            <p>機器學習通過分析物品的特徵（如大小、材質、用途）來進行分類</p>
+                        </li>
+                        <li>
+                            <span class="concept-title">訓練過程</span>
+                            <p>通過大量的例子學習，逐步建立分類規則</p>
+                        </li>
+                        <li>
+                            <span class="concept-title">預測應用</span>
+                            <p>學習完成後，可以對新的物品進行分類預測</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="thinking-section">
+                    <h3>思考問題</h3>
+                    <div class="question-cards">
+                        <div class="question-card">
+                            <h4>創意思考</h4>
+                            <p>如果你要設計一個新的太空物品，它會屬於哪個類別？為什麼？</p>
+                        </div>
+                        <div class="question-card">
+                            <h4>應用延伸</h4>
+                            <p>在日常生活中，還有哪些地方可以使用類似的分類方法？</p>
+                        </div>
+                        <div class="question-card">
+                            <h4>改進建議</h4>
+                            <p>你覺得這個分類系統還可以如何改進？可以添加哪些新的類別或特徵？</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="challenge-section">
+                    <h3>挑戰任務</h3>
+                    <div class="challenge-card">
+                        <h4>🚀 創新設計師</h4>
+                        <p>設計一個新的太空物品，並說明它的特徵和用途。記得要考慮：</p>
+                        <ul>
+                            <li>物品的主要功能</li>
+                            <li>使用的材質</li>
+                            <li>特殊的設計考慮</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button onclick="resetGame()" class="restart-button">重新開始遊戲</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="ml_script.js"></script>
+</body>
+</html>

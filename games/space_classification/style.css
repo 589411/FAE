@@ -1,0 +1,356 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #1a1a1a;
+    color: white;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+h1 {
+    text-align: center;
+    color: #00ff9d;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+h2 {
+    color: #00ff9d;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.step {
+    display: none;
+    margin-bottom: 2rem;
+}
+
+.step.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+/* 遊戲容器樣式 */
+.game-container {
+    background: #2c3e50;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: #00ff9d #2c3e50;
+}
+
+.game-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.game-container::-webkit-scrollbar-track {
+    background: #2c3e50;
+}
+
+.game-container::-webkit-scrollbar-thumb {
+    background-color: #00ff9d;
+    border-radius: 4px;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.category {
+    background: #34495e;
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-height: 200px;
+}
+
+.category h3 {
+    color: #00ff9d;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.category-description {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 0.9em;
+}
+
+.category-description p {
+    margin: 0.5rem 0;
+    color: #ccc;
+}
+
+.category-items {
+    min-height: 150px;
+    border: 2px dashed #4a6278;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.items-to-sort {
+    background: #34495e;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    min-height: 200px;
+}
+
+.item {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    cursor: move;
+    transition: transform 0.3s ease;
+    color: #333;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.item p {
+    margin: 0.5rem 0;
+    font-weight: bold;
+}
+
+.item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+    font-size: 0.9em;
+    text-align: left;
+}
+
+.item li {
+    margin: 0.2rem 0;
+    padding: 0.2rem 0.5rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+    color: #666;
+}
+
+.item.correct {
+    border: 2px solid #4CAF50;
+    animation: correctPulse 0.5s ease;
+}
+
+.item.incorrect {
+    border: 2px solid #f44336;
+    animation: incorrectShake 0.5s ease;
+}
+
+@keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes incorrectShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* 按鈕樣式 */
+button {
+    background: #00ff9d;
+    color: #1a1a1a;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    margin: 0.5rem;
+}
+
+button:hover {
+    background: #00cc7d;
+    transform: scale(1.05);
+}
+
+.test-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.more-examples-btn {
+    background: #4a6278;
+}
+
+.more-examples-btn:hover {
+    background: #5a7288;
+}
+
+.conclusion-btn {
+    background: #00ff9d;
+}
+
+.conclusion-btn:hover {
+    background: #00cc7d;
+}
+
+/* 動畫效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 總結頁面樣式 */
+.summary-section,
+.thinking-section,
+.challenge-section {
+    background: #2c3e50;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.concept-list {
+    list-style: none;
+    padding: 0;
+}
+
+.concept-list li {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #34495e;
+    border-radius: 8px;
+}
+
+.concept-title {
+    display: block;
+    color: #00ff9d;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 0.5rem;
+}
+
+.question-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.question-card {
+    background: #34495e;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.question-card:hover {
+    transform: translateY(-5px);
+}
+
+.question-card h4 {
+    color: #00ff9d;
+    margin-bottom: 1rem;
+}
+
+.challenge-card {
+    background: #34495e;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.challenge-card h4 {
+    color: #00ff9d;
+    margin-bottom: 1rem;
+}
+
+.challenge-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.challenge-card li {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.challenge-card li:before {
+    content: "•";
+    color: #00ff9d;
+    position: absolute;
+    left: 0;
+}
+
+.restart-button {
+    display: block;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    font-size: 1.2em;
+    background: #00ff9d;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.restart-button:hover {
+    background: #00cc7d;
+    transform: scale(1.05);
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .categories {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>月球生存基地</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 遊戲標題和資源面板 -->
+        <header>
+            <h1>月球生存基地</h1>
+            <div class="resource-panel">
+                <div class="energy-stats">
+                    <span>發電量: <span id="powerGeneration">0</span> kW</span>
+                    <span>儲存量: <span id="powerStorage">0</span> kWh</span>
+                    <span>消耗量: <span id="powerConsumption">0</span> kW</span>
+                </div>
+                <div class="time-display">
+                    月球時間: <span id="moonTime">0:00</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 遊戲主區域 -->
+        <main>
+            <!-- 月球表面場景 -->
+            <div class="surface-view">
+                <canvas id="surfaceCanvas"></canvas>
+                <div class="build-menu" id="surfaceBuildMenu">
+                    <button class="build-btn" data-item="solarPanel" draggable="true">
+                        <img src="images/solar-panel.png" alt="太陽能板">
+                        <span>太陽能板</span>
+                        <div class="item-count" id="solarPanelCount">0</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 基地內部場景 -->
+            <div class="base-view">
+                <canvas id="baseCanvas"></canvas>
+                <div class="build-menu" id="baseBuildMenu">
+                    <button class="build-btn" data-item="battery" draggable="true" disabled>
+                        <img src="images/battery.png" alt="儲能電池">
+                        <span>儲能電池</span>
+                        <div class="item-count" id="batteryCount">0</div>
+                    </button>
+                    <button class="build-btn" data-item="shield" draggable="true" disabled>
+                        <img src="images/shield.png" alt="防護罩">
+                        <span>防護罩</span>
+                        <div class="item-count" id="shieldCount">0</div>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- 教學和提示 -->
+        <div class="tutorial-overlay" id="tutorial">
+            <div class="tutorial-content">
+                <h2>歡迎來到月球基地！</h2>
+                <p>讓我們開始建立一個自給自足的月球基地。</p>
+                <p>首先，我們需要架設太陽能板來獲取能量。</p>
+                <button id="startGame">開始遊戲</button>
+            </div>
+        </div>
+
+        <!-- 遊戲消息提示 -->
+        <div class="message-box" id="messageBox"></div>
+
+        <!-- 成就系統 -->
+        <div class="achievements" id="achievements">
+            <div class="achievement-badges">
+                <img src="images/badges/solar_master.png" alt="太陽能大師" class="badge" id="solarMasterBadge" style="display: none;">
+                <img src="images/badges/shield_builder.png" alt="防護罩建造者" class="badge" id="shieldBuilderBadge" style="display: none;">
+                <img src="images/badges/energy_master.png" alt="能量大師" class="badge" id="energyMasterBadge" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- 音效 -->
+    <audio id="buildSound" src="sounds/build.mp3"></audio>
+    <audio id="alertSound" src="sounds/alert.mp3"></audio>
+    <audio id="successSound" src="sounds/success.mp3"></audio>
+
+    <script src="game.js"></script>
+</body>
+</html>

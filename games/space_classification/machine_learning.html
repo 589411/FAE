@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太空物品分類 - 機器學習篇</title>
+    <link rel="stylesheet" href="ml_style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>讓AI學會分類太空物品</h1>
+            <p>跟著以下步驟，了解AI如何學習分類物品</p>
+        </header>
+
+        <div class="learning-steps">
+            <!-- 步驟1：收集數據 -->
+            <section class="step" id="step1">
+                <h2>步驟1：收集訓練數據</h2>
+                <div class="step-content">
+                    <div class="explanation">
+                        <p>就像教小朋友認識物品一樣，AI也需要看很多例子來學習。</p>
+                        <p>讓我們先看看這些已經分類好的物品：</p>
+                    </div>
+                    <div class="example-items">
+                        <!-- 物品範例將由JavaScript動態生成 -->
+                    </div>
+                </div>
+                <button class="next-step" onclick="showNextStep(2)">下一步</button>
+            </section>
+
+            <!-- 步驟2：觀察特徵 -->
+            <section class="step" id="step2">
+                <h2>步驟2：觀察物品特徵</h2>
+                <div class="step-content">
+                    <div class="explanation">
+                        <p>AI需要學會觀察物品的特徵，例如：</p>
+                        <ul>
+                            <li>大小（小型、中型、大型）</li>
+                            <li>材質（金屬、塑膠、複合材料）</li>
+                            <li>用途（維修、研究、生存）</li>
+                        </ul>
+                    </div>
+                    <div class="feature-analysis">
+                        <!-- 特徵分析介面將由JavaScript動態生成 -->
+                    </div>
+                </div>
+                <button class="next-step" onclick="showNextStep(3)">下一步</button>
+            </section>
+
+            <!-- 步驟3：建立規則 -->
+            <section class="step" id="step3">
+                <h2>步驟3：建立分類規則</h2>
+                <div class="step-content">
+                    <div class="explanation">
+                        <p>根據觀察到的特徵，AI會建立一些規則：</p>
+                    </div>
+                    <div class="rule-builder">
+                        <div class="rule-examples">
+                            <div class="rule">
+                                <p>如果是「金屬製」而且「用於維修」，很可能是「工具」</p>
+                                <div class="rule-visualization">
+                                    <!-- 規則視覺化 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="next-step" onclick="showNextStep(4)">下一步</button>
+            </section>
+
+            <!-- 步驟4：測試學習成果 -->
+            <section class="step" id="step4">
+                <h2>步驟4：測試AI的學習成果</h2>
+                <div class="step-content">
+                    <div class="explanation">
+                        <p>現在，讓我們測試AI是否學會了分類：</p>
+                    </div>
+                    <div class="test-area">
+                        <div class="new-item">
+                            <!-- 新物品測試區 -->
+                        </div>
+                        <div class="ai-thinking">
+                            <!-- AI思考過程動畫 -->
+                        </div>
+                        <div class="result-container">
+                            <div class="result">
+                                <!-- 分類結果 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="try-again" onclick="resetDemo()">重新開始</button>
+            </section>
+        </div>
+    </div>
+    <script src="ml_script.js"></script>
+</body>
+</html>

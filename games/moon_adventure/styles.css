@@ -1,0 +1,259 @@
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #FF6B6B;
+    --background-color: #1a1a2e;
+    --text-color: #ffffff;
+    --accent-color: #FFD700;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 頁首樣式 */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.resource-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.energy-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.time-display {
+    font-size: 1.2em;
+    color: var(--accent-color);
+}
+
+/* 主遊戲區域 */
+main {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    height: 70vh;
+}
+
+.surface-view, .base-view {
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 建造菜單 */
+.build-menu {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.build-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+    background: #2a2a3a;
+    border: 2px solid #4a4a5a;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.build-btn:hover {
+    background: #3a3a4a;
+    border-color: #5a5a6a;
+}
+
+.build-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.build-btn img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+.item-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* 教學覆蓋層 */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.tutorial-content {
+    background: var(--background-color);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 500px;
+}
+
+.tutorial-content h2 {
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+.tutorial-content p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+#startGame {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+}
+
+#startGame:hover {
+    background: var(--accent-color);
+    transform: scale(1.05);
+}
+
+/* 消息提示框 */
+.message-box {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+}
+
+/* 成就系統 */
+.achievements {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.badge {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.badge.unlocked {
+    filter: none;
+    opacity: 1;
+    animation: unlockBadge 0.5s ease;
+}
+
+/* 動畫效果 */
+@keyframes unlockBadge {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    main {
+        grid-template-rows: repeat(2, 300px);
+    }
+
+    .resource-panel {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .energy-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+}
