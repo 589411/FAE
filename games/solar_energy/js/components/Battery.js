@@ -6,7 +6,7 @@ class Battery {
         // 電池的基本屬性
         this.width = 60;
         this.height = 100;
-        this.x = canvas.width / 2;  // 放在畫面中間
+        this.x = 100;  // 放在畫面左側
         this.y = canvas.height - 150;
         
         // 電量相關
@@ -98,16 +98,16 @@ class Battery {
         if (this.level > 0) {
             this.ctx.beginPath();
             this.ctx.rect(
-                this.x - this.width/2,
-                this.y - this.height/2,
-                this.width,
-                this.height
+                this.x - this.width/2 - 5,
+                this.y - this.height/2 - 5,
+                this.width + 10,
+                this.height + 10
             );
             this.ctx.strokeStyle = `rgba(255, 255, 0, ${this.glowIntensity * 0.3})`;
-            this.ctx.lineWidth = 3;
+            this.ctx.lineWidth = 2;
             this.ctx.stroke();
         }
-        
+
         // 繪製電池頭
         this.ctx.fillStyle = '#333';
         this.ctx.fillRect(

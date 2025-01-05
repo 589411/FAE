@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太陽能電池模擬器 - 遊戲</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="game-container">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            
+            <div id="debug-panel">
+                <h3>調試信息</h3>
+                <div id="debug-info">等待初始化...</div>
+                <div id="fps-counter">FPS: 0</div>
+            </div>
+            
+            <div id="status-panel">
+                <div id="sun-status">太陽位置: 0°</div>
+                <div id="panel-status">太陽能板角度: 0°</div>
+                <div id="efficiency">發電效率: 0%</div>
+                <div id="battery-level">電池電量: 0%</div>
+                <div id="appliances-status">耗電量: 0%/秒</div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="index.html" class="btn btn-secondary">返回介紹</a>
+                <a href="conclusion.html" class="btn btn-primary">查看總結</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入遊戲相關腳本 -->
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/components/Sun.js"></script>
+    <script src="js/components/SolarPanel.js"></script>
+    <script src="js/components/Battery.js"></script>
+    <script src="js/components/Appliances.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

@@ -6,15 +6,15 @@ class SolarPanel {
         // 太陽能板的基本屬性
         this.width = 120;
         this.height = 10;
-        this.x = canvas.width / 4;  // 放在畫面左側
+        this.x = canvas.width / 2;  // 放在畫面中間
         this.y = canvas.height - 200;  // 離地面一段距離
         
         // 角度相關
         this.angle = 0;  // 初始角度
         this.targetAngle = 0;
         this.rotationSpeed = 2;  // 每幀旋轉的角度
-        this.minAngle = -150;  // 最小角度
-        this.maxAngle = 150;   // 最大角度
+        this.minAngle = -85;  // 最小角度（接近垂直）
+        this.maxAngle = 85;   // 最大角度（接近垂直）
         
         // 模式相關
         this.autoTracking = false;  // 是否自動追蹤太陽
@@ -78,46 +78,36 @@ class SolarPanel {
             const dy = sunPos.y - this.y;
             const sunAngle = (Math.atan2(-dy, dx) * 180 / Math.PI);
             
-            // 計算太陽能板的法線方向
-            const normalAngle = this.angle + 90; // 太陽能板的法線方向
+            // 計算太陽能板的法線方向（垂直於板面的方向）
+            const normalAngle = this.angle + 90;
             
-            // 計算法線與太陽方向的夾角
+            // 計算太陽光線與法線的夾角
             let angleDiff = Math.abs(sunAngle - normalAngle);
-            if (angleDiff > 180) {
-                angleDiff = 360 - angleDiff;
+            while (angleDiff > 180) {
+                angleDiff = Math.abs(angleDiff - 360);
             }
             
-            // 只有當太陽照射在板子正面時才發電
-            if (this.isFacingSun(sunAngle, normalAngle)) {
-                // 當法線正對太陽時效率最高
-                this.efficiency = Math.cos(angleDiff * Math.PI / 180);
-                this.efficiency = Math.max(0, this.efficiency);  // 確保效率不為負
-                
-                // 考慮太陽光強度
-                this.efficiency *= sun.getLightIntensity();
-            } else {
-                this.efficiency = 0; // 背面朝向太陽時不發電
-            }
+            // 使用餘弦函數計算效率，當法線與太陽光線平行時效率最高
+            this.efficiency = Math.cos(angleDiff * Math.PI / 180);
+            this.efficiency = Math.max(0, this.efficiency);
+            
+            // 考慮太陽光強度
+            this.efficiency *= sun.getLightIntensity();
         } else {
             this.efficiency = 0;
         }
-
+        
         this.updateStatusPanel();
     }
 
     // 判斷太陽能板是否正面朝向太陽
     isFacingSun(sunAngle, normalAngle) {
-        // 將角度轉換到 0-360 範圍
-        const normalizedSunAngle = ((sunAngle % 360) + 360) % 360;
-        const normalizedNormalAngle = ((normalAngle % 360) + 360) % 360;
-        
-        // 計算太陽和法線之間的夾角
-        let angleDiff = Math.abs(normalizedSunAngle - normalizedNormalAngle);
+        // 計算太陽和法線方向的夾角
+        let angleDiff = Math.abs(sunAngle - normalAngle);
         if (angleDiff > 180) {
             angleDiff = 360 - angleDiff;
         }
-        
-        // 如果夾角小於90度，表示正面朝向太陽
+        // 如果夾角小於90度，表示太陽照射在正面
         return angleDiff < 90;
     }
 
@@ -135,31 +125,47 @@ class SolarPanel {
     draw() {
         this.ctx.save();
         
-        // 移動到太陽能板的位置並旋轉
+        // 移動到太陽能板的位置
         this.ctx.translate(this.x, this.y);
         this.ctx.rotate(this.angle * Math.PI / 180);
         
+        // 繪製太陽能板
+        this.ctx.fillStyle = '#4a90e2';
+        this.ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
+        
         // 繪製支架
+        this.ctx.fillStyle = '#666';
+        this.ctx.fillRect(-5, 0, 10, 50);
+        
+        this.ctx.restore();
+
+        // 在太陽能板下方繪製控制提示
+        this.ctx.save();
+        this.ctx.font = '16px Arial';
+        this.ctx.fillStyle = '#333';
+        
+        // 計算提示文字的位置（在太陽能板下方）
+        const textY = this.y + 80;
+        
+        // 繪製左箭頭
+        this.ctx.fillStyle = '#666';
         this.ctx.beginPath();
-        this.ctx.moveTo(0, 0);
-        this.ctx.lineTo(0, 40);
-        this.ctx.strokeStyle = '#666';
-        this.ctx.lineWidth = 5;
-        this.ctx.stroke();
+        this.ctx.moveTo(this.x - 60, textY);
+        this.ctx.lineTo(this.x - 40, textY - 10);
+        this.ctx.lineTo(this.x - 40, textY + 10);
+        this.ctx.fill();
         
-        // 繪製太陽能板本體
-        this.ctx.fillStyle = '#4169E1';  // 深藍色
-        this.ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
+        // 繪製右箭頭
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.x + 60, textY);
+        this.ctx.lineTo(this.x + 40, textY - 10);
+        this.ctx.lineTo(this.x + 40, textY + 10);
+        this.ctx.fill();
         
-        // 添加反光效果
-        const gradient = this.ctx.createLinearGradient(
-            -this.width/2, -this.height/2,
-            this.width/2, this.height/2
-        );
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.2)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
+        // 繪製文字說明
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('← →', this.x, textY + 30);
+        this.ctx.fillText('調整角度', this.x, textY + 50);
         
         this.ctx.restore();
     }

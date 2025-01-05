@@ -7,7 +7,7 @@ class Appliances {
         this.x = canvas.width * 3/4;  // 放在畫面右側
         this.y = canvas.height - 150;
         
-        // 燈泡屬性
+        // 燈泡屬性（從上到下排序）
         this.lightBulbs = [
             {
                 x: this.x - 80,
@@ -15,7 +15,8 @@ class Appliances {
                 radius: 15,
                 isOn: false,
                 brightness: 0,
-                power: 2.0  // 每秒耗電量（百分比）
+                power: 2.0,  // 每秒耗電量（百分比）
+                priority: 2  // 優先級（越高越晚開啟，越早關閉）
             },
             {
                 x: this.x - 80,
@@ -23,7 +24,8 @@ class Appliances {
                 radius: 15,
                 isOn: false,
                 brightness: 0,
-                power: 2.0
+                power: 2.0,
+                priority: 1
             },
             {
                 x: this.x - 80,
@@ -31,11 +33,12 @@ class Appliances {
                 radius: 15,
                 isOn: false,
                 brightness: 0,
-                power: 2.0
+                power: 2.0,
+                priority: 0  // 最低優先級（最早開啟，最晚關閉）
             }
         ];
         
-        // 風扇屬性
+        // 風扇屬性（從上到下排序）
         this.fans = [
             {
                 x: this.x + 50,
@@ -44,7 +47,8 @@ class Appliances {
                 isOn: false,
                 speed: 0,
                 rotation: 0,
-                power: 3.0  // 每秒耗電量（百分比）
+                power: 3.0,
+                priority: 2
             },
             {
                 x: this.x + 50,
@@ -53,7 +57,8 @@ class Appliances {
                 isOn: false,
                 speed: 0,
                 rotation: 0,
-                power: 3.0
+                power: 3.0,
+                priority: 1
             },
             {
                 x: this.x + 50,
@@ -62,7 +67,8 @@ class Appliances {
                 isOn: false,
                 speed: 0,
                 rotation: 0,
-                power: 3.0
+                power: 3.0,
+                priority: 0
             }
         ];
     }
@@ -85,10 +91,20 @@ class Appliances {
             activeBulbs = 1;
             activeFans = 1;
         }
-        
-        // 更新所有燈泡
-        for (let i = 0; i < this.lightBulbs.length; i++) {
-            const bulb = this.lightBulbs[i];
+
+        // 更新所有燈泡（按優先級排序：由下到上開啟，由上到下關閉）
+        const sortedBulbs = [...this.lightBulbs].sort((a, b) => {
+            if (activeBulbs === 0) {
+                // 關閉時：優先級高的先關
+                return b.priority - a.priority;
+            } else {
+                // 開啟時：優先級低的先開
+                return a.priority - b.priority;
+            }
+        });
+
+        for (let i = 0; i < sortedBulbs.length; i++) {
+            const bulb = sortedBulbs[i];
             if (i < activeBulbs) {
                 bulb.isOn = true;
                 bulb.brightness = Math.min(1, bulb.brightness + 0.1);
@@ -99,22 +115,31 @@ class Appliances {
             }
         }
         
-        // 更新所有風扇
-        for (let i = 0; i < this.fans.length; i++) {
-            const fan = this.fans[i];
+        // 更新所有風扇（按優先級排序：由下到上開啟，由上到下關閉）
+        const sortedFans = [...this.fans].sort((a, b) => {
+            if (activeFans === 0) {
+                // 關閉時：優先級高的先關
+                return b.priority - a.priority;
+            } else {
+                // 開啟時：優先級低的先開
+                return a.priority - b.priority;
+            }
+        });
+
+        for (let i = 0; i < sortedFans.length; i++) {
+            const fan = sortedFans[i];
             if (i < activeFans) {
                 fan.isOn = true;
-                fan.speed = Math.min(1, fan.speed + 0.05);
-                fan.rotation += fan.speed * 0.2;
+                fan.speed = Math.min(1, fan.speed + 0.1);
+                fan.rotation = (fan.rotation + fan.speed * 10) % 360;
                 battery.discharge(fan.power * deltaSeconds);
             } else {
                 fan.isOn = false;
-                fan.speed = Math.max(0, fan.speed - 0.02);
-                fan.rotation += fan.speed * 0.2;
+                fan.speed = Math.max(0, fan.speed - 0.1);
+                fan.rotation = (fan.rotation + fan.speed * 10) % 360;
             }
         }
         
-        // 更新狀態面板
         this.updateStatusPanel(batteryLevel, activeBulbs, activeFans);
     }
 
@@ -176,7 +201,7 @@ class Appliances {
         
         // 移動到風扇中心並旋轉
         this.ctx.translate(fan.x, fan.y);
-        this.ctx.rotate(fan.rotation);
+        this.ctx.rotate(fan.rotation * Math.PI / 180);
         
         // 繪製扇葉
         for (let i = 0; i < 3; i++) {
