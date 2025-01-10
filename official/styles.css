@@ -216,17 +216,14 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
-    margin-top: 3rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 2rem;
 }
 
 .contact-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
+    padding: 1.5rem;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 15px;
     color: var(--text-color);
@@ -237,7 +234,7 @@ body {
 
 .contact-item:hover {
     background: rgba(0, 0, 0, 0.8);
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     border-color: var(--primary-color);
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
@@ -257,6 +254,26 @@ body {
     font-size: 1rem;
     opacity: 0.9;
     margin: 0;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .contact-item {
+        padding: 1rem;
+    }
+    
+    .contact-item span {
+        font-size: 1rem;
+    }
+    
+    .contact-item p {
+        font-size: 0.9rem;
+    }
 }
 
 /* 響應式設計補充 */
@@ -372,12 +389,14 @@ html, body {
 }
 
 .fullscreen-image {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+    background-color: #000;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .overlay-content {
@@ -399,6 +418,106 @@ html, body {
     border-radius: 15px;
     max-width: 90%;
     width: 1000px;
+}
+
+/* 首頁標題樣式 */
+.title-container {
+    margin-top: 25vh;  /* 調整這個值來改變標題位置 */
+    opacity: 0;
+    animation: titleFadeIn 1s ease-out forwards;
+    animation-delay: 1.5s; /* 等 logo 動畫接近結束才開始 */
+}
+
+.main-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.sub-title {
+    font-size: 2rem;
+    color: #e5e5e5;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.highlight {
+    color: var(--primary-color);
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: shimmer 2s infinite;
+    animation-delay: 2.5s; /* 等標題完全顯示後才開始閃爍 */
+}
+
+/* Logo 樣式 */
+.logo-container {
+    margin-bottom: 1rem;
+    position: relative;
+    top: 35vh;  /* 調整這個值來移動 logo */
+}
+
+.main-logo {
+    max-width: 500px;
+    width: 90%;
+    height: auto;
+    margin-bottom: 1rem;
+    animation: logoFade 2s ease-out forwards;
+    transition: opacity 0.3s ease;
+}
+
+.main-logo:hover {
+    opacity: 1;
+}
+
+/* Logo 動畫 */
+@keyframes logoFade {
+    0% {
+        opacity: 1;
+        transform: translateY(-30px);
+    }
+    70% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+}
+
+/* 標題動畫 */
+@keyframes titleFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    .sub-title {
+        font-size: 1.5rem;
+    }
 }
 
 /* 內容樣式 */
@@ -434,32 +553,31 @@ html, body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Logo 樣式 */
-.logo {
-    height: 60px;
-    margin-bottom: 1rem;
-}
-
 /* 核心價值區塊樣式 */
-.core-values {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
+.core-values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
     margin-top: 2rem;
 }
 
 .core-value-item {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 2rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
-    backdrop-filter: blur(10px);
-    max-width: 300px;
+    transition: all 0.3s ease;
 }
 
 .core-value-item h3 {
+    font-size: 1.1rem;
     color: var(--primary-color);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.core-value-item p {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.4;
 }
 
 /* 任務區塊樣式 */
@@ -569,6 +687,7 @@ html, body {
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 #fullpage {
@@ -592,6 +711,7 @@ html, body {
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .text-overlay {
@@ -758,16 +878,19 @@ html, body {
     width: 100%;
     height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
 /* 背景圖片設置 */
 .fullscreen-image {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
     position: absolute;
     top: 0;
     left: 0;
+    background-color: #000;
 }
 
 /* 內容覆蓋層設置 */
@@ -791,4 +914,143 @@ html, body {
     max-width: 90%;
     width: 800px;
     margin: 0 auto;
+}
+
+/* 聯絡資訊樣式 */
+#cta .contact-info {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-top: 2rem;
+    text-align: left;
+    border: 1px solid var(--primary-color);
+}
+
+#cta .contact-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+#cta .contact-info p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+#cta .contact-info a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#cta .contact-info a:hover {
+    color: #FFF;
+}
+
+#cta .text-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* 影片背景樣式 */
+.fullscreen-video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.text-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+}
+
+#cta .text-overlay {
+    background: none;
+}
+
+/* CTA 區塊特定樣式 */
+#cta {
+    height: 100vh;
+    position: relative;
+    background-color: var(--background-dark);
+}
+
+#cta .content {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+#cta .image-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+#cta .fullscreen-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#cta .text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1200px;
+    z-index: 2;
+}
+
+#cta .contact-info {
+    margin-top: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: left;
+    border: 1px solid var(--primary-color);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 確保 section 內容不會溢出 */
+.section {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.section .content {
+    height: 100%;
+    width: 100%;
+}
+
+#home .text-overlay {
+    position: absolute;
+    top: 40%;  
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    padding: 2rem;
+}
+
+#home .main-title {
+    margin-top: 2rem;
 }

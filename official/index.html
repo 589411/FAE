@@ -15,20 +15,29 @@
 <body>
     <div id="fullpage">
         <!-- 首頁區塊 -->
-        <div class="section" id="section1">
+        <div class="section" id="home">
             <div class="content overlay-content">
                 <div class="image-container">
-                    <img src="images/main_banner.png" alt="Future Ark Exploration Banner" class="fullscreen-image">
+                    <video class="fullscreen-video" autoplay muted loop playsinline>
+                        <source src="images/main_banner.mp4" type="video/mp4">
+                        <!-- 如果影片無法播放，回退到圖片 -->
+                        <img src="images/main_banner.png" alt="Future Ark Exploration Banner" class="fullscreen-image">
+                    </video>
                     <div class="text-overlay">
-                        <h1 class="main-title">趕快加入未來方舟探險隊</h1>
-                        <h2 class="sub-title">一起探索AI的多重宇宙吧！</h2>
+                        <div class="logo-container">
+                            <img src="images/fae_logo.png" alt="FAE Logo" class="main-logo">
+                        </div>
+                        <div class="title-container">
+                            <h1 class="main-title">未來方舟探險</h1>
+                            <h2 class="sub-title">用 <span class="highlight">AI</span> 開啟多元宇宙的<span class="highlight">無限可能</span></h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 基礎任務區塊 -->
-        <div class="section" id="section2">
+        <div class="section" id="basic">
             <div class="content overlay-content">
                 <div class="image-container">
                     <img src="images/basic_missions.png" alt="Basic Missions" class="fullscreen-image">
@@ -54,7 +63,7 @@
         </div>
 
         <!-- 進階任務區塊 -->
-        <div class="section" id="section3">
+        <div class="section" id="advanced">
             <div class="content overlay-content">
                 <div class="image-container">
                     <img src="images/advanced_missions.png" alt="Advanced Missions" class="fullscreen-image">
@@ -86,7 +95,7 @@
         </div>
 
         <!-- 教學目標區塊 -->
-        <div class="section" id="section4">
+        <div class="section" id="goals">
             <div class="content overlay-content">
                 <div class="image-container">
                     <img src="images/teaching_goals.png" alt="Teaching Goals" class="fullscreen-image">
@@ -109,7 +118,7 @@
         </div>
 
         <!-- 核心價值區塊 -->
-        <div class="section" id="section5">
+        <div class="section" id="values">
             <div class="content overlay-content">
                 <div class="image-container">
                     <img src="images/core_values.png" alt="Core Values" class="fullscreen-image">
@@ -155,16 +164,26 @@
         </div>
 
         <!-- 行動呼籲區塊 -->
-        <div class="section" id="section6">
-            <div class="content overlay-content">
+        <div class="section" id="cta">
+            <div class="content">
                 <div class="image-container">
                     <img src="images/start_now.png" alt="Start Now" class="fullscreen-image">
                     <div class="text-overlay">
-                        <h1 class="main-title">行動呼籲</h1>
-                        <h2 class="sub-title">立即加入未來方舟探險隊</h2>
+                        <h1 class="main-title">就是現在</h1>
+                        <h2 class="sub-title">加入未來方舟探險隊吧！</h2>
                         <div class="cta-buttons">
-                            <a href="#" class="cta-button">開始探險</a>
-                            <a href="#" class="cta-button secondary">了解更多</a>
+                            <a href="#basic" class="cta-button">開始探險</a>
+                            <a href="#advanced" class="cta-button secondary">進階任務</a>
+                        </div>
+                        <div class="contact-info">
+                            <h3>聯絡資訊</h3>
+                            <p>Email: future.ark.ai@gmail.com</p>
+                            <p>Line@: []</p>
+                            <p>Facebook: <a href="https://www.facebook.com/share/14G2vvjeje/?mibextid=wwXIfr" target="_blank">未來方舟探險隊</a></p>
+                            <p>最新課程：
+                                <span>[Accupass連結]</span> | 
+                                <span>[AmazingTalker連結]</span>
+                            </p>
                         </div>
                     </div>
                 </div>
