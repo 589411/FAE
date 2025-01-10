@@ -32,5 +32,26 @@
             </header>
         </main>
     </div>
+
+    <script>
+        // 版本信息
+        const VERSION = {
+            number: "1.0.1",
+            date: "2025-01-10",
+            features: ["首頁視頻背景", "修復最後一頁滾動", "添加版本追蹤"]
+        };
+
+        // 在控制台顯示版本信息
+        console.log(
+            "%c未來方舟探險隊網站 - 火星任務 %c v" + VERSION.number,
+            "color: #FFD700; font-size: 14px; font-weight: bold;",
+            "color: #4f46e5; font-size: 12px;"
+        );
+        console.log(
+            "%c更新日期: %c" + VERSION.date,
+            "color: #888;",
+            "color: #4f46e5;"
+        );
+    </script>
 </body>
 </html>
