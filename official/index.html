@@ -15,7 +15,7 @@
 <body>
     <div id="fullpage">
         <!-- 首頁區塊 -->
-        <div class="section" id="home">
+        <div class="section" id="home" data-anchor="home">
             <div class="content overlay-content">
                 <div class="image-container">
                     <video class="fullscreen-video" autoplay muted loop playsinline>
@@ -37,7 +37,7 @@
         </div>
 
         <!-- 基礎任務區塊 -->
-        <div class="section" id="basic">
+        <div class="section" id="basic" data-anchor="basic">
             <div class="content overlay-content">
                 <div class="image-container">
                     <img src="images/basic_missions.png" alt="Basic Missions" class="fullscreen-image">
@@ -63,7 +63,7 @@
         </div>
 
         <!-- 進階任務區塊 -->
-        <div class="section" id="advanced">
+        <div class="section" id="advanced" data-anchor="advanced">
             <div class="content overlay-content">
                 <div class="image-container">
                     <img src="images/advanced_missions.png" alt="Advanced Missions" class="fullscreen-image">
@@ -95,7 +95,7 @@
         </div>
 
         <!-- 教學目標區塊 -->
-        <div class="section" id="goals">
+        <div class="section" id="goals" data-anchor="goals">
             <div class="content overlay-content">
                 <div class="image-container">
                     <img src="images/teaching_goals.png" alt="Teaching Goals" class="fullscreen-image">
@@ -118,7 +118,7 @@
         </div>
 
         <!-- 核心價值區塊 -->
-        <div class="section" id="values">
+        <div class="section" id="values" data-anchor="values">
             <div class="content overlay-content">
                 <div class="image-container">
                     <img src="images/core_values.png" alt="Core Values" class="fullscreen-image">
@@ -164,7 +164,7 @@
         </div>
 
         <!-- 行動呼籲區塊 -->
-        <div class="section" id="cta">
+        <div class="section" id="cta" data-anchor="cta">
             <div class="content">
                 <div class="image-container">
                     <img src="images/start_now.png" alt="Start Now" class="fullscreen-image">
@@ -196,9 +196,9 @@
     <script>
         // 版本信息
         const VERSION = {
-            number: "1.0.1",
+            number: "1.0.5",
             date: "2025-01-10",
-            features: ["首頁視頻背景", "修復最後一頁滾動", "添加版本追蹤"]
+            features: ["首頁視頻背景", "修復頁面顯示", "修復錨點問題"]
         };
 
         // 在控制台顯示版本信息
@@ -220,19 +220,22 @@
 
         // fullPage 初始化
         new fullpage('#fullpage', {
+            licenseKey: 'gplv3-license',
             autoScrolling: true,
-            scrollHorizontally: true,
             navigation: true,
             navigationPosition: 'right',
-            showActiveTooltip: false,
-            slidesNavigation: true,
+            showActiveTooltip: true,
             controlArrows: true,
             scrollingSpeed: 700,
             fitToSection: true,
             fixedElements: '.navbar',
             css3: true,
             verticalCentered: true,
-            anchors: ['home', 'basic', 'advanced', 'goals', 'values', 'cta']
+            scrollOverflow: true,
+            normalScrollElements: null,
+            keyboardScrolling: true,
+            animateAnchor: true,
+            recordHistory: true
         });
     </script>
 </body>
