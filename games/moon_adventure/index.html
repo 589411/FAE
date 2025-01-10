@@ -1,89 +1,693 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>月球生存基地</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        #gameCanvas {
+            background: #000;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .resource-info {
+            flex: 1;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background: #4A90E2;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #357ABD;
+        }
+
+        button.end-button {
+            background: #E74C3C;
+        }
+
+        button.end-button:hover {
+            background: #C0392B;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .summary-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .summary-section h3 {
+            color: #4FC3F7;
+            margin-bottom: 20px;
+        }
+
+        .summary-section h4 {
+            color: #81D4FA;
+            margin: 15px 0;
+        }
+
+        .key-concepts, .thinking-questions, .real-world-connection {
+            margin: 15px 0;
+        }
+
+        .key-concepts ul, .real-world-connection ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .key-concepts ul ul {
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        .thinking-questions ol {
+            padding-left: 20px;
+        }
+
+        .thinking-questions li {
+            margin: 10px 0;
+        }
+
+        .real-world-connection p {
+            margin-bottom: 10px;
+        }
+
+        #gameStats {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        #restartButton {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <div class="game-container">
-        <!-- 遊戲標題和資源面板 -->
-        <header>
+    <div class="container">
+        <!-- 遊戲說明 -->
+        <div id="instructions" class="panel">
             <h1>月球生存基地</h1>
-            <div class="resource-panel">
-                <div class="energy-stats">
-                    <span>發電量: <span id="powerGeneration">0</span> kW</span>
-                    <span>儲存量: <span id="powerStorage">0</span> kWh</span>
-                    <span>消耗量: <span id="powerConsumption">0</span> kW</span>
-                </div>
-                <div class="time-display">
-                    月球時間: <span id="moonTime">0:00</span>
-                </div>
-            </div>
-        </header>
+            <p>在這個遊戲中，你需要管理月球基地的能源系統：</p>
+            <ul>
+                <li>放置太陽能板收集能源</li>
+                <li>安裝電池儲存多餘的能量</li>
+                <li>部署防護罩保護基地安全</li>
+            </ul>
+            <button id="startButton">開始遊戲</button>
+        </div>
 
-        <!-- 遊戲主區域 -->
-        <main>
-            <!-- 月球表面場景 -->
-            <div class="surface-view">
-                <canvas id="surfaceCanvas"></canvas>
-                <div class="build-menu" id="surfaceBuildMenu">
-                    <button class="build-btn" data-item="solarPanel" draggable="true">
-                        <img src="images/solar-panel.png" alt="太陽能板">
-                        <span>太陽能板</span>
-                        <div class="item-count" id="solarPanelCount">0</div>
-                    </button>
+        <!-- 遊戲區域 -->
+        <div id="gameArea" class="hidden">
+            <canvas id="gameCanvas" width="800" height="400"></canvas>
+            
+            <div class="controls panel">
+                <div class="resource-info">
+                    <p>發電量：<span id="powerOutput">0</span> W</p>
+                    <p>儲存量：<span id="powerStorage">0</span> W</p>
+                    <p>分數：<span id="score">0</span></p>
                 </div>
-            </div>
-
-            <!-- 基地內部場景 -->
-            <div class="base-view">
-                <canvas id="baseCanvas"></canvas>
-                <div class="build-menu" id="baseBuildMenu">
-                    <button class="build-btn" data-item="battery" draggable="true" disabled>
-                        <img src="images/battery.png" alt="儲能電池">
-                        <span>儲能電池</span>
-                        <div class="item-count" id="batteryCount">0</div>
-                    </button>
-                    <button class="build-btn" data-item="shield" draggable="true" disabled>
-                        <img src="images/shield.png" alt="防護罩">
-                        <span>防護罩</span>
-                        <div class="item-count" id="shieldCount">0</div>
-                    </button>
+                <div class="button-group">
+                    <button id="solarButton">放置太陽能板</button>
+                    <button id="batteryButton">放置電池</button>
+                    <button id="shieldButton">放置防護罩</button>
+                    <button id="endButton" class="end-button">結束遊戲</button>
                 </div>
-            </div>
-        </main>
-
-        <!-- 教學和提示 -->
-        <div class="tutorial-overlay" id="tutorial">
-            <div class="tutorial-content">
-                <h2>歡迎來到月球基地！</h2>
-                <p>讓我們開始建立一個自給自足的月球基地。</p>
-                <p>首先，我們需要架設太陽能板來獲取能量。</p>
-                <button id="startGame">開始遊戲</button>
             </div>
         </div>
 
-        <!-- 遊戲消息提示 -->
-        <div class="message-box" id="messageBox"></div>
+        <!-- 遊戲結果 -->
+        <div id="results" class="panel hidden">
+            <h2>遊戲結果</h2>
+            <div id="gameStats"></div>
+            
+            <div class="summary-section">
+                <h3>遊戲總結與延伸思考</h3>
+                
+                <div class="key-concepts">
+                    <h4>關鍵概念</h4>
+                    <ul>
+                        <li>能源管理
+                            <ul>
+                                <li>太陽能的產生與效率</li>
+                                <li>能源的儲存與使用</li>
+                                <li>可再生能源的重要性</li>
+                            </ul>
+                        </li>
+                        <li>資源分配
+                            <ul>
+                                <li>有限資源的策略性使用</li>
+                                <li>平衡發展與防禦需求</li>
+                                <li>系統優化與效率提升</li>
+                            </ul>
+                        </li>
+                        <li>永續發展
+                            <ul>
+                                <li>環境保護與能源使用</li>
+                                <li>科技發展與生存需求</li>
+                                <li>長期規劃的重要性</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
 
-        <!-- 成就系統 -->
-        <div class="achievements" id="achievements">
-            <div class="achievement-badges">
-                <img src="images/badges/solar_master.png" alt="太陽能大師" class="badge" id="solarMasterBadge" style="display: none;">
-                <img src="images/badges/shield_builder.png" alt="防護罩建造者" class="badge" id="shieldBuilderBadge" style="display: none;">
-                <img src="images/badges/energy_master.png" alt="能量大師" class="badge" id="energyMasterBadge" style="display: none;">
+                <div class="thinking-questions">
+                    <h4>思考問題</h4>
+                    <ol>
+                        <li>為什麼太陽能板的位置會影響發電效率？這與現實世界有什麼關聯？</li>
+                        <li>為什麼需要儲存能源？這對於可再生能源的使用有什麼啟示？</li>
+                        <li>如何在有限資源下做出最佳的配置決策？</li>
+                        <li>這個遊戲如何反映了現實世界中的能源管理挑戰？</li>
+                        <li>在月球基地和地球上，永續發展各有什麼特殊考量？</li>
+                    </ol>
+                </div>
+
+                <div class="real-world-connection">
+                    <h4>現實應用</h4>
+                    <p>這個遊戲模擬了太空探索中的能源管理挑戰，反映了以下現實議題：</p>
+                    <ul>
+                        <li>太陽能等可再生能源的應用和限制</li>
+                        <li>能源儲存技術的重要性</li>
+                        <li>資源管理和策略規劃的必要性</li>
+                        <li>科技創新在解決環境問題中的角色</li>
+                        <li>太空探索對地球永續發展的啟示</li>
+                    </ul>
+                </div>
             </div>
+
+            <button id="restartButton">重新開始</button>
         </div>
+
+        <script>
+            // 遊戲配置
+            const GAME_CONFIG = {
+                SOLAR_PANEL_POWER: 50,      // 太陽能板發電量
+                BATTERY_CAPACITY: 2000,      // 電池容量
+                MAX_SOLAR_PANELS: 8,         // 最大太陽能板數量
+                MAX_BATTERIES: 5,            // 最大電池數量
+                MAX_SHIELDS: 6,              // 最大防護罩數量
+                SHIELD_POWER_COST: 20,       // 防護罩能源消耗
+                BASE_POWER_COST: 15,         // 基地能源消耗
+                METEOR_DAMAGE: 150,          // 隕石傷害
+                METEOR_INTERVAL: 2500,       // 隕石生成間隔
+                SUN_SPEED: 0.0005,          // 太陽移動速度
+                BASE_HEALTH: 2000,          // 基地初始生命值
+                METEOR_SPEED_MIN: 1.5,       // 最小隕石速度
+                METEOR_SPEED_MAX: 3.5,       // 最大隕石速度
+                METEOR_SIZE_MIN: 10,         // 最小隕石大小
+                METEOR_SIZE_MAX: 20,         // 最大隕石大小
+                SHIELD_SIZE: 40,             // 防護罩大小
+                BASE_SIZE: 60,              // 基地大小
+                DIFFICULTY_INCREASE_INTERVAL: 30000  // 難度提升間隔
+            };
+
+            // 遊戲狀態
+            let gameState = {
+                solarPanels: [],
+                batteries: [],
+                shields: [],
+                meteors: [],
+                powerOutput: 0,
+                powerStorage: 0,
+                currentTool: null,
+                sunAngle: 0,
+                baseHealth: GAME_CONFIG.BASE_HEALTH,
+                gameOver: false,
+                score: 0,
+                difficulty: 1,
+                gameTime: 0,
+                meteorCount: 0
+            };
+
+            // DOM 元素
+            const instructionsPanel = document.getElementById('instructions');
+            const gameArea = document.getElementById('gameArea');
+            const resultsPanel = document.getElementById('results');
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const powerOutputDisplay = document.getElementById('powerOutput');
+            const powerStorageDisplay = document.getElementById('powerStorage');
+            const scoreDisplay = document.getElementById('score');
+
+            // 按鈕事件
+            document.getElementById('startButton').onclick = startGame;
+            document.getElementById('solarButton').onclick = () => setTool('solar');
+            document.getElementById('batteryButton').onclick = () => setTool('battery');
+            document.getElementById('shieldButton').onclick = () => setTool('shield');
+            document.getElementById('endButton').onclick = endGame;
+            document.getElementById('restartButton').onclick = restartGame;
+
+            // 畫布事件
+            canvas.onclick = handleCanvasClick;
+
+            // 開始遊戲
+            function startGame() {
+                instructionsPanel.classList.add('hidden');
+                gameArea.classList.remove('hidden');
+                resetGame();
+                startGameLoop();
+            }
+
+            // 重置遊戲
+            function resetGame() {
+                gameState = {
+                    solarPanels: [],
+                    batteries: [],
+                    shields: [],
+                    meteors: [],
+                    powerOutput: 0,
+                    powerStorage: 0,
+                    currentTool: null,
+                    sunAngle: 0,
+                    baseHealth: GAME_CONFIG.BASE_HEALTH,
+                    gameOver: false,
+                    score: 0,
+                    difficulty: 1,
+                    gameTime: 0,
+                    meteorCount: 0
+                };
+                updateDisplay();
+            }
+
+            // 設置當前工具
+            function setTool(tool) {
+                gameState.currentTool = tool;
+                canvas.style.cursor = 'crosshair';
+            }
+
+            // 處理畫布點擊
+            function handleCanvasClick(event) {
+                if (!gameState.currentTool) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                switch (gameState.currentTool) {
+                    case 'solar':
+                        if (gameState.solarPanels.length < GAME_CONFIG.MAX_SOLAR_PANELS) {
+                            gameState.solarPanels.push({ x, y });
+                        }
+                        break;
+                    case 'battery':
+                        if (gameState.batteries.length < GAME_CONFIG.MAX_BATTERIES) {
+                            gameState.batteries.push({ x, y });
+                        }
+                        break;
+                    case 'shield':
+                        if (gameState.shields.length < GAME_CONFIG.MAX_SHIELDS) {
+                            gameState.shields.push({ x, y });
+                        }
+                        break;
+                }
+
+                gameState.currentTool = null;
+                canvas.style.cursor = 'default';
+                updateGame();
+            }
+
+            // 遊戲循環
+            function startGameLoop() {
+                // 開始生成隕石
+                setInterval(() => {
+                    if (!gameState.gameOver) {
+                        spawnMeteor();
+                    }
+                }, GAME_CONFIG.METEOR_INTERVAL);
+
+                // 主遊戲循環
+                setInterval(() => {
+                    if (!gameState.gameOver) {
+                        updateGame();
+                    }
+                }, 1000 / 60);
+            }
+
+            // 生成隕石
+            function spawnMeteor() {
+                // 隨機決定隕石出現的位置（左、上、右）
+                const position = Math.floor(Math.random() * 3);
+                let x, y, angle;
+                
+                switch(position) {
+                    case 0: // 左側
+                        x = -GAME_CONFIG.METEOR_SIZE_MAX;
+                        y = Math.random() * (canvas.height / 2);
+                        angle = Math.random() * Math.PI / 4 + Math.PI / 8; // 向右下角運動
+                        break;
+                    case 1: // 上方
+                        x = Math.random() * canvas.width;
+                        y = -GAME_CONFIG.METEOR_SIZE_MAX;
+                        angle = Math.PI / 2; // 垂直向下運動
+                        break;
+                    case 2: // 右側
+                        x = canvas.width + GAME_CONFIG.METEOR_SIZE_MAX;
+                        y = Math.random() * (canvas.height / 2);
+                        angle = Math.PI - (Math.random() * Math.PI / 4 + Math.PI / 8); // 向左下角運動
+                        break;
+                }
+                
+                const speed = GAME_CONFIG.METEOR_SPEED_MIN + 
+                             (Math.random() * (GAME_CONFIG.METEOR_SPEED_MAX - GAME_CONFIG.METEOR_SPEED_MIN)) * 
+                             gameState.difficulty;
+                
+                const size = GAME_CONFIG.METEOR_SIZE_MIN + 
+                            Math.random() * (GAME_CONFIG.METEOR_SIZE_MAX - GAME_CONFIG.METEOR_SIZE_MIN);
+                
+                gameState.meteors.push({
+                    x: x,
+                    y: y,
+                    speed: speed,
+                    size: size,
+                    angle: angle
+                });
+                
+                gameState.meteorCount++;
+            }
+
+            // 檢查碰撞
+            function checkCollision(x1, y1, r1, x2, y2, r2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                return distance < (r1 + r2);
+            }
+
+            // 繪製六角形防護罩
+            function drawHexagonShield(x, y, size) {
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i * Math.PI) / 3;
+                    const xPos = x + size * Math.cos(angle);
+                    const yPos = y + size * Math.sin(angle);
+                    if (i === 0) {
+                        ctx.moveTo(xPos, yPos);
+                    } else {
+                        ctx.lineTo(xPos, yPos);
+                    }
+                }
+                ctx.closePath();
+            }
+
+            // 更新遊戲
+            function updateGame() {
+                // 更新遊戲時間和難度
+                gameState.gameTime += 1/60;
+                if (gameState.gameTime % 30 === 0) {
+                    gameState.difficulty += 0.1;
+                }
+
+                // 更新太陽位置
+                gameState.sunAngle += GAME_CONFIG.SUN_SPEED;
+                if (gameState.sunAngle >= Math.PI * 2) {
+                    gameState.sunAngle = 0;
+                }
+
+                // 計算太陽位置
+                const sunX = canvas.width / 2 + Math.cos(gameState.sunAngle) * 150;
+                const sunY = 100 + Math.sin(gameState.sunAngle) * 50;
+
+                // 計算發電量（根據太陽能板與太陽的角度）
+                gameState.powerOutput = 0;
+                gameState.solarPanels.forEach(panel => {
+                    const dx = sunX - panel.x;
+                    const dy = sunY - panel.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const efficiency = Math.max(0, 1 - distance / 300);
+                    panel.efficiency = efficiency;
+                    gameState.powerOutput += GAME_CONFIG.SOLAR_PANEL_POWER * efficiency;
+                });
+
+                // 更新儲存量
+                const maxStorage = gameState.batteries.length * GAME_CONFIG.BATTERY_CAPACITY;
+                const powerConsumption = GAME_CONFIG.BASE_POWER_COST + 
+                                       (gameState.shields.length * GAME_CONFIG.SHIELD_POWER_COST);
+                
+                gameState.powerStorage = Math.min(
+                    maxStorage,
+                    gameState.powerStorage + gameState.powerOutput - powerConsumption
+                );
+
+                // 更新分數
+                gameState.score = Math.floor(gameState.gameTime) + 
+                                (gameState.meteorCount * 10) + 
+                                (Math.floor(gameState.powerStorage) / 100);
+
+                // 更新隕石
+                for (let i = gameState.meteors.length - 1; i >= 0; i--) {
+                    const meteor = gameState.meteors[i];
+                    
+                    // 根據角度更新位置
+                    meteor.x += Math.cos(meteor.angle) * meteor.speed;
+                    meteor.y += Math.sin(meteor.angle) * meteor.speed;
+
+                    // 檢查是否擊中防護罩
+                    let hitShield = false;
+                    for (const shield of gameState.shields) {
+                        if (checkCollision(meteor.x, meteor.y, meteor.size, 
+                                        shield.x, shield.y, GAME_CONFIG.SHIELD_SIZE) && 
+                            gameState.powerStorage > 0) {
+                            hitShield = true;
+                            gameState.score += 5;
+                            break;
+                        }
+                    }
+
+                    // 檢查是否擊中基地
+                    const baseX = canvas.width / 2;
+                    const baseY = canvas.height - 120;
+                    const hitBase = checkCollision(meteor.x, meteor.y, meteor.size,
+                                                baseX, baseY, GAME_CONFIG.BASE_SIZE / 2);
+
+                    // 如果擊中防護罩、基地或超出畫面，移除隕石
+                    if (hitShield || hitBase || 
+                        meteor.y > canvas.height || 
+                        meteor.x < -50 || 
+                        meteor.x > canvas.width + 50) {
+                        gameState.meteors.splice(i, 1);
+                        
+                        // 如果擊中基地
+                        if (hitBase && !hitShield) {
+                            gameState.baseHealth -= GAME_CONFIG.METEOR_DAMAGE * gameState.difficulty;
+                            if (gameState.baseHealth <= 0) {
+                                gameState.gameOver = true;
+                                endGame();
+                            }
+                        }
+                    }
+                }
+
+                // 更新顯示
+                updateDisplay();
+                
+                // 繪製遊戲畫面
+                drawGame();
+            }
+
+            // 更新顯示
+            function updateDisplay() {
+                powerOutputDisplay.textContent = Math.round(gameState.powerOutput);
+                powerStorageDisplay.textContent = Math.round(gameState.powerStorage);
+                scoreDisplay.textContent = Math.floor(gameState.score);
+                
+                // 添加分數和時間顯示
+                document.getElementById('gameStats').innerHTML = `
+                    <p>遊戲時間：${Math.floor(gameState.gameTime)}秒</p>
+                    <p>當前分數：${Math.floor(gameState.score)}</p>
+                    <p>難度等級：${gameState.difficulty.toFixed(1)}</p>
+                    <p>基地生命值：${Math.floor(gameState.baseHealth)}/${GAME_CONFIG.BASE_HEALTH}</p>
+                    <p>攔截隕石數：${gameState.meteorCount}</p>
+                    <p>發電效率：${(gameState.powerOutput / (gameState.solarPanels.length || 1)).toFixed(1)} W/板</p>
+                `;
+            }
+
+            // 繪製遊戲
+            function drawGame() {
+                // 清空畫布
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // 繪製背景
+                ctx.fillStyle = '#1a1a2e';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // 繪製太陽
+                const sunX = canvas.width / 2 + Math.cos(gameState.sunAngle) * 150;
+                const sunY = 100 + Math.sin(gameState.sunAngle) * 50;
+                
+                // 繪製太陽光芒
+                const gradient = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, 40);
+                gradient.addColorStop(0, 'rgba(255, 215, 0, 1)');
+                gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(sunX, sunY, 40, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // 繪製太陽本體
+                ctx.fillStyle = '#FFD700';
+                ctx.beginPath();
+                ctx.arc(sunX, sunY, 20, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 繪製太陽能板的效率指示器
+                gameState.solarPanels.forEach(panel => {
+                    const efficiency = panel.efficiency || 0;
+                    // 繪製連接線
+                    ctx.strokeStyle = `rgba(255, 215, 0, ${efficiency})`;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(sunX, sunY);
+                    ctx.lineTo(panel.x, panel.y);
+                    ctx.stroke();
+                    
+                    // 繪製太陽能板
+                    ctx.fillStyle = `rgb(${255 * (1-efficiency)}, ${255 * efficiency}, 0)`;
+                    ctx.fillRect(panel.x - 15, panel.y - 15, 30, 30);
+                    
+                    // 繪製效率指示器
+                    ctx.fillStyle = 'white';
+                    ctx.font = '12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(Math.round(efficiency * 100) + '%', panel.x, panel.y - 20);
+                });
+
+                // 繪製電池
+                gameState.batteries.forEach(battery => {
+                    const chargeLevel = Math.min(1, gameState.powerStorage / (GAME_CONFIG.BATTERY_CAPACITY * gameState.batteries.length));
+                    const height = 40;
+                    const chargeHeight = height * chargeLevel;
+                    
+                    // 繪製電池外殼
+                    ctx.fillStyle = '#666';
+                    ctx.fillRect(battery.x - 10, battery.y - 20, 20, 40);
+                    
+                    // 繪製充電量
+                    ctx.fillStyle = `rgb(0, ${255 * chargeLevel}, 0)`;
+                    ctx.fillRect(battery.x - 8, battery.y + 18 - chargeHeight, 16, chargeHeight);
+                    
+                    // 繪製電量百分比
+                    ctx.fillStyle = 'white';
+                    ctx.font = '12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(Math.round(chargeLevel * 100) + '%', battery.x, battery.y + 30);
+                });
+
+                // 繪製月球表面
+                ctx.fillStyle = '#333';
+                ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
+
+                // 繪製基地
+                ctx.fillStyle = '#666';
+                const baseX = canvas.width / 2;
+                const baseY = canvas.height - 120;
+                ctx.beginPath();
+                ctx.moveTo(baseX - 30, baseY + 20);
+                ctx.lineTo(baseX + 30, baseY + 20);
+                ctx.lineTo(baseX + 20, baseY - 20);
+                ctx.lineTo(baseX - 20, baseY - 20);
+                ctx.closePath();
+                ctx.fill();
+                
+                // 繪製基地健康條
+                const healthPercentage = gameState.baseHealth / GAME_CONFIG.BASE_HEALTH;
+                ctx.fillStyle = `rgb(${255 * (1-healthPercentage)}, ${255 * healthPercentage}, 0)`;
+                ctx.fillRect(baseX - 30, baseY - 30, 60 * healthPercentage, 5);
+
+                // 繪製防護罩
+                gameState.shields.forEach(shield => {
+                    if (gameState.powerStorage > 0) {
+                        ctx.strokeStyle = '#4FC3F7';
+                        ctx.lineWidth = 3;
+                    } else {
+                        ctx.strokeStyle = '#E74C3C';
+                        ctx.lineWidth = 1;
+                    }
+                    drawHexagonShield(shield.x, shield.y, GAME_CONFIG.SHIELD_SIZE);
+                    ctx.stroke();
+                });
+
+                // 繪製隕石
+                gameState.meteors.forEach(meteor => {
+                    ctx.fillStyle = '#FF5722';
+                    ctx.beginPath();
+                    ctx.arc(meteor.x, meteor.y, meteor.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+
+            // 結束遊戲
+            function endGame() {
+                gameArea.classList.add('hidden');
+                resultsPanel.classList.remove('hidden');
+                
+                // 顯示遊戲統計
+                document.getElementById('gameStats').innerHTML = `
+                    <h3>遊戲結束！</h3>
+                    <p>生存時間：${Math.floor(gameState.gameTime)}秒</p>
+                    <p>最終分數：${Math.floor(gameState.score)}</p>
+                    <p>最終難度：${gameState.difficulty.toFixed(1)}</p>
+                    <p>攔截隕石：${gameState.meteorCount}個</p>
+                    <p>太陽能板：${gameState.solarPanels.length}個</p>
+                    <p>電池數量：${gameState.batteries.length}個</p>
+                    <p>防護罩：${gameState.shields.length}個</p>
+                    <p>最終發電量：${Math.round(gameState.powerOutput)} W</p>
+                    <p>儲存能量：${Math.round(gameState.powerStorage)} W</p>
+                `;
+            }
+
+            // 重新開始遊戲
+            function restartGame() {
+                resultsPanel.classList.add('hidden');
+                instructionsPanel.classList.remove('hidden');
+                resetGame();
+            }
+        </script>
     </div>
-
-    <!-- 音效 -->
-    <audio id="buildSound" src="sounds/build.mp3"></audio>
-    <audio id="alertSound" src="sounds/alert.mp3"></audio>
-    <audio id="successSound" src="sounds/success.mp3"></audio>
-
-    <script src="game.js"></script>
 </body>
 </html>

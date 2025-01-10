@@ -1,0 +1,80 @@
+{
+    "tag_categories": {
+        "difficulty_level": {
+            "beginner": "入門級",
+            "intermediate": "進階級",
+            "advanced": "專家級"
+        },
+        "age_group": {
+            "age_5_8": "5-8歲",
+            "age_9_12": "9-12歲",
+            "age_13_up": "13歲以上"
+        },
+        "ai_topic": {
+            "machine_learning": "機器學習",
+            "computer_vision": "電腦視覺",
+            "nlp": "自然語言處理",
+            "robotics": "機器人",
+            "ai_ethics": "AI倫理",
+            "neural_networks": "神經網路",
+            "data_science": "數據科學",
+            "ai_applications": "AI應用"
+        },
+        "steam_topic": {
+            "science": {
+                "physics": "物理",
+                "chemistry": "化學",
+                "biology": "生物",
+                "astronomy": "天文",
+                "earth_science": "地球科學"
+            },
+            "technology": {
+                "programming": "程式設計",
+                "digital_literacy": "數位素養",
+                "cybersecurity": "網路安全",
+                "iot": "物聯網"
+            },
+            "engineering": {
+                "mechanical": "機械工程",
+                "electrical": "電機工程",
+                "software": "軟體工程",
+                "robotics": "機器人工程"
+            },
+            "arts": {
+                "digital_art": "數位藝術",
+                "design": "設計思考",
+                "creative_computing": "創意運算",
+                "multimedia": "多媒體"
+            },
+            "mathematics": {
+                "algebra": "代數",
+                "geometry": "幾何",
+                "statistics": "統計",
+                "logic": "邏輯"
+            }
+        },
+        "skill_focus": {
+            "logical_thinking": "邏輯思維",
+            "problem_solving": "問題解決",
+            "creativity": "創意思考",
+            "computational_thinking": "運算思維",
+            "critical_thinking": "批判性思考",
+            "collaboration": "團隊合作",
+            "communication": "溝通表達",
+            "data_analysis": "數據分析"
+        },
+        "interaction_type": {
+            "game": "遊戲式",
+            "simulation": "模擬式",
+            "experiment": "實驗式",
+            "project": "專案式",
+            "story": "故事式",
+            "challenge": "挑戰式"
+        },
+        "duration": {
+            "short": "30分鐘以內",
+            "medium": "30-60分鐘",
+            "long": "60分鐘以上"
+        }
+    }
+}

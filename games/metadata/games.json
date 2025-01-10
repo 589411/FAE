@@ -1,0 +1,110 @@
+{
+    "games": [
+        {
+            "id": "solar_energy",
+            "title": "太陽能電池模擬器",
+            "description": "學習太陽能發電原理和能源管理",
+            "tags": ["物理", "能源", "電學", "環境教育"],
+            "difficulty": 2,
+            "recommendedGrade": "小二以上",
+            "prerequisites": ["基本電學概念", "角度計算"],
+            "learningObjectives": [
+                "理解太陽能板的工作原理",
+                "掌握能源管理概念",
+                "認識可再生能源應用"
+            ],
+            "skills": [
+                "能源效率計算",
+                "系統思考",
+                "資源管理"
+            ],
+            "estimatedTime": "30-45分鐘",
+            "path": "/games/solar_energy",
+            "status": "active",
+            "version": "1.0.0",
+            "lastUpdated": "2025-01-05"
+        },
+        {
+            "id": "space_classification",
+            "title": "太空物品分類器",
+            "description": "學習機器學習基礎概念和分類方法",
+            "tags": ["AI", "機器學習", "分類", "邏輯思考"],
+            "difficulty": 2,
+            "recommendedGrade": "小二以上",
+            "prerequisites": ["基本程式概念", "簡單統計知識"],
+            "learningObjectives": [
+                "理解機器學習基本原理",
+                "掌握分類方法",
+                "培養邏輯思考能力"
+            ],
+            "skills": [
+                "數據分析",
+                "模式識別",
+                "決策邏輯"
+            ],
+            "estimatedTime": "45-60分鐘",
+            "path": "/games/space_classification",
+            "status": "active",
+            "version": "1.0.0",
+            "lastUpdated": "2025-01-05"
+        },
+        {
+            "id": "moon_adventure",
+            "title": "月球探險之旅",
+            "description": "體驗月球環境特性和太空探索",
+            "tags": ["物理", "太空", "重力", "探索"],
+            "difficulty": 1,
+            "recommendedGrade": "國小以上",
+            "prerequisites": ["基本物理概念"],
+            "learningObjectives": [
+                "了解月球環境特性",
+                "認識太空探索設備",
+                "學習基本物理原理"
+            ],
+            "skills": [
+                "觀察力",
+                "問題解決",
+                "空間思考"
+            ],
+            "estimatedTime": "20-30分鐘",
+            "path": "/games/moon_adventure",
+            "status": "active",
+            "version": "1.0.0",
+            "lastUpdated": "2025-01-05"
+        }
+    ],
+    "categories": [
+        {
+            "id": "physics",
+            "name": "物理",
+            "description": "包含物理學原理的遊戲"
+        },
+        {
+            "id": "ai",
+            "name": "人工智慧",
+            "description": "涉及AI和機器學習的遊戲"
+        },
+        {
+            "id": "space",
+            "name": "太空探索",
+            "description": "關於太空科學的遊戲"
+        }
+    ],
+    "difficulties": [
+        {
+            "level": 1,
+            "name": "入門",
+            "description": "適合初學者，概念簡單"
+        },
+        {
+            "level": 2,
+            "name": "進階",
+            "description": "需要一些基礎知識"
+        },
+        {
+            "level": 3,
+            "name": "挑戰",
+            "description": "需要較多預備知識，概念較複雜"
+        }
+    ]
+}

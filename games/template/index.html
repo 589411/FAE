@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課程名稱</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../common/common.css">
+</head>
+<body>
+    <div class="container">
+        <h1>課程名稱</h1>
+        
+        <div class="steps">
+            <!-- 步驟1：核心觀念介紹 -->
+            <div id="step1" class="step active">
+                <h2>第一步：核心觀念介紹</h2>
+                <div class="concept-section">
+                    <h3>學習目標</h3>
+                    <ul class="learning-objectives">
+                        <!-- 在這裡添加學習目標 -->
+                    </ul>
+                    <div class="background-info">
+                        <!-- 在這裡添加背景介紹 -->
+                    </div>
+                </div>
+                <button onclick="showNextStep(2)">下一步</button>
+            </div>
+
+            <!-- 步驟2：互動活動 -->
+            <div id="step2" class="step">
+                <h2>第二步：互動活動</h2>
+                <div class="game-container">
+                    <!-- 在這裡添加遊戲主要內容 -->
+                </div>
+                <button onclick="showNextStep(3)">下一步</button>
+            </div>
+
+            <!-- 步驟3：實踐與嘗試 -->
+            <div id="step3" class="step">
+                <h2>第三步：實踐與嘗試</h2>
+                <div class="practice-section">
+                    <!-- 在這裡添加練習活動 -->
+                </div>
+                <button onclick="showNextStep(4)">下一步</button>
+            </div>
+
+            <!-- 步驟4：討論與反思 -->
+            <div id="step4" class="step">
+                <h2>第四步：討論與反思</h2>
+                <div class="discussion-section">
+                    <h3>討論問題</h3>
+                    <!-- 在這裡添加討論問題 -->
+                </div>
+                <button onclick="showNextStep(5)">下一步</button>
+            </div>
+
+            <!-- 步驟5：總結與評估 -->
+            <div id="step5" class="step">
+                <h2>總結與評估</h2>
+                <div class="summary-section">
+                    <h3>核心概念回顧</h3>
+                    <!-- 在這裡添加總結內容 -->
+                </div>
+                <div class="assessment-section">
+                    <h3>評估標準</h3>
+                    <!-- 在這裡添加評估標準 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="../common/common.js"></script>
+</body>
+</html>
