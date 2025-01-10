@@ -955,6 +955,42 @@ html, body {
     padding: 2rem;
 }
 
+/* 視頻背景樣式 */
+.fullscreen-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* 確保視頻容器正確定位 */
+#home .image-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#home .text-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* 視頻備用圖片樣式 */
+.fullscreen-video img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* 影片背景樣式 */
 .fullscreen-video {
     width: 100vw;
@@ -981,21 +1017,27 @@ html, body {
 
 /* CTA 區塊特定樣式 */
 #cta {
-    height: 100vh;
+    height: 100vh !important;
+    min-height: 100vh;
     position: relative;
     background-color: var(--background-dark);
 }
 
 #cta .content {
-    height: 100vh;
+    height: 100vh !important;
     width: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #cta .image-container {
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    position: relative;
+    height: 100%;
 }
 
 #cta .fullscreen-image {
@@ -1008,25 +1050,34 @@ html, body {
 }
 
 #cta .text-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    z-index: 2;
     width: 90%;
     max-width: 1200px;
-    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
 }
 
-#cta .contact-info {
-    margin-top: 2rem;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 2rem;
-    border-radius: 15px;
-    text-align: left;
-    border: 1px solid var(--primary-color);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+/* 確保所有 section 都有正確的高度 */
+.section {
+    height: 100vh !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.fp-overflow {
+    height: 100% !important;
+}
+
+.fp-section {
+    height: 100vh !important;
+    position: relative !important;
+}
+
+.fp-tableCell {
+    height: 100vh !important;
 }
 
 /* 確保 section 內容不會溢出 */
