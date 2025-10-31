@@ -1,15 +1,18 @@
 # Development files
 *.md
 !README.md
+!FAE_official-main/**/*.md
 .DS_Store
 spec.md
 fap_bot.md
 future_ark_project.md
+fae_bot.md
 
 # Development directories
 dev/
 docs/
 notes/
+games/
 
 # IDE and editor files
 .vscode/
