@@ -1,4 +1,4 @@
-# Future Ark Project (FAP)
+# Future Ark Exploration (FAE)
 
 A space adventure game built with HTML, CSS, and JavaScript.
 
