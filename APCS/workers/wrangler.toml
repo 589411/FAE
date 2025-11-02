@@ -12,4 +12,4 @@ binding = "COURSE_ACCESS"
 id = "0c7142f28e5d48bbbf3b7485029cfd13"
 
 [vars]
-ALLOWED_ORIGINS = "http://localhost:8000,https://apcs-space.pages.dev"
+ALLOWED_ORIGINS = "https://apcs-space-course.pages.dev,http://localhost:8000"
