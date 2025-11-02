@@ -292,8 +292,8 @@ code {
 
 .code-content {
     display: inline;
-    white-space: pre-wrap;
-    word-break: break-word;
+    white-space: pre;
+    word-break: keep-all;
 }
 
 /* 重點行樣式 */
