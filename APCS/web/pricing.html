@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定價方案 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .pricing-hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .pricing-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--energy-cyan);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.3);
+        }
+        
+        .badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--energy-cyan);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            background: linear-gradient(135deg, var(--energy-cyan), var(--neon-purple));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .price-note {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: -1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+        
+        .features-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.05rem;
+        }
+        
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .cta-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1.5rem;
+        }
+        
+        .cta-button.primary {
+            background: linear-gradient(135deg, var(--energy-cyan), var(--neon-purple));
+            color: white;
+        }
+        
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+        
+        .faq-section {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item h4 {
+            color: var(--energy-cyan);
+            margin-bottom: 0.5rem;
+        }
+        
+        .guarantee-badge {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4caf50;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+        
+        .guarantee-badge h3 {
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- Hero Section -->
+    <section class="pricing-hero">
+        <h1>🚀 開始你的太空探險之旅</h1>
+        <p>選擇最適合你的學習方案</p>
+    </section>
+    
+    <!-- 定價卡片 -->
+    <div class="pricing-container">
+        <div class="pricing-cards">
+            <!-- 免費方案 -->
+            <div class="pricing-card">
+                <h3>🌙 免費體驗</h3>
+                <div class="price">NT$ 0</div>
+                <p class="price-note">永久免費</p>
+                
+                <ul class="features-list">
+                    <li>✅ Level 1 全部 3 個課程</li>
+                    <li>✅ 完整程式碼範例</li>
+                    <li>✅ 互動式 Quiz</li>
+                    <li>✅ 精美視覺設計</li>
+                    <li>❌ Level 2-5 進階課程</li>
+                    <li>❌ 學習進度追蹤</li>
+                    <li>❌ 證書下載</li>
+                </ul>
+                
+                <button class="cta-button secondary" onclick="window.location.href='index.html'">
+                    開始免費學習
+                </button>
+            </div>
+            
+            <!-- 完整方案 -->
+            <div class="pricing-card featured">
+                <div class="badge">🔥 最受歡迎</div>
+                <h3>🪐 完整課程</h3>
+                <div class="price">NT$ 999</div>
+                <p class="price-note">一次付費，終身訪問</p>
+                
+                <ul class="features-list">
+                    <li>✅ 全部 9 個完整課程</li>
+                    <li>✅ Level 1-5 所有內容</li>
+                    <li>✅ 50+ 程式碼範例</li>
+                    <li>✅ 30+ 互動式 Quiz</li>
+                    <li>✅ 學習進度追蹤</li>
+                    <li>✅ 完課證書下載</li>
+                    <li>✅ 未來更新免費</li>
+                    <li>✅ 優先技術支援</li>
+                </ul>
+                
+                <button class="cta-button primary" onclick="showPurchaseForm()">
+                    立即購買
+                </button>
+            </div>
+            
+            <!-- 早鳥方案 -->
+            <div class="pricing-card">
+                <div class="badge">⚡ 限時優惠</div>
+                <h3>🌟 早鳥特惠</h3>
+                <div class="price">NT$ 699</div>
+                <p class="price-note">限前 100 名</p>
+                
+                <ul class="features-list">
+                    <li>✅ 完整方案所有內容</li>
+                    <li>✅ 省 NT$ 300</li>
+                    <li>✅ 終身訪問權限</li>
+                    <li>✅ 未來更新免費</li>
+                    <li>🎁 額外贈送學習筆記模板</li>
+                    <li>🎁 APCS 考試技巧指南</li>
+                    <li>🎁 優先獲得新課程</li>
+                </ul>
+                
+                <button class="cta-button primary" onclick="showPurchaseForm('earlybird')">
+                    搶購早鳥優惠
+                </button>
+            </div>
+        </div>
+        
+        <!-- 保證徽章 -->
+        <div class="guarantee-badge">
+            <h3>✅ 30 天滿意保證</h3>
+            <p>如果你對課程不滿意，我們將全額退款，無需任何理由</p>
+        </div>
+        
+        <!-- FAQ -->
+        <div class="faq-section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: var(--energy-cyan);">常見問題</h2>
+            
+            <div class="faq-item">
+                <h4>Q: 付費後如何訪問課程？</h4>
+                <p>付款確認後，我們會在 24 小時內將兌換碼發送到您的信箱。使用兌換碼即可解鎖全部課程。</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Q: 課程有使用期限嗎？</h4>
+                <p>沒有！一次付費，終身訪問。未來的所有更新和新增內容也完全免費。</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Q: 適合完全沒有程式基礎的人嗎？</h4>
+                <p>是的！課程從零開始設計，使用太空探險的故事情境，讓學習更有趣且容易理解。</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Q: 支援哪些付款方式？</h4>
+                <p>目前支援銀行轉帳、信用卡（透過藍新金流）、PayPal 等多種方式。</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Q: 有學生優惠嗎？</h4>
+                <p>有的！憑有效學生證可享 8 折優惠。請在訂購時備註學生身份。</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Q: 可以開立發票嗎？</h4>
+                <p>可以！我們提供電子發票，付款後會自動寄送到您的信箱。</p>
+            </div>
+        </div>
+        
+        <!-- 返回首頁 -->
+        <div style="text-align: center; margin-top: 3rem;">
+            <button class="cta-button secondary" style="max-width: 300px;" onclick="window.location.href='index.html'">
+                ← 返回首頁
+            </button>
+        </div>
+    </div>
+    
+    <!-- 購買表單 Modal -->
+    <div id="purchaseModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: #1a1a2e; padding: 2rem; border-radius: 15px; max-width: 500px; width: 90%;">
+            <h2 style="color: var(--energy-cyan); margin-bottom: 1.5rem;">購買課程</h2>
+            <p style="margin-bottom: 1.5rem;">請填寫以下資訊，我們會盡快與您聯繫：</p>
+            
+            <form id="purchaseForm" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST" target="hidden_iframe">
+                <input type="text" name="entry.NAME" placeholder="姓名" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                
+                <input type="email" name="entry.EMAIL" placeholder="Email" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                
+                <input type="tel" name="entry.PHONE" placeholder="手機號碼" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                
+                <select name="entry.PLAN" required style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                    <option value="">選擇方案</option>
+                    <option value="earlybird">早鳥特惠 NT$ 699</option>
+                    <option value="full">完整課程 NT$ 999</option>
+                </select>
+                
+                <textarea name="entry.NOTE" placeholder="備註（選填）" rows="3" style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;"></textarea>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="cta-button primary" style="flex: 1;">送出訂單</button>
+                    <button type="button" class="cta-button secondary" style="flex: 1;" onclick="closePurchaseForm()">取消</button>
+                </div>
+            </form>
+            
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
+                送出後我們會在 24 小時內回覆付款資訊
+            </p>
+        </div>
+    </div>
+    
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+    
+    <script src="scripts/starfield.js"></script>
+    <script>
+        function showPurchaseForm(plan = 'full') {
+            const modal = document.getElementById('purchaseModal');
+            modal.style.display = 'flex';
+            
+            // 預選方案
+            if (plan === 'earlybird') {
+                document.querySelector('select[name="entry.PLAN"]').value = 'earlybird';
+            }
+        }
+        
+        function closePurchaseForm() {
+            document.getElementById('purchaseModal').style.display = 'none';
+        }
+        
+        // 表單提交後的處理
+        document.getElementById('purchaseForm').addEventListener('submit', function() {
+            setTimeout(function() {
+                alert('訂單已送出！我們會在 24 小時內透過 Email 聯繫您。');
+                closePurchaseForm();
+            }, 1000);
+        });
+        
+        // ESC 關閉 modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePurchaseForm();
+            }
+        });
+    </script>
+</body>
+</html>

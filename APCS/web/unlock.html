@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解鎖課程 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .unlock-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .unlock-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .unlock-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .unlock-box h1 {
+            color: var(--energy-cyan);
+            margin-bottom: 1rem;
+        }
+        
+        .unlock-box p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+        
+        .code-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .code-input:focus {
+            outline: none;
+            border-color: var(--energy-cyan);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+        
+        .unlock-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--energy-cyan), var(--neon-purple));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .unlock-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+        
+        .unlock-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .message.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+            color: #4caf50;
+        }
+        
+        .message.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+        
+        .help-text {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .help-text a {
+            color: var(--energy-cyan);
+            text-decoration: none;
+        }
+        
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <div class="unlock-container">
+        <div class="unlock-box">
+            <div class="unlock-icon">🔓</div>
+            <h1>解鎖完整課程</h1>
+            <p>輸入您購買時收到的兌換碼</p>
+            
+            <input 
+                type="text" 
+                id="codeInput" 
+                class="code-input" 
+                placeholder="APCS2024-XXXXXX"
+                maxlength="20"
+            >
+            
+            <button class="unlock-btn" onclick="unlockCourse()">
+                🚀 解鎖課程
+            </button>
+            
+            <div id="message" class="message"></div>
+            
+            <div class="help-text">
+                <p>還沒有兌換碼？<a href="pricing.html">立即購買課程</a></p>
+                <p>遇到問題？<a href="mailto:support@apcs-space.com">聯繫客服</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="scripts/starfield.js"></script>
+    <script>
+        // 有效的兌換碼列表（實際使用時應該從後端 API 驗證）
+        const validCodes = [
+            'APCS2024-DEMO01',
+            'APCS2024-DEMO02',
+            'APCS2024-DEMO03',
+            // 更多兌換碼...
+        ];
+        
+        function unlockCourse() {
+            const input = document.getElementById('codeInput');
+            const code = input.value.trim().toUpperCase();
+            const messageDiv = document.getElementById('message');
+            
+            if (!code) {
+                showMessage('請輸入兌換碼', 'error');
+                return;
+            }
+            
+            // 驗證兌換碼
+            if (validCodes.includes(code)) {
+                // 儲存解鎖狀態
+                localStorage.setItem('courseUnlocked', 'true');
+                localStorage.setItem('unlockCode', code);
+                localStorage.setItem('unlockDate', new Date().toISOString());
+                
+                showMessage('✅ 解鎖成功！正在跳轉...', 'success');
+                
+                // 3 秒後跳轉到首頁
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            } else {
+                showMessage('❌ 兌換碼無效，請檢查後重試', 'error');
+                input.value = '';
+                input.focus();
+            }
+        }
+        
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+        
+        // Enter 鍵提交
+        document.getElementById('codeInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                unlockCourse();
+            }
+        });
+        
+        // 檢查是否已解鎖
+        if (localStorage.getItem('courseUnlocked') === 'true') {
+            showMessage('您已經解鎖了完整課程！', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

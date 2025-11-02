@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APCS 太空探險課程 | FAE Academy</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 3D 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- 主要內容容器 -->
+    <div class="main-container">
+        <!-- 導航欄 -->
+        <nav class="nav-bar glass">
+            <div class="nav-content">
+                <div class="nav-logo">
+                    <img src="../../../FAEBot.png" alt="FAE Logo" class="logo-img">
+                    <span class="logo-text">FAE Academy</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#home" class="nav-link active">首頁</a>
+                    <a href="#curriculum" class="nav-link">課程地圖</a>
+                    <a href="#about" class="nav-link">關於課程</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero 區域 -->
+        <section id="home" class="hero-section">
+            <div class="hero-content fade-in">
+                <div class="hero-badge">
+                    <span class="badge-icon">🚀</span>
+                    <span class="badge-text">APCS 1-5 級分完整課程</span>
+                </div>
+                
+                <h1 class="hero-title text-glow">
+                    APCS 太空探險課程
+                </h1>
+                
+                <h2 class="hero-subtitle">
+                    從月球基地到冥王星邊界的程式設計之旅
+                </h2>
+                
+                <p class="hero-description">
+                    一套完整的 Python 程式設計課程，以太空探險為主題<br>
+                    涵蓋 APCS 1-5 級分所有核心知識點
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="#curriculum" class="btn-primary">
+                        <span class="btn-icon">🌙</span>
+                        <span>開始探險</span>
+                    </a>
+                    <a href="#quick-start" class="btn-secondary">
+                        <span class="btn-icon">📖</span>
+                        <span>快速開始</span>
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">9</div>
+                        <div class="stat-label">核心單元</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">程式範例</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">40-60h</div>
+                        <div class="stat-label">學習時數</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1-5</div>
+                        <div class="stat-label">級分涵蓋</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 課程地圖 -->
+        <section id="curriculum" class="curriculum-section">
+            <div class="section-header">
+                <h2 class="section-title text-glow">🗺️ 探險路線圖</h2>
+                <p class="section-subtitle">從月球到冥王星的完整學習旅程</p>
+            </div>
+            
+            <div class="mission-path">
+                <!-- Level 1: 月球基地 -->
+                <div class="mission-level" data-level="1">
+                    <div class="level-header hud-border">
+                        <div class="level-icon">🌙</div>
+                        <div class="level-info">
+                            <h3 class="level-title">Level 1: 月球基地訓練</h3>
+                            <div class="level-meta">
+                                <span class="level-badge">1-2 級分</span>
+                                <span class="level-time">⏱️ 10-15 小時</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="level-modules">
+                        <a href="lessons/L1/A1.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">📡</span>
+                                <h4 class="module-title">A1: 通訊系統與高速 I/O</h4>
+                            </div>
+                            <p class="module-desc">學習太空通訊協議，掌握高效輸入輸出</p>
+                            <div class="module-tags">
+                                <span class="tag">sys.stdin</span>
+                                <span class="tag">I/O 優化</span>
+                            </div>
+                        </a>
+                        
+                        <a href="lessons/L1/A2.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">🧭</span>
+                                <h4 class="module-title">A2: 導航邏輯與條件判斷</h4>
+                            </div>
+                            <p class="module-desc">月球車導航系統，掌握邏輯控制</p>
+                            <div class="module-tags">
+                                <span class="tag">if/else</span>
+                                <span class="tag">迴圈</span>
+                                <span class="tag">流程控制</span>
+                            </div>
+                        </a>
+                        
+                        <a href="lessons/L1/A3.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">📊</span>
+                                <h4 class="module-title">A3: 數據陣列與感測器管理</h4>
+                            </div>
+                            <p class="module-desc">管理月球基地感測器數據</p>
+                            <div class="module-tags">
+                                <span class="tag">list</span>
+                                <span class="tag">陣列操作</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Level 2: 木星軌道站 -->
+                <div class="mission-level" data-level="2">
+                    <div class="level-header hud-border">
+                        <div class="level-icon">🪐</div>
+                        <div class="level-info">
+                            <h3 class="level-title">Level 2: 木星軌道站</h3>
+                            <div class="level-meta">
+                                <span class="level-badge">3 級分</span>
+                                <span class="level-time">⏱️ 10-15 小時</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="level-modules">
+                        <a href="lessons/L2/B1.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">🔐</span>
+                                <h4 class="module-title">B1: 加密通訊與字串處理</h4>
+                            </div>
+                            <p class="module-desc">木星加密通訊系統</p>
+                            <div class="module-tags">
+                                <span class="tag">字串</span>
+                                <span class="tag">ord/chr</span>
+                            </div>
+                        </a>
+                        
+                        <a href="lessons/L2/B2.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">🪐</span>
+                                <h4 class="module-title">B2: 土星環模擬與二維陣列</h4>
+                            </div>
+                            <p class="module-desc">建立土星環密度地圖</p>
+                            <div class="module-tags">
+                                <span class="tag">二維陣列</span>
+                                <span class="tag">前綴和</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Level 3: 天王星高速電梯 -->
+                <div class="mission-level" data-level="3">
+                    <div class="level-header hud-border">
+                        <div class="level-icon">⚡</div>
+                        <div class="level-info">
+                            <h3 class="level-title">Level 3: 天王星高速電梯</h3>
+                            <div class="level-meta">
+                                <span class="level-badge">4 級分</span>
+                                <span class="level-time">⏱️ 15-20 小時</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="level-modules">
+                        <a href="lessons/L3/C1.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">📦</span>
+                                <h4 class="module-title">C1: 堆疊與佇列系統</h4>
+                            </div>
+                            <p class="module-desc">管理天王星貨運系統</p>
+                            <div class="module-tags">
+                                <span class="tag">Stack</span>
+                                <span class="tag">Queue</span>
+                            </div>
+                        </a>
+                        
+                        <a href="lessons/L3/C2.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">🔄</span>
+                                <h4 class="module-title">C2: 遞迴與回溯探索</h4>
+                            </div>
+                            <p class="module-desc">海王星衛星系統探索</p>
+                            <div class="module-tags">
+                                <span class="tag">遞迴</span>
+                                <span class="tag">回溯</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Level 4-5: 冥王星邊界 -->
+                <div class="mission-level" data-level="4">
+                    <div class="level-header hud-border">
+                        <div class="level-icon">🌌</div>
+                        <div class="level-info">
+                            <h3 class="level-title">Level 4-5: 冥王星邊界</h3>
+                            <div class="level-meta">
+                                <span class="level-badge">5 級分</span>
+                                <span class="level-time">⏱️ 15-20 小時</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="level-modules">
+                        <a href="lessons/L4/D1.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">🕸️</span>
+                                <h4 class="module-title">D1: 星際網絡與圖論</h4>
+                            </div>
+                            <p class="module-desc">建立星際航道網絡</p>
+                            <div class="module-tags">
+                                <span class="tag">圖論</span>
+                                <span class="tag">BFS/DFS</span>
+                            </div>
+                        </a>
+                        
+                        <a href="lessons/L5/E1.html" class="module-card glass">
+                            <div class="module-header">
+                                <span class="module-icon">💎</span>
+                                <h4 class="module-title">E1: 動態規劃與優化</h4>
+                            </div>
+                            <p class="module-desc">資源最佳化問題</p>
+                            <div class="module-tags">
+                                <span class="tag">DP</span>
+                                <span class="tag">最佳化</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 關於課程 -->
+        <section id="about" class="about-section">
+            <div class="section-header">
+                <h2 class="section-title text-glow">✨ 課程特色</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card glass">
+                    <div class="feature-icon">🎮</div>
+                    <h3 class="feature-title">沉浸式主題</h3>
+                    <p class="feature-desc">太空探險主題讓學習更有趣，從月球到冥王星的完整旅程</p>
+                </div>
+                
+                <div class="feature-card glass">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">完整結構</h3>
+                    <p class="feature-desc">每單元包含：任務背景、知識點、範例、解說、Quiz、解答</p>
+                </div>
+                
+                <div class="feature-card glass">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">APCS 對應</h3>
+                    <p class="feature-desc">直接對應 APCS 1-5 級分和考古題，針對性學習</p>
+                </div>
+                
+                <div class="feature-card glass">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">效能優先</h3>
+                    <p class="feature-desc">從第一課就強調時間複雜度和最佳實踐</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer glass">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>APCS 太空探險課程</h4>
+                    <p>FAE Academy 出品</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速連結</h4>
+                    <a href="#curriculum">課程地圖</a>
+                    <a href="../太空探險課程/README.md">完整文檔</a>
+                </div>
+                <div class="footer-section">
+                    <h4>版本資訊</h4>
+                    <p>v1.0.0 | 2025-11-02</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="scripts/starfield.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
