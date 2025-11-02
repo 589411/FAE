@@ -1,0 +1,545 @@
+/* ==================== 
+   課程頁面樣式
+==================== */
+
+/* 課程導航欄 */
+.lesson-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.lesson-nav .nav-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--energy-cyan);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.back-btn:hover {
+    transform: translateX(-5px);
+}
+
+.lesson-progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--star-white);
+}
+
+.lesson-nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-btn {
+    padding: 0.5rem 1.5rem;
+    background: rgba(0, 217, 255, 0.1);
+    border: 1px solid var(--energy-cyan);
+    border-radius: 8px;
+    color: var(--energy-cyan);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.nav-btn:hover {
+    background: rgba(0, 217, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 課程容器 */
+.lesson-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 3rem;
+}
+
+/* 側邊欄 */
+.lesson-sidebar {
+    position: sticky;
+    top: 6rem;
+    height: fit-content;
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--energy-cyan);
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-link {
+    padding: 0.8rem 1rem;
+    color: var(--star-white);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-link:hover {
+    background: rgba(0, 217, 255, 0.1);
+    border-left-color: var(--energy-cyan);
+}
+
+.sidebar-link.active {
+    background: rgba(0, 217, 255, 0.2);
+    border-left-color: var(--energy-cyan);
+    font-weight: 600;
+}
+
+/* 課程內容 */
+.lesson-content {
+    max-width: 900px;
+}
+
+/* 課程標題 */
+.lesson-header {
+    margin-bottom: 3rem;
+}
+
+.lesson-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    background: rgba(0, 217, 255, 0.1);
+    border: 1px solid var(--energy-cyan);
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+}
+
+.lesson-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.lesson-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    color: var(--star-white);
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+/* 內容區塊 */
+.content-section {
+    margin-bottom: 4rem;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--energy-cyan);
+    margin-bottom: 1.5rem;
+}
+
+.heading-icon {
+    font-size: 2.5rem;
+}
+
+.content-box {
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    line-height: 1.8;
+}
+
+.content-box p {
+    margin-bottom: 1rem;
+}
+
+.content-box ul,
+.content-box ol {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.content-box li {
+    margin-bottom: 0.5rem;
+}
+
+/* 任務目標 */
+.mission-objectives {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 217, 255, 0.05);
+    border-left: 4px solid var(--energy-cyan);
+    border-radius: 8px;
+}
+
+.mission-objectives h3 {
+    color: var(--energy-cyan);
+    margin-bottom: 1rem;
+}
+
+/* 知識卡片 */
+.knowledge-card {
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    margin-bottom: 2rem;
+}
+
+.knowledge-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--energy-cyan);
+    margin-bottom: 1rem;
+}
+
+/* 比較框 */
+.comparison-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.comparison-item {
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 2px solid;
+}
+
+.comparison-item.danger {
+    border-color: var(--danger-red);
+    background: rgba(255, 51, 102, 0.05);
+}
+
+.comparison-item.success {
+    border-color: var(--success-green);
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.comparison-item h4 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+/* 程式碼區塊 */
+pre {
+    background: #1e1e1e !important;
+    border-radius: 10px;
+    padding: 1.5rem !important;
+    overflow-x: auto;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+code {
+    font-family: 'Fira Code', monospace;
+}
+
+/* 範例卡片 */
+.example-card {
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    margin-bottom: 2rem;
+}
+
+.example-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.example-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--energy-cyan);
+}
+
+.copy-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 217, 255, 0.1);
+    border: 1px solid var(--energy-cyan);
+    border-radius: 8px;
+    color: var(--energy-cyan);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.copy-btn:hover {
+    background: rgba(0, 217, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* 輸入輸出範例 */
+.example-io {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.io-box {
+    padding: 1rem;
+    background: rgba(0, 217, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.io-box h4 {
+    color: var(--energy-cyan);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.io-box pre {
+    background: rgba(0, 0, 0, 0.3) !important;
+    padding: 1rem !important;
+    margin: 0;
+}
+
+/* 解說框 */
+.explanation-box {
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.explanation-box h3 {
+    color: var(--energy-cyan);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tech-point {
+    margin-bottom: 2rem;
+}
+
+.tech-point h4 {
+    color: var(--energy-cyan);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+/* 效能表格 */
+.performance-table {
+    margin-top: 2rem;
+}
+
+.performance-table h4 {
+    color: var(--energy-cyan);
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+thead {
+    background: rgba(0, 217, 255, 0.1);
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+}
+
+th {
+    color: var(--energy-cyan);
+    font-weight: 600;
+}
+
+tr.highlight {
+    background: rgba(0, 255, 136, 0.05);
+}
+
+/* Quiz 區塊 */
+.quiz-box {
+    padding: 2rem;
+    border-radius: 15px;
+    border: 2px solid var(--warning-amber);
+    background: rgba(255, 184, 0, 0.05);
+}
+
+.quiz-box h3 {
+    color: var(--warning-amber);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.quiz-io {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.show-solution-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--energy-cyan), var(--energy-purple));
+    color: var(--space-black);
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1.5rem;
+}
+
+.show-solution-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+}
+
+/* 解答區塊 */
+.solution-box {
+    padding: 2rem;
+    border-radius: 15px;
+    border: 2px solid var(--success-green);
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.solution-explanation {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.solution-explanation h3 {
+    color: var(--success-green);
+    margin-bottom: 1rem;
+}
+
+.solution-hidden {
+    display: none;
+}
+
+/* 完成徽章 */
+.completion-badge {
+    padding: 3rem;
+    border-radius: 15px;
+    border: 2px solid var(--success-green);
+    text-align: center;
+    margin: 4rem 0;
+}
+
+.badge-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.badge-content .badge-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.badge-content h3 {
+    font-size: 2rem;
+    color: var(--success-green);
+    margin-bottom: 1rem;
+}
+
+.completion-skills {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.skill-tag {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid var(--success-green);
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* 課程導航 */
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 4rem;
+}
+
+.lesson-navigation .nav-btn {
+    flex: 1;
+    text-align: center;
+    padding: 1rem 2rem;
+}
+
+.lesson-navigation .home-btn {
+    flex: 0.5;
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+    .lesson-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .lesson-sidebar {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .lesson-nav .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .comparison-box,
+    .example-io,
+    .quiz-io {
+        grid-template-columns: 1fr;
+    }
+    
+    .lesson-navigation {
+        flex-direction: column;
+    }
+}
