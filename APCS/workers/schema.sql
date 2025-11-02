@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS redemption_codes (
     created_at TEXT DEFAULT (datetime('now')),
     used_at TEXT,
     user_ip TEXT,
-    user_email TEXT
+    user_email TEXT,
+    device_id TEXT,  -- 首次使用的設備 ID
+    max_devices INTEGER DEFAULT 3  -- 允許的最大設備數
 );
 
 -- 創建索引加速查詢

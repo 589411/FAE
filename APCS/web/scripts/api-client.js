@@ -9,6 +9,44 @@ const API_BASE_URL = 'https://apcs-auth-api.589411.workers.dev';
 class CourseAPI {
     constructor() {
         this.token = localStorage.getItem('accessToken');
+        this.tokenId = localStorage.getItem('tokenId');
+        this.deviceId = this.getDeviceId();
+    }
+
+    /**
+     * 獲取或生成設備指紋
+     */
+    getDeviceId() {
+        let deviceId = localStorage.getItem('deviceId');
+        if (!deviceId) {
+            // 生成設備指紋（基於瀏覽器特徵）
+            const fingerprint = [
+                navigator.userAgent,
+                navigator.language,
+                screen.width + 'x' + screen.height,
+                new Date().getTimezoneOffset(),
+                navigator.hardwareConcurrency || 'unknown',
+                navigator.platform
+            ].join('|');
+            
+            // 簡單 hash（實際應用可使用更複雜的指紋庫）
+            deviceId = this.simpleHash(fingerprint);
+            localStorage.setItem('deviceId', deviceId);
+        }
+        return deviceId;
+    }
+
+    /**
+     * 簡單 hash 函數
+     */
+    simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return 'dev_' + Math.abs(hash).toString(36);
     }
 
     /**
@@ -21,15 +59,20 @@ class CourseAPI {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code })
+                body: JSON.stringify({ 
+                    code: code,
+                    deviceId: this.deviceId
+                })
             });
 
             const data = await response.json();
 
             if (data.valid && data.token) {
-                // 儲存 token
+                // 儲存 token 和 tokenId
                 this.token = data.token;
+                this.tokenId = data.tokenId;
                 localStorage.setItem('accessToken', data.token);
+                localStorage.setItem('tokenId', data.tokenId);
                 localStorage.setItem('unlockDate', new Date().toISOString());
                 return { success: true, message: data.message };
             }
@@ -78,11 +121,20 @@ class CourseAPI {
                 },
                 body: JSON.stringify({ 
                     token: this.token,
+                    tokenId: this.tokenId,
+                    deviceId: this.deviceId,
                     lessonId: lessonId 
                 })
             });
 
             const data = await response.json();
+            
+            // 如果達到設備數限制，顯示提示
+            if (data.reason === 'max_devices_reached') {
+                alert(data.message);
+                return false;
+            }
+            
             return data.canAccess;
         } catch (error) {
             console.error('檢查課程訪問失敗:', error);
@@ -98,8 +150,11 @@ class CourseAPI {
      */
     logout() {
         this.token = null;
+        this.tokenId = null;
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('tokenId');
         localStorage.removeItem('unlockDate');
+        // 注意：不清除 deviceId，保持設備識別
     }
 }
 
