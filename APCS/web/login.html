@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入 / 註冊 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .auth-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 100%;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .auth-tab.active {
+            color: var(--energy-cyan);
+            border-bottom-color: var(--energy-cyan);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            font-size: 1rem;
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--energy-cyan);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+        
+        .form-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--energy-cyan), var(--neon-purple));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .form-button:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+        
+        .form-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .divider span {
+            padding: 0 1rem;
+        }
+        
+        .google-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            background: white;
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .google-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        .message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+        }
+        
+        .message.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+            color: #4caf50;
+        }
+        
+        .message.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+        
+        .message.info {
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid #2196f3;
+            color: #2196f3;
+        }
+        
+        .verification-section {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            border-radius: 10px;
+        }
+        
+        .verification-section.active {
+            display: block;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .back-link a {
+            color: var(--energy-cyan);
+            text-decoration: none;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1 style="text-align: center; color: var(--energy-cyan); margin-bottom: 2rem;">
+                🚀 APCS 太空探險
+            </h1>
+            
+            <!-- 標籤切換 -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('login')">登入</button>
+                <button class="auth-tab" onclick="switchTab('register')">註冊</button>
+            </div>
+            
+            <!-- 登入表單 -->
+            <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="loginEmail" required placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">密碼</label>
+                    <input type="password" class="form-input" id="loginPassword" required placeholder="至少 6 個字符">
+                </div>
+                
+                <button type="submit" class="form-button">🔓 登入</button>
+                
+                <div class="divider">
+                    <span>或</span>
+                </div>
+                
+                <button type="button" class="google-button" onclick="handleGoogleLogin()">
+                    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                        <path fill="none" d="M0 0h48v48H0z"/>
+                    </svg>
+                    使用 Google 登入
+                </button>
+            </form>
+            
+            <!-- 註冊表單 -->
+            <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label">姓名</label>
+                    <input type="text" class="form-input" id="registerName" required placeholder="您的姓名">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="registerEmail" required placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">密碼</label>
+                    <input type="password" class="form-input" id="registerPassword" required placeholder="至少 6 個字符" minlength="6">
+                </div>
+                
+                <button type="submit" class="form-button">📝 註冊</button>
+                
+                <div class="divider">
+                    <span>或</span>
+                </div>
+                
+                <button type="button" class="google-button" onclick="handleGoogleLogin()">
+                    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                        <path fill="none" d="M0 0h48v48H0z"/>
+                    </svg>
+                    使用 Google 註冊
+                </button>
+                
+                <!-- Email 驗證區域 -->
+                <div id="verificationSection" class="verification-section">
+                    <h3 style="color: #2196f3; margin-bottom: 1rem;">📧 驗證您的 Email</h3>
+                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1rem;">
+                        我們已發送驗證碼到您的 Email（開發環境下會顯示在下方）
+                    </p>
+                    <div class="form-group">
+                        <label class="form-label">驗證碼</label>
+                        <input type="text" class="form-input" id="verificationCode" placeholder="6 位數字" maxlength="6">
+                    </div>
+                    <button type="button" class="form-button" onclick="handleVerifyEmail()">
+                        ✅ 驗證 Email
+                    </button>
+                </div>
+            </form>
+            
+            <!-- 訊息顯示 -->
+            <div id="message" class="message"></div>
+            
+            <!-- 返回首頁 -->
+            <div class="back-link">
+                <a href="index.html">← 返回首頁</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="scripts/starfield.js"></script>
+    <script src="scripts/auth-client.js"></script>
+    <script>
+        let currentEmail = '';
+        let currentVerificationCode = '';
+        
+        // 切換標籤
+        function switchTab(tab) {
+            // 更新標籤樣式
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // 更新表單顯示
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            document.getElementById(tab + 'Form').classList.add('active');
+            
+            // 清除訊息
+            hideMessage();
+        }
+        
+        // 處理登入
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const btn = event.target.querySelector('.form-button');
+            
+            btn.disabled = true;
+            showMessage('登入中...', 'info');
+            
+            const result = await window.authClient.login(email, password);
+            
+            if (result.success) {
+                showMessage('✅ 登入成功！正在跳轉...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                showMessage('❌ ' + result.message, 'error');
+                btn.disabled = false;
+            }
+        }
+        
+        // 處理註冊
+        async function handleRegister(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const btn = event.target.querySelector('.form-button');
+            
+            btn.disabled = true;
+            showMessage('註冊中...', 'info');
+            
+            const result = await window.authClient.register(email, password, name);
+            
+            if (result.success) {
+                currentEmail = email;
+                currentVerificationCode = result.verificationCode; // 開發環境
+                
+                showMessage('✅ 註冊成功！請驗證您的 Email', 'success');
+                
+                // 顯示驗證區域
+                document.getElementById('verificationSection').classList.add('active');
+                
+                // 開發環境：自動填入驗證碼
+                if (result.verificationCode) {
+                    document.getElementById('verificationCode').value = result.verificationCode;
+                    showMessage(`✅ 註冊成功！驗證碼：${result.verificationCode}`, 'success');
+                }
+                
+                btn.disabled = false;
+            } else {
+                showMessage('❌ ' + result.message, 'error');
+                btn.disabled = false;
+            }
+        }
+        
+        // 處理 Email 驗證
+        async function handleVerifyEmail() {
+            const code = document.getElementById('verificationCode').value;
+            
+            if (!code || code.length !== 6) {
+                showMessage('❌ 請輸入 6 位數驗證碼', 'error');
+                return;
+            }
+            
+            showMessage('驗證中...', 'info');
+            
+            const result = await window.authClient.verifyEmail(currentEmail, code);
+            
+            if (result.success) {
+                showMessage('✅ Email 驗證成功！正在自動登入...', 'success');
+                
+                // 自動登入
+                setTimeout(async () => {
+                    const password = document.getElementById('registerPassword').value;
+                    const loginResult = await window.authClient.login(currentEmail, password);
+                    
+                    if (loginResult.success) {
+                        window.location.href = 'dashboard.html';
+                    }
+                }, 1500);
+            } else {
+                showMessage('❌ ' + result.message, 'error');
+            }
+        }
+        
+        // 處理 Google 登入
+        async function handleGoogleLogin() {
+            showMessage('正在跳轉到 Google...', 'info');
+            await window.authClient.googleLogin();
+        }
+        
+        // 顯示訊息
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+        
+        // 隱藏訊息
+        function hideMessage() {
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.display = 'none';
+        }
+        
+        // 檢查是否已登入
+        if (window.authClient.isLoggedIn()) {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

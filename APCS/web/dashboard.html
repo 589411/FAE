@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用戶儀表板 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--energy-cyan), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .user-details h2 {
+            color: var(--energy-cyan);
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .user-details p {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+        
+        .logout-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(244, 67, 54, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+        
+        .dashboard-card h3 {
+            color: var(--energy-cyan);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .quick-action {
+            display: block;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .quick-action:hover {
+            background: rgba(0, 217, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .stat-value {
+            color: var(--energy-cyan);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <div class="dashboard-container">
+        <!-- 用戶資訊 -->
+        <div class="dashboard-header">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">👤</div>
+                <div class="user-details">
+                    <h2 id="userName">載入中...</h2>
+                    <p id="userEmail">-</p>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">🚪 登出</button>
+        </div>
+        
+        <!-- 儀表板內容 -->
+        <div class="dashboard-grid">
+            <!-- 快速操作 -->
+            <div class="dashboard-card">
+                <h3>🚀 快速操作</h3>
+                <a href="index.html" class="quick-action">
+                    📚 瀏覽課程
+                </a>
+                <a href="unlock.html" class="quick-action">
+                    🎫 兌換課程碼
+                </a>
+                <a href="#" class="quick-action" onclick="alert('設備管理功能開發中')">
+                    📱 管理設備
+                </a>
+            </div>
+            
+            <!-- 帳號資訊 -->
+            <div class="dashboard-card">
+                <h3>👤 帳號資訊</h3>
+                <div class="stat-item">
+                    <span class="stat-label">註冊時間</span>
+                    <span class="stat-value" id="joinDate">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Email 狀態</span>
+                    <span class="stat-value">✅ 已驗證</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">設備 ID</span>
+                    <span class="stat-value" id="deviceId">-</span>
+                </div>
+            </div>
+            
+            <!-- 課程狀態 -->
+            <div class="dashboard-card">
+                <h3>📊 課程狀態</h3>
+                <div class="stat-item">
+                    <span class="stat-label">已解鎖課程</span>
+                    <span class="stat-value" id="unlockedCourses">檢查中...</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">學習進度</span>
+                    <span class="stat-value">0%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">完成課程</span>
+                    <span class="stat-value">0 / 13</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="scripts/starfield.js"></script>
+    <script src="scripts/auth-client.js"></script>
+    <script>
+        // 檢查登入狀態
+        if (!window.authClient.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+        
+        // 載入用戶資訊
+        function loadUserInfo() {
+            const user = window.authClient.getCurrentUser();
+            
+            if (user) {
+                document.getElementById('userName').textContent = user.name || '用戶';
+                document.getElementById('userEmail').textContent = user.email;
+                
+                // 設置頭像
+                const avatar = document.getElementById('userAvatar');
+                if (user.picture) {
+                    avatar.innerHTML = `<img src="${user.picture}" style="width: 100%; height: 100%; border-radius: 50%;">`;
+                } else {
+                    avatar.textContent = user.name ? user.name[0].toUpperCase() : '👤';
+                }
+                
+                // 設置設備 ID
+                document.getElementById('deviceId').textContent = window.authClient.deviceId.substring(0, 12) + '...';
+            }
+            
+            // 檢查已解鎖課程
+            checkUnlockedCourses();
+        }
+        
+        // 檢查已解鎖課程
+        function checkUnlockedCourses() {
+            const hasToken = localStorage.getItem('accessToken');
+            const hasTokenId = localStorage.getItem('tokenId');
+            
+            if (hasToken && hasTokenId) {
+                document.getElementById('unlockedCourses').textContent = '全部課程 (13)';
+            } else {
+                document.getElementById('unlockedCourses').textContent = '免費課程 (3)';
+            }
+        }
+        
+        // 登出
+        function handleLogout() {
+            if (confirm('確定要登出嗎？')) {
+                window.authClient.logout();
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // 頁面載入時執行
+        loadUserInfo();
+    </script>
+</body>
+</html>
