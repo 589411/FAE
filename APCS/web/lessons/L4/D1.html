@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D1: 星際網絡與圖論 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/lesson.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- 導航欄 -->
+    <nav class="lesson-nav glass">
+        <div class="nav-content">
+            <a href="../../index.html" class="back-btn">
+                <span>←</span>
+                <span>返回課程地圖</span>
+            </a>
+            <div class="lesson-progress">
+                <span class="progress-text">L4 - D1</span>
+            </div>
+            <div class="lesson-nav-buttons">
+                <a href="../L3/C3.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="../L4/D2.html" class="nav-btn next-btn" >下一課</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="lesson-container">
+        <!-- 側邊欄目錄 -->
+        <aside class="lesson-sidebar glass">
+            <h3 class="sidebar-title">📋 本課內容</h3>
+            <nav class="sidebar-nav">
+                <a href="#mission" class="sidebar-link active">🚀 任務背景</a>
+                <a href="#knowledge" class="sidebar-link">📚 知識點說明</a>
+                <a href="#examples" class="sidebar-link">💻 範例程式碼</a>
+                <a href="#explanation" class="sidebar-link">🔍 程式碼解說</a>
+                <a href="#quiz" class="sidebar-link">📝 Quiz</a>
+                <a href="#solution" class="sidebar-link">✅ 解答</a>
+            </nav>
+        </aside>
+
+        <!-- 課程內容 -->
+        <article class="lesson-content">
+            <!-- 課程標題 -->
+            <header class="lesson-header">
+                <div class="lesson-badge">
+                    <span class="badge-icon">🌌</span>
+                    <span class="badge-text">L4: 冥王星邊界</span>
+                </div>
+                <h1 class="lesson-title text-glow">
+                    D1: 冥王星星際網絡：圖論與搜索演算法
+                </h1>
+                <div class="lesson-meta">
+                    <span class="meta-item">⏱️ 預計時間：6-8 小時</span>
+                    <span class="meta-item">🎯 目標級分：5 級分</span>
+                    <span class="meta-item">📊 難度：⭐⭐⭐⭐⭐</span>
+                </div>
+            </header>
+
+            <!-- 任務背景 -->
+            <section id="mission" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🚀</span>
+                    <span>任務背景</span>
+                </h2>
+                <div class="content-box glass">
+                    <p>恭喜！你已經抵達太陽系的邊界——冥王星區域。這裡有複雜的星際航道網絡，連接著各個太空站和小行星帶。要在這個網絡中找到最佳路徑，你需要掌握「圖論」——電腦科學中最強大的工具之一。</p>
+圖可以表示任何「物件之間的關係」：
+<ul>
+<li>太空站之間的航道</li>
+<li>社交網絡中的朋友關係</li>
+<li>網頁之間的超連結</li>
+<li>城市之間的道路</li>
+</ul>
+                </div>
+            </section>
+
+            <!-- 知識點說明 -->
+            <section id="knowledge" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📚</span>
+                    <span>知識點說明</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>什麼是圖（Graph）？</h3>
+圖由兩部分組成：
+<ul>
+<li><strong>頂點（Vertices/Nodes）</strong>：物件本身</li>
+<li><strong>邊（Edges）</strong>：物件之間的連接</li>
+</ul>
+<pre><code class="language-python">    A --- B
+    |     |
+    C --- D
+</code></pre>
+<h3>圖的類型</h3>
+<ol>
+<li><strong>無向圖 vs 有向圖</strong></li>
+<li>無向圖：邊沒有方向（雙向道路）</li>
+<li>有向圖：邊有方向（單行道）</li>
+</ol>
+<ol>
+<li><strong>加權圖 vs 無權圖</strong></li>
+<li>無權圖：所有邊的「成本」相同</li>
+<li>加權圖：每條邊有不同的權重（距離、時間等）</li>
+</ol>
+<h3>圖的表示法</h3>
+<strong>1. 鄰接矩陣（Adjacency Matrix）</strong>
+<pre><code class="language-python"># 適合稠密圖，查詢快但佔空間
+graph = [[0, 1, 1, 0],
+         [1, 0, 0, 1],
+         [1, 0, 0, 1],
+         [0, 1, 1, 0]]
+</code></pre>
+<strong>2. 鄰接串列（Adjacency List）</strong> ✅ 推薦
+<pre><code class="language-python"># 適合稀疏圖，節省空間
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D'],
+    'C': ['A', 'D'],
+    'D': ['B', 'C']
+}
+</code></pre>
+<h3>圖的遍歷</h3>
+<strong>廣度優先搜尋（BFS）</strong>：一層一層探索
+<ul>
+<li>使用佇列（Queue）</li>
+<li>找最短路徑（無權圖）</li>
+</ul>
+<strong>深度優先搜尋（DFS）</strong>：一條路走到底
+<ul>
+<li>使用堆疊（Stack）或遞迴</li>
+<li>探索所有路徑</li>
+</ul>
+                </div>
+            </section>
+
+            <!-- 範例程式碼 -->
+            <section id="examples" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">💻</span>
+                    <span>範例程式碼</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>範例 1：建立星際航道網絡</h3>
+<pre><code class="language-python">import sys
+from collections import defaultdict
+<p># 任務：建立太空站網絡
+n = int(sys.stdin.readline())  # 太空站數量
+m = int(sys.stdin.readline())  # 航道數量</p>
+<p># 使用鄰接串列
+graph = defaultdict(list)</p>
+<p>print("建立航道：")
+for _ in range(m):
+    a, b = map(int, sys.stdin.readline().strip().split())
+    graph[a].append(b)
+    graph[b].append(a)  # 無向圖
+    print(f"太空站 {a} ↔ 太空站 {b}")</p>
+print("\n網絡結構：")
+for station in sorted(graph.keys()):
+    neighbors = sorted(graph[station])
+    print(f"太空站 {station}: 連接到 {neighbors}")
+</code></pre>
+<h3>範例 2：BFS - 最短路徑搜索</h3>
+<pre><code class="language-python">import sys
+from collections import deque, defaultdict
+<p>def bfs_shortest_path(graph, start, end):
+    """使用 BFS 找出最短路徑"""
+    if start == end:
+        return [start]
+    
+    # 佇列：儲存 (當前節點, 路徑)
+    queue = deque([(start, [start])])
+    visited = {start}
+    
+    while queue:
+        current, path = queue.popleft()
+        
+        # 探索所有鄰居
+        for neighbor in graph[current]:
+            if neighbor in visited:
+                continue
+            
+            new_path = path + [neighbor]
+            
+            # 找到目標
+            if neighbor == end:
+                return new_path
+            
+            visited.add(neighbor)
+            queue.append((neighbor, new_path))
+    
+    return None  # 無法到達</p>
+<p># 任務：找出從地球到冥王星的最短航道
+n = int(sys.stdin.readline())
+m = int(sys.stdin.readline())</p>
+<p>graph = defaultdict(list)
+for _ in range(m):
+    a, b = map(int, sys.stdin.readline().strip().split())
+    graph[a].append(b)
+    graph[b].append(a)</p>
+<p>start = int(sys.stdin.readline())
+end = int(sys.stdin.readline())</p>
+<p>path = bfs_shortest_path(graph, start, end)</p>
+if path:
+    print(f"最短路徑：{' → '.join(map(str, path))}")
+    print(f"需要經過 {len(path) - 1} 個航道")
+else:
+    print("無法到達目標！")
+</code></pre>
+<h3>範例 3：DFS - 探索所有路徑</h3>
+<pre><code class="language-python">import sys
+from collections import defaultdict
+<p>def dfs_all_paths(graph, start, end, path=[]):
+    """使用 DFS 找出所有路徑"""
+    path = path + [start]
+    
+    # 到達目標
+    if start == end:
+        return [path]
+    
+    # 沒有鄰居
+    if start not in graph:
+        return []
+    
+    paths = []
+    for neighbor in graph[start]:
+        # 避免循環
+        if neighbor not in path:
+            new_paths = dfs_all_paths(graph, neighbor, end, path)
+            paths.extend(new_paths)
+    
+    return paths</p>
+<p># 任務：找出所有可能的探索路線
+n = int(sys.stdin.readline())
+m = int(sys.stdin.readline())</p>
+<p>graph = defaultdict(list)
+for _ in range(m):
+    a, b = map(int, sys.stdin.readline().strip().split())
+    graph[a].append(b)
+    graph[b].append(a)</p>
+<p>start = int(sys.stdin.readline())
+end = int(sys.stdin.readline())</p>
+<p>all_paths = dfs_all_paths(graph, start, end)</p>
+print(f"找到 {len(all_paths)} 條路徑：\n")
+for i, path in enumerate(all_paths, 1):
+    print(f"路徑 {i}: {' → '.join(map(str, path))}")
+</code></pre>
+<h3>範例 4：迷宮探索（網格圖）</h3>
+<pre><code class="language-python">import sys
+from collections import deque
+<p>def maze_bfs(maze, start, end):
+    """在迷宮中找最短路徑"""
+    rows = len(maze)
+    cols = len(maze[0])
+    
+    # 四個方向：上下左右
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    direction_names = ['上', '下', '左', '右']
+    
+    queue = deque([(start, [start])])
+    visited = {start}
+    
+    while queue:
+        (r, c), path = queue.popleft()
+        
+        # 到達終點
+        if (r, c) == end:
+            return path
+        
+        # 探索四個方向
+        for (dr, dc), name in zip(directions, direction_names):
+            nr, nc = r + dr, c + dc
+            
+            # 檢查邊界
+            if 0 <= nr < rows and 0 <= nc < cols:
+                # 檢查是否可通行且未訪問
+                if maze[nr][nc] != '#' and (nr, nc) not in visited:
+                    visited.add((nr, nc))
+                    queue.append(((nr, nc), path + [(nr, nc)]))
+    
+    return None</p>
+<p># 任務：在小行星帶中找到安全路徑
+# '.' = 安全區域, '#' = 隕石, 'S' = 起點, 'E' = 終點
+rows = int(sys.stdin.readline())
+cols = int(sys.stdin.readline())</p>
+<p>maze = []
+start = end = None</p>
+<p>for i in range(rows):
+    row = list(sys.stdin.readline().strip())
+    maze.append(row)
+    for j in range(cols):
+        if row[j] == 'S':
+            start = (i, j)
+            maze[i][j] = '.'
+        elif row[j] == 'E':
+            end = (i, j)
+            maze[i][j] = '.'</p>
+<p>path = maze_bfs(maze, start, end)</p>
+if path:
+    print(f"找到安全路徑！長度：{len(path)}")
+    print("\n迷宮（標記路徑）：")
+    
+    # 標記路徑
+    for r, c in path:
+        if (r, c) != start and (r, c) != end:
+            maze[r][c] = '*'
+    
+    maze[start[0]][start[1]] = 'S'
+    maze[end[0]][end[1]] = 'E'
+    
+    for row in maze:
+        print(''.join(row))
+else:
+    print("無法找到安全路徑！")
+</code></pre>
+<h3>範例 5：連通分量檢測</h3>
+<pre><code class="language-python">import sys
+from collections import defaultdict
+<p>def find_connected_components(graph, n):
+    """找出圖中的所有連通分量"""
+    visited = set()
+    components = []
+    
+    def dfs(node, component):
+        visited.add(node)
+        component.append(node)
+        
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                dfs(neighbor, component)
+    
+    for node in range(1, n + 1):
+        if node not in visited:
+            component = []
+            dfs(node, component)
+            components.append(sorted(component))
+    
+    return components</p>
+<p># 任務：識別獨立的星系群
+n = int(sys.stdin.readline())  # 太空站數量
+m = int(sys.stdin.readline())  # 航道數量</p>
+<p>graph = defaultdict(list)
+for _ in range(m):
+    a, b = map(int, sys.stdin.readline().strip().split())
+    graph[a].append(b)
+    graph[b].append(a)</p>
+<p>components = find_connected_components(graph, n)</p>
+print(f"發現 {len(components)} 個獨立星系群：\n")
+for i, comp in enumerate(components, 1):
+    print(f"星系群 {i}: {comp}")
+    print(f"  包含 {len(comp)} 個太空站")
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 程式碼解說 -->
+            <section id="explanation" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🔍</span>
+                    <span>程式碼解說</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>關鍵技術點</h3>
+<ol>
+<li><strong>BFS vs DFS 的選擇</strong></li>
+</ol>
+   
+   | 特性 | BFS | DFS |
+   |------|-----|-----|
+   | 數據結構 | 佇列 | 堆疊/遞迴 |
+   | 最短路徑 | ✅ 保證 | ❌ 不保證 |
+   | 記憶體 | 較多 | 較少 |
+   | 適用場景 | 最短路徑 | 路徑存在性 |
+<ol>
+<li><strong>visited 集合的重要性</strong></li>
+</ol>
+   <pre><code class="language-python">   visited = set()  # 防止重複訪問
+   
+   # 在有環的圖中，沒有 visited 會無限循環！
+   </code></pre>
+<ol>
+<li><strong>網格圖的技巧</strong></li>
+</ol>
+   <pre><code class="language-python">   # 四個方向的移動
+   directions = [(-1,0), (1,0), (0,-1), (0,1)]
+   
+   for dr, dc in directions:
+       new_r, new_c = r + dr, c + dc
+       # 檢查邊界
+       if 0 <= new_r < rows and 0 <= new_c < cols:
+           # 處理
+   </code></pre>
+<ol>
+<li><strong>defaultdict 的妙用</strong></li>
+</ol>
+   <pre><code class="language-python">   from collections import defaultdict
+   
+   # 自動創建空列表
+   graph = defaultdict(list)
+   graph[1].append(2)  # 不需要先初始化 graph[1]
+   </code></pre>
+                </div>
+            </section>
+
+            <!-- Quiz -->
+            <section id="quiz" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📝</span>
+                    <span>Quiz: 星際救援任務</span>
+                </h2>
+                <div class="quiz-box glass">
+                    <h3>題目：多目標最短路徑</h3>
+<p>你的太空船在太空站 S，需要救援位於太空站 T1 和 T2 的兩組太空人，然後返回基地 E。</p>
+<p>請找出一條路徑，使得總航道數最少。你可以選擇先救援 T1 或 T2。</p>
+<strong>輸入格式：</strong>
+<ul>
+<li>第一行：N M（太空站數量，航道數量）</li>
+<li>接下來 M 行：每行兩個整數 a b，表示太空站 a 和 b 之間有航道</li>
+<li>最後一行：S T1 T2 E（起點、兩個救援點、終點）</li>
+</ul>
+<strong>輸入範例：</strong>
+<pre><code class="language-python">6 7
+1 2
+1 3
+2 4
+3 4
+4 5
+4 6
+5 6
+1 2 5 6
+</code></pre>
+<strong>輸出範例：</strong>
+<pre><code class="language-python">最佳路徑：1 → 2 → 4 → 5 → 4 → 6
+總航道數：5
+救援順序：
+<ol>
+<li>從起點 1 到救援點 2</li>
+<li>從救援點 2 到救援點 5</li>
+<li>從救援點 5 到終點 6</li>
+</ol>
+</code></pre>
+<h3>💡 提示</h3>
+<ul>
+<li>使用 BFS 計算任意兩點間的最短距離</li>
+<li>比較兩種順序：S→T1→T2→E 和 S→T2→T1→E</li>
+<li>選擇總距離較短的路徑</li>
+</ul>
+<p>---</p>
+                    <button class="show-solution-btn" onclick="toggleSolution()">
+                        💡 查看解答
+                    </button>
+                </div>
+            </section>
+
+            <!-- 解答 -->
+            <section id="solution" class="content-section solution-hidden">
+                <h2 class="section-heading">
+                    <span class="heading-icon">✅</span>
+                    <span>Quiz 解答</span>
+                </h2>
+                <div class="solution-box glass">
+                    <pre><code class="language-python">import sys
+from collections import deque, defaultdict
+<p>def bfs_distance(graph, start, end):
+    """計算從 start 到 end 的最短距離"""
+    if start == end:
+        return 0, [start]
+    
+    queue = deque([(start, [start])])
+    visited = {start}
+    
+    while queue:
+        current, path = queue.popleft()
+        
+        for neighbor in graph[current]:
+            if neighbor in visited:
+                continue
+            
+            new_path = path + [neighbor]
+            
+            if neighbor == end:
+                return len(new_path) - 1, new_path
+            
+            visited.add(neighbor)
+            queue.append((neighbor, new_path))
+    
+    return float('inf'), []</p>
+<p># 讀取輸入
+n, m = map(int, sys.stdin.readline().strip().split())</p>
+<p>graph = defaultdict(list)
+for _ in range(m):
+    a, b = map(int, sys.stdin.readline().strip().split())
+    graph[a].append(b)
+    graph[b].append(a)</p>
+<p>S, T1, T2, E = map(int, sys.stdin.readline().strip().split())</p>
+<p># 計算所有需要的距離
+dist_S_T1, path_S_T1 = bfs_distance(graph, S, T1)
+dist_S_T2, path_S_T2 = bfs_distance(graph, S, T2)
+dist_T1_T2, path_T1_T2 = bfs_distance(graph, T1, T2)
+dist_T2_T1, path_T2_T1 = bfs_distance(graph, T2, T1)
+dist_T1_E, path_T1_E = bfs_distance(graph, T1, E)
+dist_T2_E, path_T2_E = bfs_distance(graph, T2, E)</p>
+<p># 方案 1：S → T1 → T2 → E
+route1_dist = dist_S_T1 + dist_T1_T2 + dist_T2_E
+route1_path = path_S_T1[:-1] + path_T1_T2[:-1] + path_T2_E</p>
+<p># 方案 2：S → T2 → T1 → E
+route2_dist = dist_S_T2 + dist_T2_T1 + dist_T1_E
+route2_path = path_S_T2[:-1] + path_T2_T1[:-1] + path_T1_E</p>
+<p># 選擇較短的路徑
+if route1_dist <= route2_dist:
+    best_path = route1_path
+    best_dist = route1_dist
+    order = [T1, T2]
+else:
+    best_path = route2_path
+    best_dist = route2_dist
+    order = [T2, T1]</p>
+print(f"最佳路徑：{' → '.join(map(str, best_path))}")
+print(f"總航道數：{best_dist}")
+print(f"\n救援順序：")
+print(f"1. 從起點 {S} 到救援點 {order[0]}")
+print(f"2. 從救援點 {order[0]} 到救援點 {order[1]}")
+print(f"3. 從救援點 {order[1]} 到終點 {E}")
+</code></pre>
+<h3>解答說明</h3>
+<ol>
+<li><strong>分段計算</strong></li>
+<li>將問題分解為多個兩點間最短路徑</li>
+<li>使用 BFS 計算每段距離</li>
+</ol>
+<ol>
+<li><strong>比較兩種方案</strong></li>
+</ol>
+   <pre><code class="language-python">   # 方案 1：S → T1 → T2 → E
+   # 方案 2：S → T2 → T1 → E
+   # 選擇總距離較短的
+   </code></pre>
+<ol>
+<li><strong>路徑拼接</strong></li>
+</ol>
+   <pre><code class="language-python">   # 注意：拼接時要去掉中間節點的重複
+   path_S_T1[:-1] + path_T1_T2[:-1] + path_T2_E
+   </code></pre>
+<p>---</p>
+                </div>
+            </section>
+
+            <!-- 完成徽章 -->
+            <div class="completion-badge glass">
+                <div class="badge-content">
+                    <span class="badge-icon">🎉</span>
+                    <h3>訓練完成！</h3>
+                    <p>恭喜你完成 星際網絡與圖論 訓練！</p>
+                </div>
+            </div>
+
+            <!-- 導航按鈕 -->
+            <div class="lesson-navigation">
+                <a href="../L3/C3.html" class="nav-btn prev-btn" >← 上一課</a>
+                <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
+                <a href="../L4/D2.html" class="nav-btn next-btn" >下一課 →</a>
+            </div>
+        </article>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../../scripts/starfield.js"></script>
+    <script src="../../scripts/lesson.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

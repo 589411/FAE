@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C1: 堆疊與佇列系統 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/lesson.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- 導航欄 -->
+    <nav class="lesson-nav glass">
+        <div class="nav-content">
+            <a href="../../index.html" class="back-btn">
+                <span>←</span>
+                <span>返回課程地圖</span>
+            </a>
+            <div class="lesson-progress">
+                <span class="progress-text">L3 - C1</span>
+            </div>
+            <div class="lesson-nav-buttons">
+                <a href="../L2/B3.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="../L3/C2.html" class="nav-btn next-btn" >下一課</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="lesson-container">
+        <!-- 側邊欄目錄 -->
+        <aside class="lesson-sidebar glass">
+            <h3 class="sidebar-title">📋 本課內容</h3>
+            <nav class="sidebar-nav">
+                <a href="#mission" class="sidebar-link active">🚀 任務背景</a>
+                <a href="#knowledge" class="sidebar-link">📚 知識點說明</a>
+                <a href="#examples" class="sidebar-link">💻 範例程式碼</a>
+                <a href="#explanation" class="sidebar-link">🔍 程式碼解說</a>
+                <a href="#quiz" class="sidebar-link">📝 Quiz</a>
+                <a href="#solution" class="sidebar-link">✅ 解答</a>
+            </nav>
+        </aside>
+
+        <!-- 課程內容 -->
+        <article class="lesson-content">
+            <!-- 課程標題 -->
+            <header class="lesson-header">
+                <div class="lesson-badge">
+                    <span class="badge-icon">🚀</span>
+                    <span class="badge-text">L3: 天王星高速電梯</span>
+                </div>
+                <h1 class="lesson-title text-glow">
+                    C1: 天王星貨運系統：堆疊與佇列
+                </h1>
+                <div class="lesson-meta">
+                    <span class="meta-item">⏱️ 預計時間：4-5 小時</span>
+                    <span class="meta-item">🎯 目標級分：4 級分</span>
+                    <span class="meta-item">📊 難度：⭐⭐⭐⭐☆</span>
+                </div>
+            </header>
+
+            <!-- 任務背景 -->
+            <section id="mission" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🚀</span>
+                    <span>任務背景</span>
+                </h2>
+                <div class="content-box glass">
+                    歡迎來到天王星軌道站！這裡是太陽系外圍的重要補給站。你需要管理兩種不同的貨物系統：
+<ul>
+<li><strong>堆疊系統（Stack）</strong>：後進先出（LIFO），像一疊盤子</li>
+<li><strong>佇列系統（Queue）</strong>：先進先出（FIFO），像排隊結帳</li>
+</ul>
+<p>掌握這兩種數據結構是成為高級程式設計師的關鍵！它們是許多進階演算法的基礎。</p>
+                </div>
+            </section>
+
+            <!-- 知識點說明 -->
+            <section id="knowledge" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📚</span>
+                    <span>知識點說明</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>堆疊（Stack）- 後進先出</h3>
+<p>想像一疊盤子：最後放上去的盤子，最先被拿走。</p>
+<pre><code class="language-python">    [3]  ← 最後進入，最先離開
+    [2]
+    [1]  ← 最先進入，最後離開
+   -----
+</code></pre>
+<strong>基本操作：</strong>
+<ul>
+<li><code>push(x)</code>：將元素 x 放到頂部</li>
+<li><code>pop()</code>：移除並返回頂部元素</li>
+<li><code>peek()</code>：查看頂部元素（不移除）</li>
+<li><code>is_empty()</code>：檢查是否為空</li>
+</ul>
+<h3>佇列（Queue）- 先進先出</h3>
+<p>想像排隊：最先排隊的人，最先被服務。</p>
+<pre><code class="language-python">出口 ← [1] [2] [3] ← 入口
+      最先進入    最後進入
+</code></pre>
+<strong>基本操作：</strong>
+<ul>
+<li><code>enqueue(x)</code>：將元素 x 加到隊尾</li>
+<li><code>dequeue()</code>：移除並返回隊首元素</li>
+<li><code>front()</code>：查看隊首元素（不移除）</li>
+<li><code>is_empty()</code>：檢查是否為空</li>
+</ul>
+<h3>Python 實現</h3>
+<strong>堆疊：使用 list</strong>
+<pre><code class="language-python">stack = []
+stack.append(1)  # push
+stack.append(2)
+top = stack.pop()  # pop，返回 2
+</code></pre>
+<strong>佇列：使用 collections.deque</strong>
+<pre><code class="language-python">from collections import deque
+queue = deque()
+queue.append(1)  # enqueue
+queue.append(2)
+first = queue.popleft()  # dequeue，返回 1
+</code></pre>
+<p>⚠️ <strong>重要</strong>：不要用 <code>list.pop(0)</code> 實現佇列！時間複雜度是 O(N)，非常慢！</p>
+                </div>
+            </section>
+
+            <!-- 範例程式碼 -->
+            <section id="examples" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">💻</span>
+                    <span>範例程式碼</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>範例 1：貨櫃堆疊管理</h3>
+<pre><code class="language-python">import sys
+<p># 任務：管理貨櫃堆疊
+stack = []</p>
+<p>n = int(sys.stdin.readline())  # 操作次數</p>
+<p>for _ in range(n):
+    command = sys.stdin.readline().strip().split()
+    
+    if command[0] == "PUSH":
+        container_id = command[1]
+        stack.append(container_id)
+        print(f"✅ 貨櫃 {container_id} 已堆疊")
+        
+    elif command[0] == "POP":
+        if stack:
+            removed = stack.pop()
+            print(f"📦 移除貨櫃 {removed}")
+        else:
+            print("❌ 錯誤：堆疊為空")
+            
+    elif command[0] == "PEEK":
+        if stack:
+            print(f"👀 頂部貨櫃：{stack[-1]}")
+        else:
+            print("❌ 堆疊為空")
+            
+    elif command[0] == "SIZE":
+        print(f"📊 堆疊大小：{len(stack)}")</p>
+print(f"\n最終堆疊：{stack}")
+</code></pre>
+<h3>範例 2：太空船維修佇列</h3>
+<pre><code class="language-python">import sys
+from collections import deque
+<p># 任務：管理太空船維修佇列
+queue = deque()</p>
+<p>n = int(sys.stdin.readline())</p>
+<p>for _ in range(n):
+    command = sys.stdin.readline().strip().split()
+    
+    if command[0] == "ARRIVE":
+        ship_id = command[1]
+        queue.append(ship_id)
+        print(f"🚀 太空船 {ship_id} 加入維修佇列")
+        print(f"   目前排隊：{len(queue)} 艘")
+        
+    elif command[0] == "SERVICE":
+        if queue:
+            serviced = queue.popleft()
+            print(f"🔧 開始維修太空船 {serviced}")
+        else:
+            print("✅ 沒有太空船等待維修")
+            
+    elif command[0] == "NEXT":
+        if queue:
+            print(f"👉 下一艘：{queue[0]}")
+        else:
+            print("❌ 佇列為空")</p>
+print(f"\n等待維修：{list(queue)}")
+</code></pre>
+<h3>範例 3：括號配對檢查（經典堆疊應用）</h3>
+<pre><code class="language-python">import sys
+<p># 任務：檢查括號是否正確配對
+expression = sys.stdin.readline().strip()</p>
+<p>stack = []
+pairs = {'(': ')', '[': ']', '{': '}'}
+valid = True</p>
+<p>for i, char in enumerate(expression):
+    if char in pairs:  # 左括號
+        stack.append(char)
+    elif char in pairs.values():  # 右括號
+        if not stack:
+            print(f"❌ 錯誤：位置 {i} 的 '{char}' 沒有對應的左括號")
+            valid = False
+            break
+        
+        left = stack.pop()
+        if pairs[left] != char:
+            print(f"❌ 錯誤：位置 {i} 的 '{char}' 與 '{left}' 不匹配")
+            valid = False
+            break</p>
+<p>if valid and stack:
+    print(f"❌ 錯誤：還有 {len(stack)} 個左括號未配對")
+    valid = False</p>
+if valid:
+    print("✅ 括號配對正確！")
+</code></pre>
+<h3>範例 4：逆波蘭表示法計算器</h3>
+<pre><code class="language-python">import sys
+<p># 任務：計算逆波蘭表示法（後綴表示法）
+# 例如：3 4 + 5 <em> 表示 (3 + 4) </em> 5 = 35
+tokens = sys.stdin.readline().strip().split()</p>
+<p>stack = []</p>
+<p>for token in tokens:
+    if token in ['+', '-', '*', '/']:
+        # 彈出兩個操作數
+        b = stack.pop()
+        a = stack.pop()
+        
+        # 執行運算
+        if token == '+':
+            result = a + b
+        elif token == '-':
+            result = a - b
+        elif token == '*':
+            result = a * b
+        elif token == '/':
+            result = a // b  # 整數除法
+        
+        stack.append(result)
+        print(f"計算：{a} {token} {b} = {result}")
+    else:
+        # 數字，壓入堆疊
+        stack.append(int(token))
+        print(f"壓入：{token}")</p>
+print(f"\n最終結果：{stack[0]}")
+</code></pre>
+<h3>範例 5：滑動窗口最大值（雙端佇列進階應用）</h3>
+<pre><code class="language-python">import sys
+from collections import deque
+<p># 任務：找出每個大小為 k 的滑動窗口中的最大值
+n = int(sys.stdin.readline())
+k = int(sys.stdin.readline())
+arr = list(map(int, sys.stdin.readline().strip().split()))</p>
+<p># 使用雙端佇列儲存索引
+dq = deque()
+result = []</p>
+<p>for i in range(n):
+    # 移除超出窗口範圍的元素
+    while dq and dq[0] < i - k + 1:
+        dq.popleft()
+    
+    # 移除所有比當前元素小的元素（它們不可能是最大值）
+    while dq and arr[dq[-1]] < arr[i]:
+        dq.pop()
+    
+    # 加入當前元素的索引
+    dq.append(i)
+    
+    # 當窗口形成後，記錄最大值
+    if i >= k - 1:
+        result.append(arr[dq[0]])</p>
+print(f"陣列：{arr}")
+print(f"窗口大小：{k}")
+print(f"每個窗口的最大值：{result}")
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 程式碼解說 -->
+            <section id="explanation" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🔍</span>
+                    <span>程式碼解說</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>關鍵技術點</h3>
+<ol>
+<li><strong>為什麼佇列要用 deque？</strong></li>
+</ol>
+   
+   | 操作 | list | deque |
+   |------|------|-------|
+   | 尾部添加 | O(1) | O(1) |
+   | 尾部移除 | O(1) | O(1) |
+   | 頭部添加 | O(N) | O(1) |
+   | 頭部移除 | O(N) | O(1) |
+   
+   使用 <code>list.pop(0)</code> 會導致所有元素向前移動，非常慢！
+<ol>
+<li><strong>括號配對的邏輯</strong></li>
+</ol>
+   <pre><code class="language-python">   # 遇到左括號：壓入堆疊
+   if char in '([{':
+       stack.append(char)
+   
+   # 遇到右括號：檢查是否匹配
+   if char in ')]}':
+       if stack and matches(stack[-1], char):
+           stack.pop()
+       else:
+           return False  # 不匹配
+   </code></pre>
+<ol>
+<li><strong>逆波蘭表示法的優勢</strong></li>
+<li>不需要括號</li>
+<li>計算機容易處理</li>
+<li>使用堆疊即可計算</li>
+</ol>
+   
+   <pre><code class="language-python">   中綴：(3 + 4) * 5
+   後綴：3 4 + 5 *
+   
+   計算過程：
+   3 → [3]
+   4 → [3, 4]
+   + → [7]        (彈出 3,4，計算 3+4，壓入 7)
+   5 → [7, 5]
+   <em> → [35]       (彈出 7,5，計算 7</em>5，壓入 35)
+   </code></pre>
+<ol>
+<li><strong>堆疊與遞迴的關係</strong></li>
+<li>遞迴本質上使用系統的「呼叫堆疊」</li>
+<li>可以用顯式堆疊模擬遞迴</li>
+<li>避免 Python 的遞迴深度限制</li>
+</ul>
+                </div>
+            </section>
+
+            <!-- Quiz -->
+            <section id="quiz" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📝</span>
+                    <span>Quiz: 太空電梯調度系統</span>
+                </h2>
+                <div class="quiz-box glass">
+                    <h3>題目：電梯請求處理</h3>
+天王星軌道站有一個智能電梯系統。電梯接收兩種請求：
+<ul>
+<li><code>UP X</code>：有人在第 X 層要上樓</li>
+<li><code>DOWN X</code>：有人在第 X 層要下樓</li>
+</ul>
+電梯使用以下策略：
+<ol>
+<li>先處理所有上樓請求（從低樓層到高樓層）</li>
+<li>再處理所有下樓請求（從高樓層到低樓層）</li>
+</ul>
+<p>請模擬電梯的運行過程。</p>
+<strong>輸入格式：</strong>
+<ul>
+<li>第一行：整數 N（請求數量，1 ≤ N ≤ 100）</li>
+<li>接下來 N 行：每行一個請求，格式為 "UP X" 或 "DOWN X"</li>
+</ul>
+<strong>輸入範例：</strong>
+<pre><code class="language-python">6
+UP 3
+DOWN 5
+UP 7
+DOWN 2
+UP 1
+DOWN 8
+</code></pre>
+<strong>輸出範例：</strong>
+<pre><code class="language-python">處理上樓請求：
+樓層 1
+樓層 3
+樓層 7
+<p>處理下樓請求：
+樓層 8
+樓層 5
+樓層 2</p>
+總共服務：6 個請求
+</code></pre>
+<h3>💡 提示</h3>
+<ul>
+<li>使用兩個列表分別儲存上樓和下樓請求</li>
+<li>對列表進行排序</li>
+<li>上樓請求升序，下樓請求降序</li>
+</ul>
+<p>---</p>
+                    <button class="show-solution-btn" onclick="toggleSolution()">
+                        💡 查看解答
+                    </button>
+                </div>
+            </section>
+
+            <!-- 解答 -->
+            <section id="solution" class="content-section solution-hidden">
+                <h2 class="section-heading">
+                    <span class="heading-icon">✅</span>
+                    <span>Quiz 解答</span>
+                </h2>
+                <div class="solution-box glass">
+                    <pre><code class="language-python">import sys
+<p># 讀取請求數量
+n = int(sys.stdin.readline())</p>
+<p># 分別儲存上樓和下樓請求
+up_requests = []
+down_requests = []</p>
+<p># 讀取所有請求
+for _ in range(n):
+    request = sys.stdin.readline().strip().split()
+    direction = request[0]
+    floor = int(request[1])
+    
+    if direction == "UP":
+        up_requests.append(floor)
+    else:  # DOWN
+        down_requests.append(floor)</p>
+<p># 排序
+up_requests.sort()  # 升序：從低到高
+down_requests.sort(reverse=True)  # 降序：從高到低</p>
+<p># 處理上樓請求
+print("處理上樓請求：")
+for floor in up_requests:
+    print(f"樓層 {floor}")</p>
+<p>if up_requests:
+    print()</p>
+<p># 處理下樓請求
+print("處理下樓請求：")
+for floor in down_requests:
+    print(f"樓層 {floor}")</p>
+print(f"\n總共服務：{len(up_requests) + len(down_requests)} 個請求")
+</code></pre>
+<h3>解答說明</h3>
+<ol>
+<li><strong>分類儲存</strong></li>
+</ol>
+   <pre><code class="language-python">   if direction == "UP":
+       up_requests.append(floor)
+   else:
+       down_requests.append(floor)
+   </code></pre>
+   將請求分成兩類，方便後續處理
+<ol>
+<li><strong>排序策略</strong></li>
+</ol>
+   <pre><code class="language-python">   up_requests.sort()  # [1, 3, 7]
+   down_requests.sort(reverse=True)  # [8, 5, 2]
+   </code></pre>
+<ul>
+<li>上樓：從低到高，符合電梯上升邏輯</li>
+<li>下樓：從高到低，符合電梯下降邏輯</li>
+</ul>
+<ol>
+<li><strong>為什麼不用堆疊或佇列？</strong></li>
+<li>這題需要「排序」後處理</li>
+<li>堆疊和佇列適合「順序」處理</li>
+<li>使用列表 + 排序更合適</li>
+</ul>
+<h3>進階版本：使用優先佇列</h3>
+<pre><code class="language-python">import heapq
+<p># 最小堆（用於上樓請求）
+up_heap = []
+# 最大堆（用於下樓請求，使用負數模擬）
+down_heap = []</p>
+<p>for _ in range(n):
+    request = sys.stdin.readline().strip().split()
+    direction = request[0]
+    floor = int(request[1])
+    
+    if direction == "UP":
+        heapq.heappush(up_heap, floor)
+    else:
+        heapq.heappush(down_heap, -floor)  # 負數實現最大堆</p>
+<p>print("處理上樓請求：")
+while up_heap:
+    floor = heapq.heappop(up_heap)
+    print(f"樓層 {floor}")</p>
+print("\n處理下樓請求：")
+while down_heap:
+    floor = -heapq.heappop(down_heap)  # 轉回正數
+    print(f"樓層 {floor}")
+</code></pre>
+<p>---</p>
+                </div>
+            </section>
+
+            <!-- 完成徽章 -->
+            <div class="completion-badge glass">
+                <div class="badge-content">
+                    <span class="badge-icon">🎉</span>
+                    <h3>訓練完成！</h3>
+                    <p>恭喜你完成 堆疊與佇列系統 訓練！</p>
+                </div>
+            </div>
+
+            <!-- 導航按鈕 -->
+            <div class="lesson-navigation">
+                <a href="../L2/B3.html" class="nav-btn prev-btn" >← 上一課</a>
+                <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
+                <a href="../L3/C2.html" class="nav-btn next-btn" >下一課 →</a>
+            </div>
+        </article>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../../scripts/starfield.js"></script>
+    <script src="../../scripts/lesson.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

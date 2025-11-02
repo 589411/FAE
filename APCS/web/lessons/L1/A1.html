@@ -21,11 +21,11 @@
                 <span>返回課程地圖</span>
             </a>
             <div class="lesson-progress">
-                <span class="progress-text">Level 1 - A1</span>
+                <span class="progress-text">L1 - A1</span>
             </div>
             <div class="lesson-nav-buttons">
-                <a href="#" class="nav-btn prev-btn" style="opacity: 0.5; pointer-events: none;">上一課</a>
-                <a href="A2.html" class="nav-btn next-btn">下一課</a>
+                <a href="" class="nav-btn prev-btn" style="opacity: 0.5; pointer-events: none;">上一課</a>
+                <a href="../L1/A2.html" class="nav-btn next-btn" >下一課</a>
             </div>
         </div>
     </nav>
@@ -51,7 +51,7 @@
             <header class="lesson-header">
                 <div class="lesson-badge">
                     <span class="badge-icon">🌙</span>
-                    <span class="badge-text">Level 1: 月球基地訓練</span>
+                    <span class="badge-text">L1: 月球基地訓練</span>
                 </div>
                 <h1 class="lesson-title text-glow">
                     A1: 月球基地通訊系統：高速 I/O 訓練
@@ -71,15 +71,12 @@
                 </h2>
                 <div class="content-box glass">
                     <p>歡迎來到月球基地！你是太空探險預備隊的一員，正在接受基礎訓練。在太空中，通訊延遲可能致命，因此我們的通訊系統必須以最高效率運作。你的第一個任務是學習如何使用高速通訊協議與地球指揮中心進行數據傳輸。</p>
-                    
-                    <div class="mission-objectives">
-                        <h3>🎯 學習目標</h3>
-                        <ul>
-                            <li>如何接收來自地球的指令（標準輸入）</li>
-                            <li>如何快速回傳任務數據（標準輸出）</li>
-                            <li>為什麼傳統的通訊方式在大量數據傳輸時會失敗</li>
-                        </ul>
-                    </div>
+在這個訓練模組中，你將學習：
+<ul>
+<li>如何接收來自地球的指令（標準輸入）</li>
+<li>如何快速回傳任務數據（標準輸出）</li>
+<li>為什麼傳統的通訊方式在大量數據傳輸時會失敗</li>
+</ul>
                 </div>
             </section>
 
@@ -89,27 +86,20 @@
                     <span class="heading-icon">📚</span>
                     <span>知識點說明</span>
                 </h2>
-                
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">為什麼需要高速 I/O？</h3>
-                    <p>想像你正在月球基地接收來自地球的 100 萬筆感測器數據。如果使用慢速通訊協議，可能需要數小時才能完成傳輸。但在太空任務中，時間就是生命！</p>
-                    
-                    <div class="comparison-box">
-                        <div class="comparison-item danger">
-                            <h4>❌ 慢速路徑（危險）</h4>
-                            <pre><code class="language-python"># 使用 input() - 適合小型任務，但大量數據時會超時
-data = input()</code></pre>
-                            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">⚠️ 在處理大量數據時可能超時</p>
-                        </div>
-                        
-                        <div class="comparison-item success">
-                            <h4>✅ 高速路徑（專業）</h4>
-                            <pre><code class="language-python">import sys
+                <div class="content-box glass">
+                    <h3>為什麼需要高速 I/O？</h3>
+<p>想像你正在月球基地接收來自地球的 100 萬筆感測器數據。如果使用慢速通訊協議，可能需要數小時才能完成傳輸。但在太空任務中，時間就是生命！</p>
+<strong>慢速路徑（危險⚠️）：</strong>
+<pre><code class="language-python"># 使用 input() - 適合小型任務，但大量數據時會超時
+data = input()
+</code></pre>
+<strong>高速路徑（專業✅）：</strong>
+<pre><code class="language-python">import sys
 # 使用 sys.stdin.readline() - 專業太空人的選擇
-data = sys.stdin.readline()</code></pre>
-                            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">✨ 速度是 input() 的數倍</p>
-                        </div>
-                    </div>
+data = sys.stdin.readline()
+</code></pre>
+<h3>通訊協議模板</h3>
+<p>作為太空探險隊員，你需要熟記以下通訊模板：</p>
                 </div>
             </section>
 
@@ -119,90 +109,35 @@ data = sys.stdin.readline()</code></pre>
                     <span class="heading-icon">💻</span>
                     <span>範例程式碼</span>
                 </h2>
-                
-                <!-- 範例 1 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 1：接收單一指令</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
+                <div class="content-box glass">
+                    <h3>範例 1：接收單一指令</h3>
+<pre><code class="language-python">import sys
 # 任務：接收地球發來的火箭發射倒數秒數
-countdown = int(sys.stdin.readline())  # ⚡ 使用高速 I/O 讀取
-print(f"火箭將在 {countdown} 秒後發射！")  # ✅ 格式化輸出</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸入範例：</h4>
-                            <pre><code>10</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>火箭將在 10 秒後發射！</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 範例 2 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 2：接收多筆感測器數據</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：接收一行包含多個溫度讀數的數據
+countdown = int(sys.stdin.readline())
+print(f"火箭將在 {countdown} 秒後發射！")
+</code></pre>
+<h3>範例 2：接收多筆感測器數據</h3>
+<pre><code class="language-python">import sys
+<p># 任務：接收一行包含多個溫度讀數的數據
 # 輸入格式：5 個用空格分隔的溫度值
-# 範例輸入：-120 -85 20 15 -100
-
-temperatures = list(map(int, sys.stdin.readline().strip().split()))  # ⚡ 讀取並解析數據
+# 範例輸入：-120 -85 20 15 -100</p>
+temperatures = list(map(int, sys.stdin.readline().strip().split()))
 print(f"收到 {len(temperatures)} 筆溫度數據")
-print(f"最低溫度：{min(temperatures)}°C")  # ✅ 使用內建函數
-print(f"最高溫度：{max(temperatures)}°C")  # ✅ 使用內建函數</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸入範例：</h4>
-                            <pre><code>-120 -85 20 15 -100</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>收到 5 筆溫度數據
-最低溫度：-120°C
-最高溫度：20°C</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 範例 3 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 3：高速輸出任務報告</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys
-
-# 任務：快速輸出多行任務狀態報告
+print(f"最低溫度：{min(temperatures)}°C")
+print(f"最高溫度：{max(temperatures)}°C")
+</code></pre>
+<h3>範例 3：高速輸出任務報告</h3>
+<pre><code class="language-python">import sys
+<p># 任務：快速輸出多行任務狀態報告
 mission_status = [
     "引擎系統：正常",
     "生命維持系統：正常",
     "通訊系統：正常",
     "導航系統：正常"
-]
-
+]</p>
 for status in mission_status:
-    sys.stdout.write(status + '\n')</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>引擎系統：正常
-生命維持系統：正常
-通訊系統：正常
-導航系統：正常</code></pre>
-                        </div>
-                    </div>
+    sys.stdout.write(status + '\n')
+</code></pre>
                 </div>
             </section>
 
@@ -212,48 +147,31 @@ for status in mission_status:
                     <span class="heading-icon">🔍</span>
                     <span>程式碼解說</span>
                 </h2>
-                
-                <div class="explanation-box glass">
+                <div class="content-box glass">
                     <h3>關鍵技術點</h3>
-                    
-                    <div class="tech-point">
-                        <h4>1. sys.stdin.readline()</h4>
-                        <ul>
-                            <li>直接從輸入緩衝區讀取，速度是 <code>input()</code> 的數倍</li>
-                            <li>會包含行末的換行符號 <code>\n</code>，需要用 <code>.strip()</code> 移除</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>2. strip()</h4>
-                        <ul>
-                            <li>移除字串前後的空白字元（包括空格、換行符號）</li>
-                            <li>確保數據乾淨，避免解析錯誤</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>3. split()</h4>
-                        <ul>
-                            <li>將字串按空格分割成列表</li>
-                            <li>例如："1 2 3" → ["1", "2", "3"]</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>4. map(int, ...)</h4>
-                        <ul>
-                            <li>將列表中的每個字串元素轉換為整數</li>
-                            <li>配合 <code>list()</code> 轉換為列表</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>📊 數據流程圖</h4>
-                        <div style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 10px; margin-top: 1rem; font-family: 'Fira Code', monospace; font-size: 0.9rem; overflow-x: auto;">
-                            <pre style="margin: 0; background: none; padding: 0; border: none;">地球指令 → sys.stdin → readline() → strip() → split() → map(int) → list() → 處理</pre>
-                        </div>
-                    </div>
+<ol>
+<li><strong><code>sys.stdin.readline()</code></strong></li>
+<li>直接從輸入緩衝區讀取，速度是 <code>input()</code> 的數倍</li>
+<li>會包含行末的換行符號 <code>\n</code>，需要用 <code>.strip()</code> 移除</li>
+</ol>
+<ol>
+<li><strong><code>strip()</code></strong></li>
+<li>移除字串前後的空白字元（包括空格、換行符號）</li>
+<li>確保數據乾淨，避免解析錯誤</li>
+</ol>
+<ol>
+<li><strong><code>split()</code></strong></li>
+<li>將字串按空格分割成列表</li>
+<li>例如："1 2 3" → ["1", "2", "3"]</li>
+</ol>
+<ol>
+<li><strong><code>map(int, ...)</code></strong></li>
+<li>將列表中的每個字串元素轉換為整數</li>
+<li>配合 <code>list()</code> 轉換為列表</li>
+</ol>
+<h3>數據流程圖</h3>
+<pre><code class="language-python">地球指令 → sys.stdin → readline() → strip() → split() → map(int) → list() → 處理
+</code></pre>
                 </div>
             </section>
 
@@ -261,47 +179,38 @@ for status in mission_status:
             <section id="quiz" class="content-section">
                 <h2 class="section-heading">
                     <span class="heading-icon">📝</span>
-                    <span>Quiz：月球基地通訊測試</span>
+                    <span>Quiz: 月球基地通訊測試</span>
                 </h2>
-                
                 <div class="quiz-box glass">
                     <h3>題目：氧氣補給計算</h3>
-                    <p>月球基地收到一批氧氣補給資料。第一行是補給次數 N，接下來 N 行每行包含一個整數，代表該次補給的氧氣量（公升）。請計算：</p>
-                    <ol>
-                        <li>總補給量</li>
-                        <li>平均每次補給量（四捨五入到整數）</li>
-                        <li>最大單次補給量</li>
-                    </ol>
-                    
-                    <div class="quiz-io">
-                        <div class="io-box">
-                            <h4>輸入範例：</h4>
-                            <pre><code>5
+月球基地收到一批氧氣補給資料。第一行是補給次數 N，接下來 N 行每行包含一個整數，代表該次補給的氧氣量（公升）。請計算：
+<ol>
+<li>總補給量</li>
+<li>平均每次補給量（四捨五入到整數）</li>
+<li>最大單次補給量</li>
+</ol>
+<strong>輸入範例：</strong>
+<pre><code class="language-python">5
 150
 200
 180
 220
-190</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>總補給量：940 公升
+190
+</code></pre>
+<strong>輸出範例：</strong>
+<pre><code class="language-python">總補給量：940 公升
 平均補給量：188 公升
-最大補給量：220 公升</code></pre>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 217, 255, 0.05); border-left: 4px solid var(--energy-cyan); border-radius: 8px;">
-                        <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">💡 提示</h4>
-                        <ul style="margin-left: 1.5rem;">
-                            <li>使用 <code>sys.stdin.readline()</code> 讀取每一行</li>
-                            <li>使用 <code>sum()</code> 計算總和</li>
-                            <li>使用 <code>round()</code> 進行四捨五入</li>
-                        </ul>
-                    </div>
-                    
+最大補給量：220 公升
+</code></pre>
+<h3>💡 提示</h3>
+<ul>
+<li>使用 <code>sys.stdin.readline()</code> 讀取每一行</li>
+<li>使用 <code>sum()</code> 計算總和</li>
+<li>使用 <code>round()</code> 進行四捨五入</li>
+</ul>
+<p>---</p>
                     <button class="show-solution-btn" onclick="toggleSolution()">
-                        💡 顯示解答
+                        💡 查看解答
                     </button>
                 </div>
             </section>
@@ -312,54 +221,42 @@ for status in mission_status:
                     <span class="heading-icon">✅</span>
                     <span>Quiz 解答</span>
                 </h2>
-                
                 <div class="solution-box glass">
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 讀取補給次數
-n = int(sys.stdin.readline())  # ⚡ 讀取第一行
-
-# 讀取所有補給數據
-supplies = []  # ⚠️ 建立空列表儲存數據
-for i in range(n):  # ⚡ 迴圈讀取 N 次
+                    <pre><code class="language-python">import sys
+<p># 讀取補給次數
+n = int(sys.stdin.readline())</p>
+<p># 讀取所有補給數據
+supplies = []
+for i in range(n):
     amount = int(sys.stdin.readline())
-    supplies.append(amount)
-
-# 計算統計數據
-total = sum(supplies)  # ✅ 使用 sum() 計算總和
-average = round(total / n)  # ✅ 使用 round() 四捨五入
-maximum = max(supplies)  # ✅ 使用 max() 找最大值
-
+    supplies.append(amount)</p>
+<p># 計算統計數據
+total = sum(supplies)
+average = round(total / n)
+maximum = max(supplies)</p>
 # 輸出結果
 print(f"總補給量：{total} 公升")
 print(f"平均補給量：{average} 公升")
-print(f"最大補給量：{maximum} 公升")</code></pre>
-                    
-                    <div class="solution-explanation">
-                        <h3>解答說明</h3>
-                        <ol>
-                            <li><strong>讀取次數</strong>：先讀取 N，知道要處理多少筆數據</li>
-                            <li><strong>迴圈讀取</strong>：使用 <code>for</code> 迴圈逐行讀取每次補給量</li>
-                            <li><strong>累積數據</strong>：將每次讀取的數據 <code>append</code> 到列表中</li>
-                            <li><strong>統計計算</strong>：
-                                <ul>
-                                    <li><code>sum(supplies)</code>：計算總和</li>
-                                    <li><code>round(total / n)</code>：計算平均值並四捨五入</li>
-                                    <li><code>max(supplies)</code>：找出最大值</li>
-                                </ul>
-                            </li>
-                            <li><strong>格式化輸出</strong>：使用 f-string 讓輸出更清晰易讀</li>
-                        </ol>
-                        
-                        <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.3); border-radius: 10px;">
-                            <h4 style="color: var(--success-green); margin-bottom: 1rem;">📊 效能分析</h4>
-                            <ul>
-                                <li><strong>時間複雜度</strong>：O(N) - 需要讀取 N 筆數據</li>
-                                <li><strong>空間複雜度</strong>：O(N) - 需要儲存 N 筆數據</li>
-                                <li><strong>I/O 效率</strong>：使用 <code>sys.stdin.readline()</code>，即使 N = 100,000 也能快速完成</li>
-                            </ul>
-                        </div>
-                    </div>
+print(f"最大補給量：{maximum} 公升")
+</code></pre>
+<h3>解答說明</h3>
+<ol>
+<li><strong>讀取次數</strong>：先讀取 N，知道要處理多少筆數據</li>
+<li><strong>迴圈讀取</strong>：使用 <code>for</code> 迴圈逐行讀取每次補給量</li>
+<li><strong>累積數據</strong>：將每次讀取的數據 <code>append</code> 到列表中</li>
+<li><strong>統計計算</strong>：</li>
+<li><code>sum(supplies)</code>：計算總和</li>
+<li><code>round(total / n)</code>：計算平均值並四捨五入</li>
+<li><code>max(supplies)</code>：找出最大值</li>
+<li><strong>格式化輸出</strong>：使用 f-string 讓輸出更清晰易讀</li>
+</ol>
+<h3>效能分析</h3>
+<ul>
+<li>時間複雜度：O(N) - 需要讀取 N 筆數據</li>
+<li>空間複雜度：O(N) - 需要儲存 N 筆數據</li>
+<li>I/O 效率：使用 <code>sys.stdin.readline()</code>，即使 N = 100,000 也能快速完成</li>
+</ul>
+<p>---</p>
                 </div>
             </section>
 
@@ -368,34 +265,15 @@ print(f"最大補給量：{maximum} 公升")</code></pre>
                 <div class="badge-content">
                     <span class="badge-icon">🎉</span>
                     <h3>訓練完成！</h3>
-                    <p>恭喜你完成月球基地通訊系統訓練！你現在已經掌握：</p>
-                    <div class="completion-skills">
-                        <span class="skill-tag">✅ 高速 I/O</span>
-                        <span class="skill-tag">✅ sys.stdin.readline()</span>
-                        <span class="skill-tag">✅ 數據解析</span>
-                        <span class="skill-tag">✅ 統計計算</span>
-                    </div>
-                    <p style="margin-top: 1.5rem; font-size: 1.1rem; color: var(--energy-cyan);">
-                        <strong>下一站：邏輯控制訓練 - 學習如何在複雜的太空環境中做出正確決策！</strong>
-                    </p>
+                    <p>恭喜你完成 通訊系統與高速 I/O 訓練！</p>
                 </div>
-            </div>
-
-            <!-- APCS 對應 -->
-            <div class="content-box glass" style="margin-top: 2rem;">
-                <h3 style="color: var(--energy-cyan); margin-bottom: 1rem;">🔗 APCS 對應能力</h3>
-                <ul>
-                    <li><strong>級分目標</strong>：1-2 級分</li>
-                    <li><strong>評量項目</strong>：輸入與輸出、算術運算</li>
-                    <li><strong>對應題型</strong>：i399 (數字遊戲)、o076 (特技表演)</li>
-                </ul>
             </div>
 
             <!-- 導航按鈕 -->
             <div class="lesson-navigation">
-                <a href="#" class="nav-btn prev-btn" style="opacity: 0.5; pointer-events: none;">← 上一課</a>
+                <a href="" class="nav-btn prev-btn" style="opacity: 0.5; pointer-events: none;">← 上一課</a>
                 <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
-                <a href="A2.html" class="nav-btn next-btn">下一課 →</a>
+                <a href="../L1/A2.html" class="nav-btn next-btn" >下一課 →</a>
             </div>
         </article>
     </main>

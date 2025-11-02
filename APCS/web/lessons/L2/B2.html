@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B1: 加密通訊與字串處理 | APCS 太空探險課程</title>
+    <title>B2: 土星環模擬與二維陣列 | APCS 太空探險課程</title>
     <link rel="stylesheet" href="../../styles/main.css">
     <link rel="stylesheet" href="../../styles/lesson.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
 </head>
-<body data-course-id="B2">
+<body>
     <!-- 星空背景 -->
     <canvas id="starfield" class="starfield"></canvas>
     
@@ -21,11 +21,11 @@
                 <span>返回課程地圖</span>
             </a>
             <div class="lesson-progress">
-                <span class="progress-text">Level 2 - B1</span>
+                <span class="progress-text">L2 - B2</span>
             </div>
             <div class="lesson-nav-buttons">
-                <a href="../L1/A3.html" class="nav-btn prev-btn">上一課</a>
-                <a href="B2.html" class="nav-btn next-btn">下一課</a>
+                <a href="../L2/B1.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="../L2/B3.html" class="nav-btn next-btn" >下一課</a>
             </div>
         </div>
     </nav>
@@ -51,13 +51,13 @@
             <header class="lesson-header">
                 <div class="lesson-badge">
                     <span class="badge-icon">🪐</span>
-                    <span class="badge-text">Level 2: 木星軌道站</span>
+                    <span class="badge-text">L2: 木星軌道站</span>
                 </div>
                 <h1 class="lesson-title text-glow">
-                    B1: 木星加密通訊：進階字串與字元操作
+                    B2: 土星環模擬：二維陣列與矩陣操作
                 </h1>
                 <div class="lesson-meta">
-                    <span class="meta-item">⏱️ 預計時間：2-3 小時</span>
+                    <span class="meta-item">⏱️ 預計時間：4-5 小時</span>
                     <span class="meta-item">🎯 目標級分：3 級分</span>
                     <span class="meta-item">📊 難度：⭐⭐⭐☆☆</span>
                 </div>
@@ -70,17 +70,14 @@
                     <span>任務背景</span>
                 </h2>
                 <div class="content-box glass">
-                    <p>歡迎來到木星軌道站！由於距離地球超過 6 億公里，通訊延遲長達 40 分鐘。為了確保通訊安全，所有訊息都必須經過加密處理。作為通訊官，你需要掌握字串處理和字元編碼技術。</p>
-                    
-                    <div class="mission-objectives">
-                        <h3>🎯 學習目標</h3>
-                        <ul>
-                            <li>字串的不可變性及其影響</li>
-                            <li>字元與數字的轉換（ASCII/Unicode）</li>
-                            <li>高效的字串操作方法</li>
-                            <li>字串格式化技巧</li>
-                        </ul>
-                    </div>
+                    <p>你的探險隊正在接近土星！為了安全穿越土星環，需要建立一個三維空間模擬系統。土星環可以用二維網格表示，每個格子記錄該區域的冰晶密度。你需要學會處理這種「表格式」的數據結構。</p>
+在這個訓練模組中，你將學習：
+<ul>
+<li>二維陣列（矩陣）的創建與操作</li>
+<li>前綴和技巧：快速計算區域總和</li>
+<li>差分陣列：高效處理區間更新</li>
+<li>矩陣遍歷的各種模式</li>
+</ul>
                 </div>
             </section>
 
@@ -90,86 +87,43 @@
                     <span class="heading-icon">📚</span>
                     <span>知識點說明</span>
                 </h2>
-                
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">字串的不可變性（Immutability）</h3>
-                    <p style="color: var(--warning-amber); font-weight: bold;">⚠️ 核心概念：Python 中的字串是不可變的！</p>
-                    <pre><code class="language-python">message = "HELLO"  # 🔑 創建字串
-# message[0] = "J"  # ❌ 錯誤！無法修改字串
-
-# ✅ 正確：創建新字串
-message = "J" + message[1:]  # "JELLO"</code></pre>
-                    <p style="margin-top: 1rem;">這意味著每次「修改」字串，實際上都是創建一個新的字串物件。</p>
-                </div>
-
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">字元編碼：ord() 和 chr()</h3>
-                    <p>每個字元都有一個對應的數字編碼：</p>
-                    <pre><code class="language-python"># 🔑 字元 → 數字
-print(ord('A'))  # 65
-print(ord('Z'))  # 90
-print(ord('a'))  # 97
-
-# ⚡ 數字 → 字元
-print(chr(65))   # 'A'
-print(chr(90))   # 'Z'</code></pre>
-                </div>
-
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">常用字串方法</h3>
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
-                        <thead>
-                            <tr style="background: rgba(0, 217, 255, 0.1);">
-                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">方法</th>
-                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">功能</th>
-                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">範例</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>split()</code></td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">分割字串</td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>"a b c".split()</code> → <code>['a', 'b', 'c']</code></td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>join()</code></td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">連接字串</td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>"-".join(['a','b'])</code> → <code>"a-b"</code></td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>strip()</code></td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">移除空白</td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>" hi ".strip()</code> → <code>"hi"</code></td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>replace()</code></td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">替換子串</td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>"cat".replace('c','b')</code> → <code>"bat"</code></td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>upper()</code></td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">轉大寫</td>
-                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>"hello".upper()</code> → <code>"HELLO"</code></td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.75rem;"><code>lower()</code></td>
-                                <td style="padding: 0.75rem;">轉小寫</td>
-                                <td style="padding: 0.75rem;"><code>"HELLO".lower()</code> → <code>"hello"</code></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">字串切片（Slicing）</h3>
-                    <pre><code class="language-python">text = "JUPITER"  # 🔑 字串範例
-#       0123456
-
-print(text[0:3])    # ⚡ "JUP" (索引 0,1,2)
-print(text[2:])     # "PITER" (從索引 2 到結尾)
-print(text[:4])     # "JUPI" (從開頭到索引 3)
-print(text[::2])    # ✅ "JPTE" (每隔一個字元)
-print(text[::-1])   # ⚠️ "RETIPUJ" (反轉字串)</code></pre>
+                <div class="content-box glass">
+                    <h3>什麼是二維陣列？</h3>
+<p>二維陣列就像一個表格或棋盤，有行（row）和列（column）：</p>
+<pre><code class="language-python">    列0  列1  列2  列3
+行0  5    8    2    9
+行1  3    7    1    4
+行2  6    2    8    5
+</code></pre>
+<h3>創建二維陣列</h3>
+<pre><code class="language-python"># ✅ 正確方法：每行都是獨立的列表
+matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+# ❌ 錯誤方法：所有行都指向同一個列表！
+matrix_wrong = [[0] <em> cols] </em> rows  # 危險！
+</code></pre>
+<strong>為什麼錯誤方法危險？</strong>
+<pre><code class="language-python">matrix = [[0] <em> 3] </em> 2
+matrix[0][0] = 5
+print(matrix)  # [[5, 0, 0], [5, 0, 0]] - 兩行都被修改了！
+</code></pre>
+<h3>前綴和（Prefix Sum）</h3>
+<p>前綴和是一種「空間換時間」的技巧，可以在 O(1) 時間內計算任意區間的總和。</p>
+<strong>一維前綴和：</strong>
+<pre><code class="language-python">arr = [1, 2, 3, 4, 5]
+# 前綴和：[0, 1, 3, 6, 10, 15]
+# prefix[i] = arr[0] + arr[1] + ... + arr[i-1]
+# 計算 arr[1:4] 的總和
+sum_1_to_3 = prefix[4] - prefix[1]  # 9
+</code></pre>
+<h3>差分陣列（Difference Array）</h3>
+<p>差分陣列用於高效處理「區間增減」操作：</p>
+<pre><code class="language-python"># 對區間 [L, R] 的所有元素 +x
+diff[L] += x
+diff[R+1] -= x
+# 最後還原陣列
+for i in range(1, n):
+    arr[i] = arr[i-1] + diff[i]
+</code></pre>
                 </div>
             </section>
 
@@ -179,159 +133,156 @@ print(text[::-1])   # ⚠️ "RETIPUJ" (反轉字串)</code></pre>
                     <span class="heading-icon">💻</span>
                     <span>範例程式碼</span>
                 </h2>
-                
-                                <!-- 範例 1 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 1：凱薩密碼加密系統</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：使用凱薩密碼加密訊息（字母位移）
-message = sys.stdin.readline().strip()  # ⚡ 讀取訊息
-shift = int(sys.stdin.readline())  # ⚡ 讀取位移量
-
-encrypted = ""  # ⚠️ 建立空字串儲存加密結果
-for char in message:
-    if char.isupper():  # ✅ 大寫字母
-        # 將字母轉為 0-25，位移後再轉回字母
-        new_pos = (ord(char) - ord('A') + shift) % 26  # 🔑 取模確保循環
-        encrypted += chr(ord('A') + new_pos)
-    elif char.islower():  # 小寫字母
-        new_pos = (ord(char) - ord('a') + shift) % 26
-        encrypted += chr(ord('a') + new_pos)
-    else:
-        encrypted += char  # 非字母字元保持不變
-
-print(f"原始訊息：{message}")
-print(f"加密訊息：{encrypted}")</code></pre>
-                </div>
-
-                <!-- 範例 2 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 2：訊息解析器</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：解析太空船狀態報告
-# 格式："SHIP-001:FUEL-75:OXYGEN-90:SPEED-25000"
-report = sys.stdin.readline().strip()
-
-# 分割報告
-parts = report.split(':')  # ⚡ 使用 : 分割
-
-# 解析每個部分
-ship_id = parts[0].split('-')[1]  # 🔑 二次分割取得數值
-fuel = int(parts[1].split('-')[1])
-oxygen = int(parts[2].split('-')[1])
-speed = int(parts[3].split('-')[1])
-
-print(f"太空船編號：{ship_id}")
-print(f"燃料：{fuel}%")
-print(f"氧氣：{oxygen}%")
-print(f"速度：{speed} km/h")
-
-# 狀態判斷
-if fuel < 30 or oxygen < 30:  # ⚠️ 資源不足警告
-    print("⚠️ 警告：資源不足！")
-else:
-    print("✅ 系統正常")</code></pre>
-                </div>
-
-                <!-- 範例 3 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 3：高效字串拼接</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：生成太空站日誌報告
+                <div class="content-box glass">
+                    <h3>範例 1：土星環密度地圖</h3>
+<pre><code class="language-python">import sys
+<p># 任務：創建並顯示土星環密度地圖
+rows = int(sys.stdin.readline())
+cols = int(sys.stdin.readline())</p>
+<p># 創建二維陣列
+density_map = []
+for i in range(rows):
+    row = list(map(int, sys.stdin.readline().strip().split()))
+    density_map.append(row)</p>
+<p># 顯示地圖
+print("土星環密度地圖：")
+for i in range(rows):
+    for j in range(cols):
+        print(f"{density_map[i][j]:3}", end=" ")
+    print()  # 換行</p>
+<p># 找出最危險區域（密度最高）
+max_density = 0
+danger_pos = (0, 0)</p>
+<p>for i in range(rows):
+    for j in range(cols):
+        if density_map[i][j] > max_density:
+            max_density = density_map[i][j]
+            danger_pos = (i, j)</p>
+print(f"\n最危險區域：行{danger_pos[0]} 列{danger_pos[1]}")
+print(f"密度：{max_density}")
+</code></pre>
+<h3>範例 2：矩陣轉置（旋轉視角）</h3>
+<pre><code class="language-python">import sys
+<p># 任務：將矩陣轉置（行列互換）
 n = int(sys.stdin.readline())
-
-# ❌ 低效方法（每次都創建新字串）
-report_slow = ""
+matrix = []
 for i in range(n):
-    report_slow += f"Day {i+1}: Mission ongoing
-"  # ⚠️ O(N²) 時間複雜度
-
-# ✅ 高效方法（使用列表收集，最後一次性連接）
-report_fast = []  # 🔑 使用列表收集
+    row = list(map(int, sys.stdin.readline().strip().split()))
+    matrix.append(row)</p>
+<p># 創建轉置矩陣
+transposed = [[0 for _ in range(n)] for _ in range(n)]</p>
+<p>for i in range(n):
+    for j in range(n):
+        transposed[j][i] = matrix[i][j]</p>
+<p>print("原始矩陣：")
+for row in matrix:
+    print(row)</p>
+print("\n轉置後：")
+for row in transposed:
+    print(row)
+</code></pre>
+<h3>範例 3：前綴和 - 快速區域查詢</h3>
+<pre><code class="language-python">import sys
+<p># 任務：使用前綴和快速計算子矩陣的總和
+n = int(sys.stdin.readline())
+matrix = []
 for i in range(n):
-    report_fast.append(f"Day {i+1}: Mission ongoing")
-
-final_report = '
-'.join(report_fast)  # ⚡ O(N) 時間複雜度
-print(final_report)</code></pre>
-                </div>
-
-                <!-- 範例 4 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 4：字串反轉與回文檢測</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：檢查密碼是否為回文（正反讀都一樣）
-password = sys.stdin.readline().strip()
-
-# 方法 1：使用切片反轉
-reversed_password = password[::-1]  # ⚡ 切片反轉
-
-if password == reversed_password:
-    print(f"✅ '{password}' 是回文密碼")
-else:
-    print(f"❌ '{password}' 不是回文密碼")
-
-# 方法 2：雙指標法（更節省空間）
-left = 0  # 🔑 左指標
-right = len(password) - 1  # 🔑 右指標
-is_palindrome = True
-
-while left < right:
-    if password[left] != password[right]:  # ⚠️ 發現不匹配
-        is_palindrome = False
-        break
-    left += 1
+    row = list(map(int, sys.stdin.readline().strip().split()))
+    matrix.append(row)</p>
+<p># 建立二維前綴和
+# prefix[i][j] = 從 (0,0) 到 (i-1,j-1) 的矩形區域總和
+prefix = [[0 for _ in range(n+1)] for _ in range(n+1)]</p>
+<p>for i in range(1, n+1):
+    for j in range(1, n+1):
+        prefix[i][j] = (matrix[i-1][j-1] + 
+                       prefix[i-1][j] + 
+                       prefix[i][j-1] - 
+                       prefix[i-1][j-1])</p>
+# 查詢：計算從 (r1,c1) 到 (r2,c2) 的子矩陣總和
+q = int(sys.stdin.readline())  # 查詢次數
+for _ in range(q):
+    r1, c1, r2, c2 = map(int, sys.stdin.readline().strip().split())
+    
+    # 轉換為 1-indexed
+    r1 += 1
+    c1 += 1
+    r2 += 1
+    c2 += 1
+    
+    # 使用容斥原理計算
+    result = (prefix[r2][c2] - 
+             prefix[r1-1][c2] - 
+             prefix[r2][c1-1] + 
+             prefix[r1-1][c1-1])
+    
+    print(f"區域 ({r1-1},{c1-1}) 到 ({r2-1},{c2-1}) 總和：{result}")
+</code></pre>
+<h3>範例 4：差分陣列 - 隕石雨模擬</h3>
+<pre><code class="language-python">import sys
+<p># 任務：模擬多次隕石雨對土星環的影響
+n = int(sys.stdin.readline())  # 區域數量
+density = [0] * n  # 初始密度都是 0</p>
+<p># 差分陣列
+diff = [0] * (n + 1)</p>
+<p># 讀取隕石雨事件
+m = int(sys.stdin.readline())  # 事件數量
+for _ in range(m):
+    L, R, impact = map(int, sys.stdin.readline().strip().split())
+    # 對區間 [L, R] 增加 impact
+    diff[L] += impact
+    diff[R+1] -= impact</p>
+<p># 還原實際密度
+for i in range(n):
+    if i == 0:
+        density[i] = diff[i]
+    else:
+        density[i] = density[i-1] + diff[i]</p>
+<p>print("最終密度分布：")
+print(density)</p>
+# 找出最危險區域
+max_density = max(density)
+danger_zones = [i for i, d in enumerate(density) if d == max_density]
+print(f"最高密度：{max_density}")
+print(f"危險區域：{danger_zones}")
+</code></pre>
+<h3>範例 5：螺旋矩陣遍歷</h3>
+<pre><code class="language-python">import sys
+<p># 任務：以螺旋方式遍歷矩陣（順時針）
+n = int(sys.stdin.readline())
+matrix = []
+for i in range(n):
+    row = list(map(int, sys.stdin.readline().strip().split()))
+    matrix.append(row)</p>
+<p>result = []
+top, bottom = 0, n - 1
+left, right = 0, n - 1</p>
+<p>while top <= bottom and left <= right:
+    # 向右
+    for col in range(left, right + 1):
+        result.append(matrix[top][col])
+    top += 1
+    
+    # 向下
+    for row in range(top, bottom + 1):
+        result.append(matrix[row][right])
     right -= 1
-
-print(f"雙指標檢測結果：{is_palindrome}")</code></pre>
+    
+    # 向左
+    if top <= bottom:
+        for col in range(right, left - 1, -1):
+            result.append(matrix[bottom][col])
+        bottom -= 1
+    
+    # 向上
+    if left <= right:
+        for row in range(bottom, top - 1, -1):
+            result.append(matrix[row][left])
+        left += 1</p>
+print("螺旋遍歷結果：")
+print(result)
+</code></pre>
                 </div>
-
-                <!-- 範例 5 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 5：DNA 序列分析</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：分析 DNA 序列中各鹼基的數量
-dna_sequence = sys.stdin.readline().strip().upper()  # ⚡ 轉大寫
-
-# 統計每種鹼基
-count_A = dna_sequence.count('A')  # ✅ 使用 count() 方法
-count_T = dna_sequence.count('T')
-count_G = dna_sequence.count('G')
-count_C = dna_sequence.count('C')
-
-total = len(dna_sequence)
-
-print(f"DNA 序列長度：{total}")
-print(f"A (腺嘌呤)：{count_A} ({count_A/total*100:.1f}%)")
-print(f"T (胸腺嘧啶)：{count_T} ({count_T/total*100:.1f}%)")
-print(f"G (鳥嘌呤)：{count_G} ({count_G/total*100:.1f}%)")
-print(f"C (胞嘧啶)：{count_C} ({count_C/total*100:.1f}%)")
-
-# 檢查 GC 含量（重要的生物指標）
-gc_content = (count_G + count_C) / total * 100  # 🔑 計算 GC 含量
-print(f"
-GC 含量：{gc_content:.1f}%")</code></pre>
-                </div>
+            </section>
 
             <!-- 程式碼解說 -->
             <section id="explanation" class="content-section">
@@ -339,65 +290,58 @@ GC 含量：{gc_content:.1f}%")</code></pre>
                     <span class="heading-icon">🔍</span>
                     <span>程式碼解說</span>
                 </h2>
-                
-                <div class="explanation-box glass">
+                <div class="content-box glass">
                     <h3>關鍵技術點</h3>
-                    
-                    <div class="tech-point">
-                        <h4>1. 字元運算的數學原理</h4>
-                        <pre><code class="language-python"># 🔑 將 'A' 位移 3 變成 'D'
-char = 'A'
-shift = 3
-
-# 步驟 1：轉為相對位置 (0-25)
-pos = ord(char) - ord('A')  # ⚡ 0
-
-# 步驟 2：位移並取模（處理超出範圍）
-new_pos = (pos + shift) % 26  # ✅ 3
-
-# 步驟 3：轉回字元
-new_char = chr(ord('A') + new_pos)  # 'D'</code></pre>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>2. 為什麼要用 % 26？</h4>
-                        <ul>
-                            <li>確保結果在 0-25 範圍內</li>
-                            <li>例如：'Z' + 1 = 'A'（循環）</li>
-                        </ul>
-                        <pre><code class="language-python"># ⚠️ 'Z' 的位置是 25
-(25 + 1) % 26 = 0  # 回到 'A'</code></pre>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>3. 字串拼接的效能陷阱</h4>
-                        <pre><code class="language-python"># ❌ 慢速：O(N²) 時間複雜度
-result = ""
-for i in range(10000):
-    result += str(i)  # 每次都創建新字串！
-
-# ✅ 快速：O(N) 時間複雜度
-parts = []
-for i in range(10000):
-    parts.append(str(i))
-result = ''.join(parts)  # 只創建一次</code></pre>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>4. f-string 的強大功能</h4>
-                        <pre><code class="language-python">name = "Jupiter"  # 🔑 變數
-distance = 778500000
-
-# 基本格式化
-print(f"距離：{distance} km")
-
-# ⚡ 數字格式化
-print(f"距離：{distance:,} km")  # 778,500,000 km
-print(f"距離：{distance:.2e} km")  # 7.79e+08 km
-
-# ✅ 對齊
-print(f"{name:>10}")  # 右對齊，寬度 10</code></pre>
-                    </div>
+<ol>
+<li><strong>二維陣列的正確創建</strong></li>
+</ol>
+   <pre><code class="language-python">   # 每次迴圈都創建新的列表
+   matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+   
+   # 等價於：
+   matrix = []
+   for i in range(rows):
+       row = []
+       for j in range(cols):
+           row.append(0)
+       matrix.append(row)
+   </code></pre>
+<ol>
+<li><strong>前綴和的容斥原理</strong></li>
+</ol>
+   <pre><code class="language-python">   要計算紅色區域的總和：
+   
+   +-------+-------+
+   |   A   |   B   |
+   +-------+-------+
+   |   C   | [RED] |
+   +-------+-------+
+   
+   RED = (A+B+C+RED) - (A+B) - (A+C) + A
+       = prefix[r2][c2] - prefix[r1-1][c2] 
+<ul>
+<li>prefix[r2][c1-1] + prefix[r1-1][c1-1]</li>
+</ul>
+   </code></pre>
+<ol>
+<li><strong>差分陣列的原理</strong></li>
+</ul>
+   <pre><code class="language-python">   # 對區間 [2, 5] 加 3
+   diff[2] += 3   # 從位置 2 開始增加
+   diff[6] -= 3   # 從位置 6 開始減少
+   
+   # 還原後：
+   # 位置 0,1: 不變
+   # 位置 2,3,4,5: +3
+   # 位置 6 之後: 不變
+   </code></pre>
+<ol>
+<li><strong>矩陣遍歷模式</strong></li>
+<li>逐行遍歷：<code>for i in range(rows): for j in range(cols)</code></li>
+<li>逐列遍歷：<code>for j in range(cols): for i in range(rows)</code></li>
+<li>對角線遍歷：<code>for i in range(n): matrix[i][i]</code></li>
+<li>螺旋遍歷：使用四個邊界指標</li>
+</ul>
                 </div>
             </section>
 
@@ -405,69 +349,49 @@ print(f"{name:>10}")  # 右對齊，寬度 10</code></pre>
             <section id="quiz" class="content-section">
                 <h2 class="section-heading">
                     <span class="heading-icon">📝</span>
-                    <span>Quiz：外星訊號解碼</span>
+                    <span>Quiz: 能量護盾充能系統</span>
                 </h2>
-                
                 <div class="quiz-box glass">
-                    <h3>題目：交錯字串解碼</h3>
-                    <p>木星軌道站收到一段外星訊號，經過分析發現這是一段「交錯編碼」的訊息。編碼規則如下：</p>
-                    <ol>
-                        <li>原始訊息被分成兩部分</li>
-                        <li>兩部分交錯合併：第1個字元來自第一部分，第2個字元來自第二部分，依此類推</li>
-                        <li>如果兩部分長度不同，較長部分的剩餘字元直接附加在最後</li>
-                    </ol>
-                    <p style="margin-top: 1.5rem;"><strong>你的任務是解碼這段訊息。</strong></p>
-                    
-                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(0, 217, 255, 0.05); border-left: 4px solid var(--energy-cyan); border-radius: 8px;">
-                        <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">解碼規則：</h4>
-                        <ul style="margin-left: 1.5rem;">
-                            <li>奇數位置（1, 3, 5, ...）的字元屬於第一部分</li>
-                            <li>偶數位置（2, 4, 6, ...）的字元屬於第二部分</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="quiz-io">
-                        <div class="io-box">
-                            <h4>輸入格式：</h4>
-                            <p style="margin-left: 1rem;">一行字串，長度不超過 100</p>
-                        </div>
-                    </div>
-                    
-                    <div class="quiz-io">
-                        <div class="io-box">
-                            <h4>輸入範例 1：</h4>
-                            <pre><code>JSUEPCIOTNER</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例 1：</h4>
-                            <pre><code>第一部分：JUPITER
-第二部分：SECTOR</code></pre>
-                        </div>
-                    </div>
-                    
-                    <div class="quiz-io">
-                        <div class="io-box">
-                            <h4>輸入範例 2：</h4>
-                            <pre><code>HWEOLRLLOD</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例 2：</h4>
-                            <pre><code>第一部分：HELLO
-第二部分：WORLD
-解碼失敗：這不是有效的交錯編碼</code></pre>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 217, 255, 0.05); border-left: 4px solid var(--energy-cyan); border-radius: 8px;">
-                        <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">💡 提示</h4>
-                        <ul style="margin-left: 1.5rem;">
-                            <li>使用字串切片的步進功能：<code>s[::2]</code> 取奇數位置，<code>s[1::2]</code> 取偶數位置</li>
-                            <li>Python 的索引從 0 開始，所以 <code>s[0]</code> 是第 1 個字元</li>
-                        </ul>
-                    </div>
-                    
+                    <h3>題目：區域充能優化</h3>
+<p>土星探險隊的能量護盾由 N×N 的能量格組成。初始時所有格子的能量都是 0。現在有 M 次充能操作，每次操作會對一個矩形區域內的所有格子增加能量。</p>
+請計算：
+<ol>
+<li>所有充能操作完成後，每個格子的最終能量</li>
+<li>能量最高的格子位置及其能量值</li>
+<li>總能量</li>
+</ol>
+<strong>輸入格式：</strong>
+<ul>
+<li>第一行：整數 N（護盾大小，1 ≤ N ≤ 100）</li>
+<li>第二行：整數 M（充能次數，1 ≤ M ≤ 1000）</li>
+<li>接下來 M 行，每行 5 個整數：r1 c1 r2 c2 energy</li>
+<li>表示對從 (r1,c1) 到 (r2,c2) 的矩形區域增加 energy 能量</li>
+</ul>
+<strong>輸入範例：</strong>
+<pre><code class="language-python">4
+3
+0 0 1 1 10
+1 1 2 2 20
+0 0 3 3 5
+</code></pre>
+<strong>輸出範例：</strong>
+<pre><code class="language-python">最終能量分布：
+15 15 5 5
+15 35 25 5
+5 25 25 5
+5 5 5 5
+最高能量：35
+位置：(1, 1)
+總能量：240
+</code></pre>
+<h3>💡 提示</h3>
+<ul>
+<li>可以直接暴力更新每個格子（簡單但可能較慢）</li>
+<li>或使用二維差分陣列（進階技巧）</li>
+</ul>
+<p>---</p>
                     <button class="show-solution-btn" onclick="toggleSolution()">
-                        💡 顯示解答
+                        💡 查看解答
                     </button>
                 </div>
             </section>
@@ -478,85 +402,102 @@ print(f"{name:>10}")  # 右對齊，寬度 10</code></pre>
                     <span class="heading-icon">✅</span>
                     <span>Quiz 解答</span>
                 </h2>
-                
                 <div class="solution-box glass">
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 讀取編碼訊息
-encoded = sys.stdin.readline().strip()  # ⚡ 讀取並清理輸入
-
-# 解碼：分離奇數和偶數位置的字元
-# 注意：Python 索引從 0 開始
-# s[0::2] 取索引 0, 2, 4, ... (第 1, 3, 5, ... 個字元)
-# s[1::2] 取索引 1, 3, 5, ... (第 2, 4, 6, ... 個字元)
-part1 = encoded[0::2]  # 🔑 奇數位置
-part2 = encoded[1::2]  # 🔑 偶數位置
-
-print(f"第一部分：{part1}")
-print(f"第二部分：{part2}")
-
-# 驗證：重新交錯看是否能還原
-reconstructed = ""  # ⚠️ 建立空字串
-max_len = max(len(part1), len(part2))
-
-for i in range(max_len):  # ⚡ 遍歷最長的部分
-    if i < len(part1):
-        reconstructed += part1[i]
-    if i < len(part2):
-        reconstructed += part2[i]
-
-if reconstructed == encoded:  # ✅ 驗證是否正確
-    print("✅ 解碼成功！")
-else:
-    print("❌ 解碼失敗：這不是有效的交錯編碼")</code></pre>
-                    
-                    <div class="solution-explanation">
-                        <h3>解答說明</h3>
-                        
-                        <div class="tech-point">
-                            <h4>1. 字串切片的步進參數</h4>
-                            <pre><code class="language-python">s = "ABCDEFGH"  # 🔑 範例字串
-#    01234567
-
-s[0::2]  # ⚡ "ACEG" - 從索引 0 開始，每次跳 2
-s[1::2]  # ⚡ "BDFH" - 從索引 1 開始，每次跳 2</code></pre>
-                        </div>
-                        
-                        <div class="tech-point">
-                            <h4>2. 交錯重建邏輯</h4>
-                            <pre><code class="language-python"># 假設 part1 = "ABC", part2 = "XY"
-# 重建過程：
-# i=0: 加入 A, 加入 X → "AX"
-# i=1: 加入 B, 加入 Y → "AXBY"
-# i=2: 加入 C, part2 已結束 → "AXBYC"</code></pre>
-                        </div>
-                        
-                        <div class="tech-point">
-                            <h4>3. 邊界處理</h4>
-                            <pre><code class="language-python">if i < len(part1):  # ✅ 確保不超出範圍
-    reconstructed += part1[i]</code></pre>
-                            <p style="margin-top: 0.5rem;">這樣可以處理兩部分長度不同的情況</p>
-                        </div>
-                        
-                        <div class="tech-point">
-                            <h4>4. 進階版本：使用 zip_longest</h4>
-                            <pre><code class="language-python">from itertools import zip_longest
-
-# ⚡ 更優雅的交錯方法
-reconstructed = ""
-for c1, c2 in zip_longest(part1, part2, fillvalue=''):
-    reconstructed += c1 + c2</code></pre>
-                        </div>
-                        
-                        <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.3); border-radius: 10px;">
-                            <h4 style="color: var(--success-green); margin-bottom: 1rem;">📊 效能分析</h4>
-                            <ul>
-                                <li><strong>時間複雜度</strong>：O(N) - N 是字串長度</li>
-                                <li><strong>空間複雜度</strong>：O(N) - 需要儲存分離後的兩部分</li>
-                                <li><strong>切片操作</strong>：O(N) - 創建新字串</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <h3>解法 1：直接更新（適合初學者）</h3>
+<pre><code class="language-python">import sys
+<p># 讀取護盾大小
+n = int(sys.stdin.readline())</p>
+<p># 創建能量矩陣
+energy = [[0 for _ in range(n)] for _ in range(n)]</p>
+<p># 讀取充能次數
+m = int(sys.stdin.readline())</p>
+<p># 處理每次充能
+for _ in range(m):
+    r1, c1, r2, c2, power = map(int, sys.stdin.readline().strip().split())
+    
+    # 對矩形區域內的每個格子增加能量
+    for i in range(r1, r2 + 1):
+        for j in range(c1, c2 + 1):
+            energy[i][j] += power</p>
+<p># 顯示最終能量分布
+print("最終能量分布：")
+for row in energy:
+    print(' '.join(map(str, row)))</p>
+<p># 找出最高能量
+max_energy = 0
+max_pos = (0, 0)
+total_energy = 0</p>
+<p>for i in range(n):
+    for j in range(n):
+        total_energy += energy[i][j]
+        if energy[i][j] > max_energy:
+            max_energy = energy[i][j]
+            max_pos = (i, j)</p>
+print(f"\n最高能量：{max_energy}")
+print(f"位置：{max_pos}")
+print(f"總能量：{total_energy}")
+</code></pre>
+<h3>解法 2：二維差分陣列（進階）</h3>
+<pre><code class="language-python">import sys
+<p>n = int(sys.stdin.readline())</p>
+<p># 二維差分陣列
+diff = [[0 for _ in range(n+1)] for _ in range(n+1)]</p>
+<p>m = int(sys.stdin.readline())</p>
+<p># 記錄差分
+for _ in range(m):
+    r1, c1, r2, c2, power = map(int, sys.stdin.readline().strip().split())
+    
+    # 二維差分標記
+    diff[r1][c1] += power
+    diff[r1][c2+1] -= power
+    diff[r2+1][c1] -= power
+    diff[r2+1][c2+1] += power</p>
+<p># 還原實際能量（二維前綴和）
+energy = [[0 for _ in range(n)] for _ in range(n)]</p>
+<p>for i in range(n):
+    for j in range(n):
+        energy[i][j] = diff[i][j]
+        if i > 0:
+            energy[i][j] += energy[i-1][j]
+        if j > 0:
+            energy[i][j] += energy[i][j-1]
+        if i > 0 and j > 0:
+            energy[i][j] -= energy[i-1][j-1]</p>
+<p># 輸出結果（同上）
+print("最終能量分布：")
+for row in energy:
+    print(' '.join(map(str, row)))</p>
+<p>max_energy = max(max(row) for row in energy)
+total_energy = sum(sum(row) for row in energy)</p>
+<p>for i in range(n):
+    for j in range(n):
+        if energy[i][j] == max_energy:
+            max_pos = (i, j)
+            break</p>
+print(f"\n最高能量：{max_energy}")
+print(f"位置：{max_pos}")
+print(f"總能量：{total_energy}")
+</code></pre>
+<h3>解答說明</h3>
+<strong>解法 1 的優缺點：</strong>
+<ul>
+<li>✅ 簡單直觀，容易理解</li>
+<li>✅ 適合 M 和區域大小都不大的情況</li>
+<li>❌ 時間複雜度：O(M × 區域大小)</li>
+</ul>
+<strong>解法 2 的優缺點：</strong>
+<ul>
+<li>✅ 時間複雜度：O(M + N²)，更高效</li>
+<li>✅ 適合大量更新操作</li>
+<li>❌ 較複雜，需要理解差分原理</li>
+</ul>
+<h3>效能比較</h3>
+<p>| 情況 | 解法 1 | 解法 2 |
+|------|--------|--------|
+| N=100, M=10, 小區域 | 快速 | 快速 |
+| N=100, M=1000, 大區域 | 較慢 | 快速 |
+| N=1000, M=10000 | 超時 | 可行 |</p>
+<p>---</p>
                 </div>
             </section>
 
@@ -565,43 +506,20 @@ for c1, c2 in zip_longest(part1, part2, fillvalue=''):
                 <div class="badge-content">
                     <span class="badge-icon">🎉</span>
                     <h3>訓練完成！</h3>
-                    <p>恭喜你完成木星加密通訊訓練！你現在已經掌握：</p>
-                    <div class="completion-skills">
-                        <span class="skill-tag">✅ 字串的不可變性概念</span>
-                        <span class="skill-tag">✅ ord() 和 chr() 字元編碼轉換</span>
-                        <span class="skill-tag">✅ 字串方法：split(), join(), strip(), replace()</span>
-                        <span class="skill-tag">✅ 字串切片與反轉</span>
-                        <span class="skill-tag">✅ 高效字串拼接技巧</span>
-                        <span class="skill-tag">✅ f-string 格式化</span>
-                    </div>
-                    <p style="margin-top: 1.5rem; font-size: 1.1rem; color: var(--energy-cyan);">
-                        <strong>下一站：土星環模擬 - 二維陣列與矩陣操作！</strong>
-                    </p>
+                    <p>恭喜你完成 土星環模擬與二維陣列 訓練！</p>
                 </div>
-            </div>
-
-            <!-- APCS 對應 -->
-            <div class="content-box glass" style="margin-top: 2rem;">
-                <h3 style="color: var(--energy-cyan); margin-bottom: 1rem;">🔗 APCS 對應能力</h3>
-                <ul>
-                    <li><strong>級分目標</strong>：3 級分</li>
-                    <li><strong>評量項目</strong>：字串處理、字元運算</li>
-                    <li><strong>對應題型</strong>：i400 (字串解碼)、c462 (交錯字串)</li>
-                    <li><strong>核心技能</strong>：字元編碼、字串分割與重組</li>
-                </ul>
             </div>
 
             <!-- 導航按鈕 -->
             <div class="lesson-navigation">
-                <a href="../L1/A3.html" class="nav-btn prev-btn">← 上一課</a>
+                <a href="../L2/B1.html" class="nav-btn prev-btn" >← 上一課</a>
                 <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
-                <a href="B2.html" class="nav-btn next-btn">下一課 →</a>
+                <a href="../L2/B3.html" class="nav-btn next-btn" >下一課 →</a>
             </div>
         </article>
     </main>
 
     <!-- JavaScript -->
-    <script src="../../scripts/page-guard.js"></script>
     <script src="../../scripts/starfield.js"></script>
     <script src="../../scripts/lesson.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>

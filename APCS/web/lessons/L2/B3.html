@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B3: 函式與模組化工程 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/lesson.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- 導航欄 -->
+    <nav class="lesson-nav glass">
+        <div class="nav-content">
+            <a href="../../index.html" class="back-btn">
+                <span>←</span>
+                <span>返回課程地圖</span>
+            </a>
+            <div class="lesson-progress">
+                <span class="progress-text">L2 - B3</span>
+            </div>
+            <div class="lesson-nav-buttons">
+                <a href="../L2/B2.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="../L3/C1.html" class="nav-btn next-btn" >下一課</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="lesson-container">
+        <!-- 側邊欄目錄 -->
+        <aside class="lesson-sidebar glass">
+            <h3 class="sidebar-title">📋 本課內容</h3>
+            <nav class="sidebar-nav">
+                <a href="#mission" class="sidebar-link active">🚀 任務背景</a>
+                <a href="#knowledge" class="sidebar-link">📚 知識點說明</a>
+                <a href="#examples" class="sidebar-link">💻 範例程式碼</a>
+                <a href="#explanation" class="sidebar-link">🔍 程式碼解說</a>
+                <a href="#quiz" class="sidebar-link">📝 Quiz</a>
+                <a href="#solution" class="sidebar-link">✅ 解答</a>
+            </nav>
+        </aside>
+
+        <!-- 課程內容 -->
+        <article class="lesson-content">
+            <!-- 課程標題 -->
+            <header class="lesson-header">
+                <div class="lesson-badge">
+                    <span class="badge-icon">🪐</span>
+                    <span class="badge-text">L2: 木星軌道站</span>
+                </div>
+                <h1 class="lesson-title text-glow">
+                    B3: 複雜工程學：函式、模組化與作用域
+                </h1>
+                <div class="lesson-meta">
+                    <span class="meta-item">⏱️ 預計時間：4-5 小時</span>
+                    <span class="meta-item">🎯 目標級分：3 級分</span>
+                    <span class="meta-item">📊 難度：⭐⭐⭐☆☆</span>
+                </div>
+            </header>
+
+            <!-- 任務背景 -->
+            <section id="mission" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🚀</span>
+                    <span>任務背景</span>
+                </h2>
+                <div class="content-box glass">
+                    <p>在木星軌道站，你需要管理多個複雜的子系統：生命維持、能源管理、通訊系統等。如果將所有邏輯寫在一個巨大的程式中，維護將是噩夢！</p>
+<p>作為系統工程師，你需要學會將複雜問題分解為多個獨立的模組（函式），每個模組負責一個明確的任務。這不僅讓程式更易於理解和除錯，也能讓程式碼重複使用。</p>
+在這個訓練模組中，你將學習：
+<ul>
+<li>如何定義和使用函式</li>
+<li>理解變數的作用域（Scope）</li>
+<li>掌握 Python 的參數傳遞機制</li>
+<li>函式的最佳實踐</li>
+</ul>
+                </div>
+            </section>
+
+            <!-- 知識點說明 -->
+            <section id="knowledge" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📚</span>
+                    <span>知識點說明</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>為什麼需要函式？</h3>
+<strong>問題分解（Problem Decomposition）</strong>：將一個複雜問題拆解成多個更小、更易於管理的子問題。
+<pre><code class="language-python"># ❌ 不好的做法：所有邏輯混在一起
+data = input()
+# ... 100 行程式碼 ...
+result = ...
+print(result)
+<p># ✅ 好的做法：模組化
+def parse_data(raw_data):
+    """解析輸入數據"""
+    return processed_data</p>
+<p>def calculate(data):
+    """執行計算"""
+    return result</p>
+<p>def format_output(result):
+    """格式化輸出"""
+    return formatted</p>
+# 主程式清晰易讀
+data = parse_data(input())
+result = calculate(data)
+print(format_output(result))
+</code></pre>
+<h3>函式定義語法</h3>
+<pre><code class="language-python">def function_name(parameter1, parameter2):
+    """
+    函式說明文件（Docstring）
+    """
+    # 函式主體
+    result = parameter1 + parameter2
+    return result  # 回傳值
+</code></pre>
+<h3>作用域（Scope）</h3>
+<strong>區域變數 vs 全域變數</strong>：
+<pre><code class="language-python">global_var = 100  # 全域變數
+<p>def my_function():
+    local_var = 50  # 區域變數
+    print(global_var)  # 可以讀取全域變數
+    print(local_var)   # 可以讀取區域變數</p>
+my_function()
+# print(local_var)  # ❌ 錯誤！無法在函式外存取區域變數
+</code></pre>
+<p>⚠️ <strong>最佳實踐</strong>：盡量避免使用全域變數，通過參數傳遞和回傳值來溝通。</p>
+<h3>Python 的參數傳遞機制</h3>
+<p>Python 使用「物件參考傳遞」（Call by Object Reference）：</p>
+<strong>可變物件（Mutable）</strong>：
+<pre><code class="language-python">def modify_list(lst):
+    lst.append(999)  # 會修改原始列表
+    
+my_list = [1, 2, 3]
+modify_list(my_list)
+print(my_list)  # [1, 2, 3, 999] ✓ 被修改了
+</code></pre>
+<strong>不可變物件（Immutable）</strong>：
+<pre><code class="language-python">def modify_number(n):
+    n = n + 100  # 創建新物件，不影響原始變數
+    
+my_num = 50
+modify_number(my_num)
+print(my_num)  # 50 ✓ 沒有被修改
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 範例程式碼 -->
+            <section id="examples" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">💻</span>
+                    <span>範例程式碼</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>範例 1：計算火箭燃料消耗</h3>
+<pre><code class="language-python">import sys
+<p>def calculate_fuel(distance, efficiency):
+    """
+    計算所需燃料
+    distance: 飛行距離（公里）
+    efficiency: 燃料效率（公里/公升）
+    """
+    fuel_needed = distance / efficiency
+    return fuel_needed</p>
+<p>def format_report(distance, fuel):
+    """格式化報告"""
+    return f"飛行 {distance} 公里需要 {fuel:.2f} 公升燃料"</p>
+<p># 主程式
+distance = int(sys.stdin.readline())
+efficiency = float(sys.stdin.readline())</p>
+fuel = calculate_fuel(distance, efficiency)
+print(format_report(distance, fuel))
+</code></pre>
+<strong>輸入範例</strong>：
+<pre><code class="language-python">1000
+25.5
+</code></pre>
+<strong>輸出範例</strong>：
+<pre><code class="language-python">飛行 1000 公里需要 39.22 公升燃料
+</code></pre>
+<h3>範例 2：溫度轉換系統</h3>
+<pre><code class="language-python">import sys
+<p>def celsius_to_fahrenheit(celsius):
+    """攝氏轉華氏"""
+    return celsius * 9/5 + 32</p>
+<p>def fahrenheit_to_celsius(fahrenheit):
+    """華氏轉攝氏"""
+    return (fahrenheit - 32) * 5/9</p>
+<p>def kelvin_to_celsius(kelvin):
+    """克耳文轉攝氏"""
+    return kelvin - 273.15</p>
+<p># 讀取溫度和單位
+temp = float(sys.stdin.readline())
+unit = sys.stdin.readline().strip()</p>
+if unit == 'C':
+    print(f"{celsius_to_fahrenheit(temp):.2f} °F")
+elif unit == 'F':
+    print(f"{fahrenheit_to_celsius(temp):.2f} °C")
+elif unit == 'K':
+    print(f"{kelvin_to_celsius(temp):.2f} °C")
+</code></pre>
+<h3>範例 3：質數檢測</h3>
+<pre><code class="language-python">import sys
+<p>def is_prime(n):
+    """
+    檢查 n 是否為質數
+    回傳 True 或 False
+    """
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    
+    # 只需檢查到 sqrt(n)
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 2
+    
+    return True</p>
+<p># 主程式
+n = int(sys.stdin.readline())</p>
+if is_prime(n):
+    print(f"{n} 是質數")
+else:
+    print(f"{n} 不是質數")
+</code></pre>
+<h3>範例 4：列表統計函式</h3>
+<pre><code class="language-python">import sys
+<p>def calculate_stats(numbers):
+    """
+    計算列表的統計數據
+    回傳：(總和, 平均值, 最大值, 最小值)
+    """
+    total = sum(numbers)
+    avg = total / len(numbers)
+    maximum = max(numbers)
+    minimum = min(numbers)
+    
+    return total, avg, maximum, minimum</p>
+<p># 讀取數據
+n = int(sys.stdin.readline())
+numbers = list(map(int, sys.stdin.readline().split()))</p>
+<p># 呼叫函式並解包回傳值
+total, avg, maximum, minimum = calculate_stats(numbers)</p>
+print(f"總和：{total}")
+print(f"平均：{avg:.2f}")
+print(f"最大：{maximum}")
+print(f"最小：{minimum}")
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 程式碼解說 -->
+            <section id="explanation" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🔍</span>
+                    <span>程式碼解說</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>關鍵技術點</h3>
+<p>#### 1. 函式設計原則</p>
+<strong>單一職責原則（Single Responsibility Principle）</strong>：
+<ul>
+<li>每個函式只做一件事</li>
+<li>函式名稱應清楚描述其功能</li>
+<li>函式長度建議不超過 20-30 行</li>
+</ul>
+<p>#### 2. 參數與回傳值</p>
+<pre><code class="language-python">def process_data(input_data, option=True):
+    """
+    input_data: 必要參數
+    option: 選擇性參數（有預設值）
+    """
+    if option:
+        return input_data * 2
+    return input_data
+</code></pre>
+<p>#### 3. 多個回傳值</p>
+<p>Python 可以回傳多個值（實際上是回傳一個 tuple）：</p>
+<pre><code class="language-python">def get_min_max(numbers):
+    return min(numbers), max(numbers)
+minimum, maximum = get_min_max([1, 5, 3, 9, 2])
+</code></pre>
+<p>#### 4. 遞迴初探</p>
+<p>函式可以呼叫自己：</p>
+<pre><code class="language-python">def factorial(n):
+    """計算階乘"""
+    if n <= 1:  # 基礎情況
+        return 1
+    return n * factorial(n - 1)  # 遞迴呼叫
+</code></pre>
+                </div>
+            </section>
+
+            <!-- Quiz -->
+            <section id="quiz" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📝</span>
+                    <span>Quiz: 太空站系統管理</span>
+                </h2>
+                <div class="quiz-box glass">
+                    <h3>題目</h3>
+<p>木星軌道站需要一個氧氣管理系統。請設計以下函式：</p>
+<ol>
+<li><code>calculate_oxygen_consumption(crew_size, days)</code> - 計算氧氣消耗量</li>
+<li>每人每天消耗 0.84 公斤氧氣</li>
+</ol>
+   
+<ol>
+<li><code>check_oxygen_level(current, required)</code> - 檢查氧氣是否足夠</li>
+<li>回傳 True（足夠）或 False（不足）</li>
+</ol>
+   
+<ol>
+<li><code>format_warning(shortage)</code> - 格式化警告訊息</li>
+<li>如果短缺，回傳警告訊息</li>
+</ol>
+<strong>輸入格式</strong>：
+<pre><code class="language-python">第一行：機組人員數量
+第二行：任務天數
+第三行：當前氧氣儲量（公斤）
+</code></pre>
+<strong>輸出格式</strong>：
+<ul>
+<li>如果足夠：<code>氧氣充足：剩餘 X.XX 公斤</code></li>
+<li>如果不足：<code>警告：氧氣短缺 X.XX 公斤！</code></li>
+</ul>
+<strong>輸入範例</strong>：
+<pre><code class="language-python">5
+30
+100
+</code></pre>
+<strong>輸出範例</strong>：
+<pre><code class="language-python">警告：氧氣短缺 26.00 公斤！
+</code></pre>
+                    <button class="show-solution-btn" onclick="toggleSolution()">
+                        💡 查看解答
+                    </button>
+                </div>
+            </section>
+
+            <!-- 解答 -->
+            <section id="solution" class="content-section solution-hidden">
+                <h2 class="section-heading">
+                    <span class="heading-icon">✅</span>
+                    <span>Quiz 解答</span>
+                </h2>
+                <div class="solution-box glass">
+                    <pre><code class="language-python">import sys
+<p>def calculate_oxygen_consumption(crew_size, days):
+    """計算氧氣消耗量"""
+    consumption_per_person_per_day = 0.84
+    total_consumption = crew_size <em> days </em> consumption_per_person_per_day
+    return total_consumption</p>
+<p>def check_oxygen_level(current, required):
+    """檢查氧氣是否足夠"""
+    return current >= required</p>
+<p>def format_warning(shortage):
+    """格式化警告訊息"""
+    if shortage < 0:
+        return f"警告：氧氣短缺 {abs(shortage):.2f} 公斤！"
+    else:
+        return f"氧氣充足：剩餘 {shortage:.2f} 公斤"</p>
+<p># 主程式
+crew_size = int(sys.stdin.readline())
+days = int(sys.stdin.readline())
+current_oxygen = float(sys.stdin.readline())</p>
+<p># 計算所需氧氣
+required = calculate_oxygen_consumption(crew_size, days)</p>
+<p># 計算剩餘或短缺
+difference = current_oxygen - required</p>
+# 輸出結果
+print(format_warning(difference))
+</code></pre>
+<h3>解答說明</h3>
+<strong>模組化設計的優勢</strong>：
+<ol>
+<li><strong>易於測試</strong>：每個函式可以獨立測試</li>
+<li><strong>易於維護</strong>：修改某個功能只需改對應函式</li>
+<li><strong>易於重用</strong>：函式可以在不同地方使用</li>
+<li><strong>易於理解</strong>：主程式邏輯清晰</li>
+</ol>
+<strong>函式命名</strong>：
+<ul>
+<li>使用動詞開頭：<code>calculate_</code>, <code>check_</code>, <code>format_</code></li>
+<li>名稱描述功能：一看就知道做什麼</li>
+</ul>
+                </div>
+            </section>
+
+            <!-- 完成徽章 -->
+            <div class="completion-badge glass">
+                <div class="badge-content">
+                    <span class="badge-icon">🎉</span>
+                    <h3>訓練完成！</h3>
+                    <p>恭喜你完成 函式與模組化工程 訓練！</p>
+                </div>
+            </div>
+
+            <!-- 導航按鈕 -->
+            <div class="lesson-navigation">
+                <a href="../L2/B2.html" class="nav-btn prev-btn" >← 上一課</a>
+                <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
+                <a href="../L3/C1.html" class="nav-btn next-btn" >下一課 →</a>
+            </div>
+        </article>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../../scripts/starfield.js"></script>
+    <script src="../../scripts/lesson.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

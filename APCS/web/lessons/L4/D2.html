@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D2: 動態規劃藝術 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/lesson.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- 導航欄 -->
+    <nav class="lesson-nav glass">
+        <div class="nav-content">
+            <a href="../../index.html" class="back-btn">
+                <span>←</span>
+                <span>返回課程地圖</span>
+            </a>
+            <div class="lesson-progress">
+                <span class="progress-text">L4 - D2</span>
+            </div>
+            <div class="lesson-nav-buttons">
+                <a href="../L4/D1.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="../L4/D3.html" class="nav-btn next-btn" >下一課</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="lesson-container">
+        <!-- 側邊欄目錄 -->
+        <aside class="lesson-sidebar glass">
+            <h3 class="sidebar-title">📋 本課內容</h3>
+            <nav class="sidebar-nav">
+                <a href="#mission" class="sidebar-link active">🚀 任務背景</a>
+                <a href="#knowledge" class="sidebar-link">📚 知識點說明</a>
+                <a href="#examples" class="sidebar-link">💻 範例程式碼</a>
+                <a href="#explanation" class="sidebar-link">🔍 程式碼解說</a>
+                <a href="#quiz" class="sidebar-link">📝 Quiz</a>
+                <a href="#solution" class="sidebar-link">✅ 解答</a>
+            </nav>
+        </aside>
+
+        <!-- 課程內容 -->
+        <article class="lesson-content">
+            <!-- 課程標題 -->
+            <header class="lesson-header">
+                <div class="lesson-badge">
+                    <span class="badge-icon">🌌</span>
+                    <span class="badge-text">L4: 冥王星邊界</span>
+                </div>
+                <h1 class="lesson-title text-glow">
+                    D2: 優化的藝術：動態規劃 (DP)
+                </h1>
+                <div class="lesson-meta">
+                    <span class="meta-item">⏱️ 預計時間：6-8 小時</span>
+                    <span class="meta-item">🎯 目標級分：5 級分</span>
+                    <span class="meta-item">📊 難度：⭐⭐⭐⭐⭐</span>
+                </div>
+            </header>
+
+            <!-- 任務背景 -->
+            <section id="mission" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🚀</span>
+                    <span>任務背景</span>
+                </h2>
+                <div class="content-box glass">
+                    <p>在冥王星邊界，資源極度稀缺。每個決策都必須是最優的，沒有試錯的餘地。動態規劃（Dynamic Programming, DP）是解決優化問題的終極武器。</p>
+作為資源優化專家，你需要學會：
+<ul>
+<li>識別問題是否適合用 DP 解決</li>
+<li>定義狀態和轉移方程</li>
+<li>實現高效的 DP 解法</li>
+</ul>
+<p>DP 是 APCS 5 級分的核心技能，也是最具挑戰性的演算法之一。</p>
+                </div>
+            </section>
+
+            <!-- 知識點說明 -->
+            <section id="knowledge" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📚</span>
+                    <span>知識點說明</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>什麼是動態規劃？</h3>
+<strong>核心概念</strong>：將複雜問題分解為重疊的子問題，並儲存子問題的解以避免重複計算。
+<strong>DP 的兩大特徵</strong>：
+<ol>
+<li><strong>最優子結構（Optimal Substructure）</strong></li>
+<li>問題的最優解可由子問題的最優解構造出來</li>
+</ol>
+<ol>
+<li><strong>重疊子問題（Overlapping Subproblems）</strong></li>
+<li>遞迴求解時，相同的子問題會被重複計算多次</li>
+</ol>
+<h3>經典範例：費氏數列</h3>
+<strong>暴力遞迴（指數時間）</strong>：
+<pre><code class="language-python">def fib(n):
+    if n <= 1:
+        return n
+    return fib(n-1) + fib(n-2)  # 大量重複計算
+</code></pre>
+<strong>DP 優化（線性時間）</strong>：
+<pre><code class="language-python">def fib_dp(n):
+    if n <= 1:
+        return n
+    
+    memo = {}
+    memo[0] = 0
+    memo[1] = 1
+    
+    for i in range(2, n+1):
+        memo[i] = memo[i-1] + memo[i-2]
+    
+    return memo[n]
+</code></pre>
+<h3>DP 的兩種實現方式</h3>
+<p>#### 1. Top-Down（由上而下）+ Memoization</p>
+<pre><code class="language-python">def fib_memo(n, memo={}):
+    if n in memo:
+        return memo[n]  # 已計算過，直接回傳
+    
+    if n <= 1:
+        return n
+    
+    memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)
+    return memo[n]
+</code></pre>
+<strong>優點</strong>：
+<ul>
+<li>思路自然，接近遞迴思維</li>
+<li>Python 有 <code>@lru_cache</code> 裝飾器可自動實現</li>
+</ul>
+<strong>缺點</strong>：
+<ul>
+<li>可能遇到遞迴深度限制</li>
+</ul>
+<p>#### 2. Bottom-Up（由下而上）+ Tabulation</p>
+<pre><code class="language-python">def fib_table(n):
+    if n <= 1:
+        return n
+    
+    dp = [0] * (n + 1)
+    dp[0] = 0
+    dp[1] = 1
+    
+    for i in range(2, n+1):
+        dp[i] = dp[i-1] + dp[i-2]
+    
+    return dp[n]
+</code></pre>
+<strong>優點</strong>：
+<ul>
+<li>避免遞迴開銷</li>
+<li>更容易優化空間複雜度</li>
+</ul>
+<strong>缺點</strong>：
+<ul>
+<li>需要仔細設計迭代順序</li>
+</ul>
+<h3>DP 解題步驟</h3>
+<ol>
+<li><strong>定義狀態</strong>：<code>dp[i]</code> 代表什麼？</li>
+<li><strong>找出轉移方程</strong>：<code>dp[i]</code> 如何從之前的狀態計算？</li>
+<li><strong>確定初始條件</strong>：<code>dp[0]</code>, <code>dp[1]</code> 等基礎情況</li>
+<li><strong>確定計算順序</strong>：從小到大還是從大到小？</li>
+<li><strong>確定答案位置</strong>：最終答案在 <code>dp[?]</code></li>
+</ul>
+                </div>
+            </section>
+
+            <!-- 範例程式碼 -->
+            <section id="examples" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">💻</span>
+                    <span>範例程式碼</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>範例 1：爬樓梯問題</h3>
+<pre><code class="language-python">import sys
+<p>def climb_stairs(n):
+    """
+    爬 n 階樓梯，每次可爬 1 或 2 階
+    問有多少種爬法？
+    
+    狀態定義：dp[i] = 爬到第 i 階的方法數
+    轉移方程：dp[i] = dp[i-1] + dp[i-2]
+    """
+    if n <= 2:
+        return n
+    
+    dp = [0] * (n + 1)
+    dp[1] = 1  # 爬 1 階：1 種方法
+    dp[2] = 2  # 爬 2 階：2 種方法 (1+1 或 2)
+    
+    for i in range(3, n+1):
+        dp[i] = dp[i-1] + dp[i-2]
+    
+    return dp[n]</p>
+# 主程式
+n = int(sys.stdin.readline())
+print(f"爬 {n} 階樓梯有 {climb_stairs(n)} 種方法")
+</code></pre>
+<h3>範例 2：最小路徑和</h3>
+<pre><code class="language-python">import sys
+<p>def min_path_sum(grid):
+    """
+    從左上角走到右下角，只能向右或向下
+    找出路徑和最小的路徑
+    
+    狀態定義：dp[i][j] = 到達 (i,j) 的最小路徑和
+    轉移方程：dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])
+    """
+    rows = len(grid)
+    cols = len(grid[0])
+    
+    # 初始化 DP 表
+    dp = [[0] * cols for _ in range(rows)]
+    dp[0][0] = grid[0][0]
+    
+    # 初始化第一行
+    for j in range(1, cols):
+        dp[0][j] = dp[0][j-1] + grid[0][j]
+    
+    # 初始化第一列
+    for i in range(1, rows):
+        dp[i][0] = dp[i-1][0] + grid[i][0]
+    
+    # 填充 DP 表
+    for i in range(1, rows):
+        for j in range(1, cols):
+            dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])
+    
+    return dp[rows-1][cols-1]</p>
+<p># 讀取網格
+rows = int(sys.stdin.readline())
+cols = int(sys.stdin.readline())
+grid = []
+for _ in range(rows):
+    row = list(map(int, sys.stdin.readline().split()))
+    grid.append(row)</p>
+result = min_path_sum(grid)
+print(f"最小路徑和：{result}")
+</code></pre>
+<h3>範例 3：0/1 背包問題</h3>
+<pre><code class="language-python">import sys
+<p>def knapsack(weights, values, capacity):
+    """
+    0/1 背包問題：每個物品只能選或不選
+    
+    狀態定義：dp[i][w] = 前 i 個物品，容量 w 時的最大價值
+    轉移方程：
+        不選第 i 個：dp[i][w] = dp[i-1][w]
+        選第 i 個：dp[i][w] = dp[i-1][w-weight[i]] + value[i]
+        取最大值
+    """
+    n = len(weights)
+    
+    # 創建 DP 表
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        for w in range(capacity + 1):
+            # 不選第 i 個物品
+            dp[i][w] = dp[i-1][w]
+            
+            # 如果能選第 i 個物品
+            if w >= weights[i-1]:
+                dp[i][w] = max(
+                    dp[i][w],
+                    dp[i-1][w - weights[i-1]] + values[i-1]
+                )
+    
+    return dp[n][capacity]</p>
+<p># 讀取數據
+n = int(sys.stdin.readline())
+capacity = int(sys.stdin.readline())</p>
+<p>weights = []
+values = []
+for _ in range(n):
+    w, v = map(int, sys.stdin.readline().split())
+    weights.append(w)
+    values.append(v)</p>
+max_value = knapsack(weights, values, capacity)
+print(f"最大價值：{max_value}")
+</code></pre>
+<h3>範例 4：最長遞增子序列 (LIS)</h3>
+<pre><code class="language-python">import sys
+<p>def longest_increasing_subsequence(arr):
+    """
+    找出最長遞增子序列的長度
+    
+    狀態定義：dp[i] = 以 arr[i] 結尾的最長遞增子序列長度
+    轉移方程：dp[i] = max(dp[j] + 1) for all j < i where arr[j] < arr[i]
+    """
+    n = len(arr)
+    if n == 0:
+        return 0
+    
+    # 初始化：每個元素自己就是長度 1 的子序列
+    dp = [1] * n
+    
+    for i in range(1, n):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    
+    return max(dp)</p>
+<p># 主程式
+n = int(sys.stdin.readline())
+arr = list(map(int, sys.stdin.readline().split()))</p>
+lis_length = longest_increasing_subsequence(arr)
+print(f"最長遞增子序列長度：{lis_length}")
+</code></pre>
+<h3>範例 5：使用 @lru_cache</h3>
+<pre><code class="language-python">import sys
+from functools import lru_cache
+<p>@lru_cache(maxsize=None)
+def count_ways(n, k):
+    """
+    用 k 種顏色塗 n 個柵欄
+    相鄰柵欄不能同色
+    
+    使用 Python 的 lru_cache 自動實現 memoization
+    """
+    if n == 1:
+        return k
+    if n == 2:
+        return k * k
+    
+    # 第 n 個柵欄可以：
+    # 1. 與第 n-1 個不同色：count_ways(n-1, k) * (k-1)
+    # 2. 與第 n-2 個不同色但與 n-1 同色：count_ways(n-2, k) * (k-1)
+    return (k - 1) * (count_ways(n-1, k) + count_ways(n-2, k))</p>
+<p># 主程式
+n = int(sys.stdin.readline())
+k = int(sys.stdin.readline())</p>
+ways = count_ways(n, k)
+print(f"塗色方法數：{ways}")
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 程式碼解說 -->
+            <section id="explanation" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🔍</span>
+                    <span>程式碼解說</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>關鍵技術點</h3>
+<p>#### 1. 狀態定義的藝術</p>
+<strong>一維 DP</strong>：
+<pre><code class="language-python">dp[i] = 到達位置 i 的最優解
+</code></pre>
+<strong>二維 DP</strong>：
+<pre><code class="language-python">dp[i][j] = 考慮前 i 個元素，某個限制為 j 時的最優解
+</code></pre>
+<p>#### 2. 空間優化</p>
+<p>許多 DP 只需要前一個或前兩個狀態：</p>
+<pre><code class="language-python"># 原始：O(N) 空間
+dp = [0] * n
+for i in range(n):
+    dp[i] = dp[i-1] + dp[i-2]
+# 優化：O(1) 空間
+prev2, prev1 = 0, 1
+for i in range(2, n+1):
+    curr = prev1 + prev2
+    prev2, prev1 = prev1, curr
+</code></pre>
+<p>#### 3. DP vs 遞迴</p>
+<p>| 特性 | 遞迴 | DP |
+|------|------|-----|
+| 時間複雜度 | 指數級 | 多項式級 |
+| 空間複雜度 | 遞迴堆疊 | DP 表 |
+| 實現難度 | 簡單直觀 | 需要設計 |</p>
+                </div>
+            </section>
+
+            <!-- Quiz -->
+            <section id="quiz" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📝</span>
+                    <span>Quiz: 資源分配優化</span>
+                </h2>
+                <div class="quiz-box glass">
+                    <h3>題目</h3>
+冥王星基地有 N 天的任務，每天可以選擇執行任務 A 或任務 B：
+<ul>
+<li>任務 A：獲得 <code>a[i]</code> 點資源</li>
+<li>任務 B：獲得 <code>b[i]</code> 點資源</li>
+</ul>
+<strong>限制</strong>：連續執行同一任務不能超過 2 天
+<p>求 N 天內能獲得的最大資源點數。</p>
+<strong>輸入格式</strong>：
+<pre><code class="language-python">第一行：天數 N
+第二行：N 個整數，代表每天任務 A 的資源點
+第三行：N 個整數，代表每天任務 B 的資源點
+</code></pre>
+<strong>輸出格式</strong>：
+<pre><code class="language-python">最大資源點數：X
+</code></pre>
+<strong>輸入範例</strong>：
+<pre><code class="language-python">5
+10 5 8 12 6
+8 12 6 10 15
+</code></pre>
+<strong>輸出範例</strong>：
+<pre><code class="language-python">最大資源點數：54
+</code></pre>
+                    <button class="show-solution-btn" onclick="toggleSolution()">
+                        💡 查看解答
+                    </button>
+                </div>
+            </section>
+
+            <!-- 解答 -->
+            <section id="solution" class="content-section solution-hidden">
+                <h2 class="section-heading">
+                    <span class="heading-icon">✅</span>
+                    <span>Quiz 解答</span>
+                </h2>
+                <div class="solution-box glass">
+                    <pre><code class="language-python">import sys
+<p>def max_resources(n, task_a, task_b):
+    """
+    動態規劃解決資源分配問題
+    
+    狀態定義：
+    dp[i][0] = 第 i 天執行 A，且前一天執行 B 的最大資源
+    dp[i][1] = 第 i 天執行 A，且前一天執行 A 的最大資源
+    dp[i][2] = 第 i 天執行 B，且前一天執行 A 的最大資源
+    dp[i][3] = 第 i 天執行 B，且前一天執行 B 的最大資源
+    """
+    if n == 0:
+        return 0
+    
+    # 初始化
+    dp = [[0] * 4 for _ in range(n)]
+    dp[0][0] = task_a[0]  # 第 0 天執行 A
+    dp[0][3] = task_b[0]  # 第 0 天執行 B
+    
+    for i in range(1, n):
+        # 今天執行 A，昨天執行 B
+        dp[i][0] = max(dp[i-1][2], dp[i-1][3]) + task_a[i]
+        
+        # 今天執行 A，昨天執行 A（但不能連續 3 天）
+        dp[i][1] = dp[i-1][0] + task_a[i]
+        
+        # 今天執行 B，昨天執行 A
+        dp[i][2] = max(dp[i-1][0], dp[i-1][1]) + task_b[i]
+        
+        # 今天執行 B，昨天執行 B（但不能連續 3 天）
+        dp[i][3] = dp[i-1][2] + task_b[i]
+    
+    return max(dp[n-1])</p>
+<p># 主程式
+n = int(sys.stdin.readline())
+task_a = list(map(int, sys.stdin.readline().split()))
+task_b = list(map(int, sys.stdin.readline().split()))</p>
+result = max_resources(n, task_a, task_b)
+print(f"最大資源點數：{result}")
+</code></pre>
+<h3>解答說明</h3>
+<strong>狀態設計</strong>：
+<ul>
+<li>需要記錄「今天做什麼」和「昨天做什麼」</li>
+<li>用 4 個狀態涵蓋所有可能組合</li>
+</ul>
+<strong>轉移邏輯</strong>：
+<ul>
+<li>今天做 A，昨天必須是 B（或昨天也是 A 但前天是 B）</li>
+<li>確保不會連續 3 天做同一任務</li>
+</ul>
+<strong>時間複雜度</strong>：O(N)
+<strong>空間複雜度</strong>：O(N)（可優化到 O(1)）
+                </div>
+            </section>
+
+            <!-- 完成徽章 -->
+            <div class="completion-badge glass">
+                <div class="badge-content">
+                    <span class="badge-icon">🎉</span>
+                    <h3>訓練完成！</h3>
+                    <p>恭喜你完成 動態規劃藝術 訓練！</p>
+                </div>
+            </div>
+
+            <!-- 導航按鈕 -->
+            <div class="lesson-navigation">
+                <a href="../L4/D1.html" class="nav-btn prev-btn" >← 上一課</a>
+                <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
+                <a href="../L4/D3.html" class="nav-btn next-btn" >下一課 →</a>
+            </div>
+        </article>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../../scripts/starfield.js"></script>
+    <script src="../../scripts/lesson.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

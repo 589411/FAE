@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2: 遞迴與回溯探索 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/lesson.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- 導航欄 -->
+    <nav class="lesson-nav glass">
+        <div class="nav-content">
+            <a href="../../index.html" class="back-btn">
+                <span>←</span>
+                <span>返回課程地圖</span>
+            </a>
+            <div class="lesson-progress">
+                <span class="progress-text">L3 - C2</span>
+            </div>
+            <div class="lesson-nav-buttons">
+                <a href="../L3/C1.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="../L3/C3.html" class="nav-btn next-btn" >下一課</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="lesson-container">
+        <!-- 側邊欄目錄 -->
+        <aside class="lesson-sidebar glass">
+            <h3 class="sidebar-title">📋 本課內容</h3>
+            <nav class="sidebar-nav">
+                <a href="#mission" class="sidebar-link active">🚀 任務背景</a>
+                <a href="#knowledge" class="sidebar-link">📚 知識點說明</a>
+                <a href="#examples" class="sidebar-link">💻 範例程式碼</a>
+                <a href="#explanation" class="sidebar-link">🔍 程式碼解說</a>
+                <a href="#quiz" class="sidebar-link">📝 Quiz</a>
+                <a href="#solution" class="sidebar-link">✅ 解答</a>
+            </nav>
+        </aside>
+
+        <!-- 課程內容 -->
+        <article class="lesson-content">
+            <!-- 課程標題 -->
+            <header class="lesson-header">
+                <div class="lesson-badge">
+                    <span class="badge-icon">🚀</span>
+                    <span class="badge-text">L3: 天王星高速電梯</span>
+                </div>
+                <h1 class="lesson-title text-glow">
+                    C2: 海王星深度探索：遞迴與回溯法
+                </h1>
+                <div class="lesson-meta">
+                    <span class="meta-item">⏱️ 預計時間：5-6 小時</span>
+                    <span class="meta-item">🎯 目標級分：4 級分</span>
+                    <span class="meta-item">📊 難度：⭐⭐⭐⭐☆</span>
+                </div>
+            </header>
+
+            <!-- 任務背景 -->
+            <section id="mission" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🚀</span>
+                    <span>任務背景</span>
+                </h2>
+                <div class="content-box glass">
+                    <p>海王星的衛星系統極為複雜，有 14 顆已知衛星。探索這些衛星需要系統性地搜索所有可能的路徑。這時候，「遞迴」和「回溯」就是你最強大的工具！</p>
+<p>遞迴就像俄羅斯套娃：大問題包含小問題，小問題又包含更小的問題，直到問題小到可以直接解決。</p>
+                </div>
+            </section>
+
+            <!-- 知識點說明 -->
+            <section id="knowledge" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📚</span>
+                    <span>知識點說明</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>什麼是遞迴？</h3>
+遞迴是函數呼叫自己的過程。每個遞迴函數都需要：
+<ol>
+<li><strong>基礎情況（Base Case）</strong>：遞迴的終止條件</li>
+<li><strong>遞迴步驟（Recursive Step）</strong>：將問題分解為更小的子問題</li>
+</ol>
+<pre><code class="language-python">def countdown(n):
+    if n == 0:  # 基礎情況
+        print("發射！")
+        return
+    print(n)
+    countdown(n - 1)  # 遞迴步驟
+</code></pre>
+<h3>遞迴的思維模式</h3>
+<strong>信念飛躍（Leap of Faith）</strong>：相信函數對更小的問題能正確運作。
+<pre><code class="language-python"># 計算階乘：n! = n × (n-1)!
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)  # 相信 factorial(n-1) 是正確的
+</code></pre>
+<h3>什麼是回溯法？</h3>
+回溯法是一種系統性搜索所有可能解的方法：
+<ol>
+<li>做出選擇</li>
+<li>遞迴探索</li>
+<li>撤銷選擇（回溯）</li>
+</ol>
+<p>就像在迷宮中探索：走到死路就退回來，嘗試另一條路。</p>
+<h3>回溯模板</h3>
+<pre><code class="language-python">result = []
+def backtrack(path, choices):
+    # 1. 檢查是否找到解
+    if is_solution(path):
+        result.append(path.copy())
+        return
+    
+    # 2. 剪枝（可選）
+    if cannot_be_solution(path):
+        return
+    
+    # 3. 嘗試所有選擇
+    for choice in choices:
+        # 做出選擇
+        path.append(choice)
+        
+        # 遞迴探索
+        backtrack(path, new_choices)
+        
+        # 撤銷選擇
+        path.pop()
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 範例程式碼 -->
+            <section id="examples" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">💻</span>
+                    <span>範例程式碼</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>範例 1：階乘計算（基礎遞迴）</h3>
+<pre><code class="language-python">import sys
+<p>def factorial(n):
+    """計算 n 的階乘"""
+    # 基礎情況
+    if n == 0 or n == 1:
+        return 1
+    
+    # 遞迴步驟
+    return n * factorial(n - 1)</p>
+<p># 任務：計算火箭推進器配置數量
+n = int(sys.stdin.readline())
+result = factorial(n)</p>
+print(f"{n}! = {result}")
+print(f"共有 {result} 種配置方式")
+</code></pre>
+<h3>範例 2：費波那契數列</h3>
+<pre><code class="language-python">import sys
+<p>def fibonacci(n):
+    """計算第 n 個費波那契數"""
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)</p>
+<p># 優化版本：使用記憶化
+memo = {}</p>
+<p>def fibonacci_memo(n):
+    if n in memo:
+        return memo[n]
+    
+    if n <= 1:
+        return n
+    
+    memo[n] = fibonacci_memo(n - 1) + fibonacci_memo(n - 2)
+    return memo[n]</p>
+<p># 任務：計算軌道共振週期
+n = int(sys.stdin.readline())</p>
+print(f"第 {n} 個費波那契數：{fibonacci_memo(n)}")
+</code></pre>
+<h3>範例 3：生成所有排列（回溯法）</h3>
+<pre><code class="language-python">import sys
+<p>def permutations(arr):
+    """生成陣列的所有排列"""
+    result = []
+    
+    def backtrack(path, remaining):
+        # 基礎情況：沒有剩餘元素
+        if not remaining:
+            result.append(path.copy())
+            return
+        
+        # 嘗試每個剩餘元素
+        for i in range(len(remaining)):
+            # 選擇
+            path.append(remaining[i])
+            new_remaining = remaining[:i] + remaining[i+1:]
+            
+            # 遞迴
+            backtrack(path, new_remaining)
+            
+            # 撤銷
+            path.pop()
+    
+    backtrack([], arr)
+    return result</p>
+<p># 任務：生成太空船編隊的所有排列
+n = int(sys.stdin.readline())
+ships = list(range(1, n + 1))</p>
+<p>all_perms = permutations(ships)</p>
+print(f"太空船數量：{n}")
+print(f"可能的編隊方式：{len(all_perms)} 種")
+print("\n前 10 種編隊：")
+for i, perm in enumerate(all_perms[:10]):
+    print(f"{i+1}. {perm}")
+</code></pre>
+<h3>範例 4：N 皇后問題</h3>
+<pre><code class="language-python">import sys
+<p>def solve_n_queens(n):
+    """解決 N 皇后問題"""
+    result = []
+    board = [['.'] * n for _ in range(n)]
+    
+    def is_safe(row, col):
+        """檢查在 (row, col) 放置皇后是否安全"""
+        # 檢查同一列
+        for i in range(row):
+            if board[i][col] == 'Q':
+                return False
+        
+        # 檢查左上對角線
+        i, j = row - 1, col - 1
+        while i >= 0 and j >= 0:
+            if board[i][j] == 'Q':
+                return False
+            i -= 1
+            j -= 1
+        
+        # 檢查右上對角線
+        i, j = row - 1, col + 1
+        while i >= 0 and j < n:
+            if board[i][j] == 'Q':
+                return False
+            i -= 1
+            j += 1
+        
+        return True
+    
+    def backtrack(row):
+        # 基礎情況：所有行都放置完成
+        if row == n:
+            result.append([''.join(row) for row in board])
+            return
+        
+        # 嘗試在當前行的每一列放置皇后
+        for col in range(n):
+            if is_safe(row, col):
+                # 放置皇后
+                board[row][col] = 'Q'
+                
+                # 遞迴處理下一行
+                backtrack(row + 1)
+                
+                # 撤銷
+                board[row][col] = '.'
+    
+    backtrack(0)
+    return result</p>
+<p># 任務：在 N×N 的太空站網格中放置 N 個防禦塔
+n = int(sys.stdin.readline())
+solutions = solve_n_queens(n)</p>
+<p>print(f"網格大小：{n}×{n}")
+print(f"找到 {len(solutions)} 種配置方案")</p>
+if solutions:
+    print("\n第一種方案：")
+    for row in solutions[0]:
+        print(row)
+</code></pre>
+<h3>範例 5：子集生成（組合問題）</h3>
+<pre><code class="language-python">import sys
+<p>def subsets(nums):
+    """生成所有子集"""
+    result = []
+    
+    def backtrack(start, path):
+        # 每個狀態都是一個有效的子集
+        result.append(path.copy())
+        
+        # 嘗試添加後續元素
+        for i in range(start, len(nums)):
+            # 選擇
+            path.append(nums[i])
+            
+            # 遞迴（注意：從 i+1 開始，避免重複）
+            backtrack(i + 1, path)
+            
+            # 撤銷
+            path.pop()
+    
+    backtrack(0, [])
+    return result</p>
+<p># 任務：選擇要探索的衛星組合
+n = int(sys.stdin.readline())
+satellites = list(range(1, n + 1))</p>
+<p>all_subsets = subsets(satellites)</p>
+print(f"衛星總數：{n}")
+print(f"可能的探索組合：{len(all_subsets)} 種")
+print("\n所有組合：")
+for i, subset in enumerate(all_subsets):
+    if subset:
+        print(f"{i}. 探索衛星 {subset}")
+    else:
+        print(f"{i}. 不探索任何衛星")
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 程式碼解說 -->
+            <section id="explanation" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🔍</span>
+                    <span>程式碼解說</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>關鍵技術點</h3>
+<ol>
+<li><strong>遞迴的執行過程</strong></li>
+</ol>
+   <pre><code class="language-python">   factorial(3)
+   = 3 * factorial(2)
+   = 3 <em> (2 </em> factorial(1))
+   = 3 <em> (2 </em> 1)
+   = 3 * 2
+   = 6
+   </code></pre>
+<ol>
+<li><strong>記憶化的重要性</strong></li>
+</ol>
+   <pre><code class="language-python">   # 沒有記憶化：fibonacci(5) 會重複計算很多次
+   fib(5)
+   ├─ fib(4)
+   │  ├─ fib(3)
+   │  │  ├─ fib(2)  ← 重複
+   │  │  └─ fib(1)
+   │  └─ fib(2)     ← 重複
+   └─ fib(3)        ← 重複
+      ├─ fib(2)
+      └─ fib(1)
+   
+   # 有記憶化：每個值只計算一次
+   </code></pre>
+<ol>
+<li><strong>回溯的「選擇-探索-撤銷」模式</strong></li>
+</ol>
+   <pre><code class="language-python">   # 生成 [1,2,3] 的排列
+   []
+   ├─ [1]
+   │  ├─ [1,2]
+   │  │  └─ [1,2,3] ✓
+   │  └─ [1,3]
+   │     └─ [1,3,2] ✓
+   ├─ [2]
+   │  └─ ...
+   └─ [3]
+      └─ ...
+   </code></pre>
+<ol>
+<li><strong>剪枝優化</strong></li>
+</ol>
+   <pre><code class="language-python">   # N 皇后問題中的剪枝
+   if not is_safe(row, col):
+       continue  # 跳過這個選擇，不需要遞迴
+   </code></pre>
+                </div>
+            </section>
+
+            <!-- Quiz -->
+            <section id="quiz" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📝</span>
+                    <span>Quiz: 衛星路徑探索</span>
+                </h2>
+                <div class="quiz-box glass">
+                    <h3>題目：找出所有路徑</h3>
+<p>海王星有 N 顆衛星，編號從 1 到 N。你的太空船從衛星 1 出發，目標是到達衛星 N。每次可以選擇前進 1 或 2 個衛星（例如從衛星 3 可以到達衛星 4 或 5）。</p>
+<p>請找出所有可能的路徑。</p>
+<strong>輸入格式：</strong>
+<ul>
+<li>一行：整數 N（衛星數量，2 ≤ N ≤ 10）</li>
+</ul>
+<strong>輸入範例：</strong>
+<pre><code class="language-python">4
+</code></pre>
+<strong>輸出範例：</strong>
+<pre><code class="language-python">路徑 1: [1, 2, 3, 4]
+路徑 2: [1, 2, 4]
+路徑 3: [1, 3, 4]
+總共 3 條路徑
+</code></pre>
+<h3>💡 提示</h3>
+<ul>
+<li>使用回溯法</li>
+<li>從衛星 1 開始</li>
+<li>每次可以 +1 或 +2</li>
+<li>到達衛星 N 時記錄路徑</li>
+</ul>
+<p>---</p>
+                    <button class="show-solution-btn" onclick="toggleSolution()">
+                        💡 查看解答
+                    </button>
+                </div>
+            </section>
+
+            <!-- 解答 -->
+            <section id="solution" class="content-section solution-hidden">
+                <h2 class="section-heading">
+                    <span class="heading-icon">✅</span>
+                    <span>Quiz 解答</span>
+                </h2>
+                <div class="solution-box glass">
+                    <pre><code class="language-python">import sys
+<p>def find_all_paths(n):
+    """找出從 1 到 n 的所有路徑"""
+    result = []
+    
+    def backtrack(current, path):
+        # 基礎情況：到達目標
+        if current == n:
+            result.append(path.copy())
+            return
+        
+        # 剪枝：超出範圍
+        if current > n:
+            return
+        
+        # 選擇 1：前進 1 步
+        path.append(current + 1)
+        backtrack(current + 1, path)
+        path.pop()
+        
+        # 選擇 2：前進 2 步
+        if current + 2 <= n:  # 確保不超出範圍
+            path.append(current + 2)
+            backtrack(current + 2, path)
+            path.pop()
+    
+    # 從衛星 1 開始
+    backtrack(1, [1])
+    return result</p>
+<p># 讀取衛星數量
+n = int(sys.stdin.readline())</p>
+<p># 找出所有路徑
+paths = find_all_paths(n)</p>
+<p># 輸出結果
+for i, path in enumerate(paths, 1):
+    print(f"路徑 {i}: {path}")</p>
+print(f"\n總共 {len(paths)} 條路徑")
+</code></pre>
+<h3>解答說明</h3>
+<ol>
+<li><strong>遞迴結構</strong></li>
+</ol>
+   <pre><code class="language-python">   def backtrack(current, path):
+       if current == n:  # 到達目標
+           result.append(path.copy())  # 記錄路徑
+           return
+   </code></pre>
+<ol>
+<li><strong>兩個選擇</strong></li>
+</ol>
+   <pre><code class="language-python">   # 選擇 1：+1
+   path.append(current + 1)
+   backtrack(current + 1, path)
+   path.pop()
+   
+   # 選擇 2：+2
+   path.append(current + 2)
+   backtrack(current + 2, path)
+   path.pop()
+   </code></pre>
+<ol>
+<li><strong>為什麼要 path.copy()？</strong></li>
+</ol>
+   <pre><code class="language-python">   # ❌ 錯誤：所有路徑都指向同一個列表
+   result.append(path)
+   
+   # ✅ 正確：創建副本
+   result.append(path.copy())
+   </code></pre>
+<ol>
+<li><strong>遞迴樹</strong></li>
+</ol>
+   <pre><code class="language-python">   N = 4 的情況：
+   
+   1
+   ├─ 2
+   │  ├─ 3
+   │  │  └─ 4 ✓ [1,2,3,4]
+   │  └─ 4 ✓ [1,2,4]
+   └─ 3
+      └─ 4 ✓ [1,3,4]
+   </code></pre>
+<h3>進階：計算路徑數量（不列舉）</h3>
+<pre><code class="language-python">def count_paths(n):
+    """計算路徑數量（動態規劃）"""
+    if n <= 1:
+        return 1
+    
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    dp[2] = 1
+    
+    for i in range(3, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+    
+    return dp[n]
+# 這其實是費波那契數列！
+</code></pre>
+<h3>效能分析</h3>
+<ul>
+<li>時間複雜度：O(2^N) - 每個位置有 2 個選擇</li>
+<li>空間複雜度：O(N) - 遞迴深度最多 N</li>
+<li>實際路徑數：第 N 個費波那契數</li>
+</ul>
+<p>---</p>
+                </div>
+            </section>
+
+            <!-- 完成徽章 -->
+            <div class="completion-badge glass">
+                <div class="badge-content">
+                    <span class="badge-icon">🎉</span>
+                    <h3>訓練完成！</h3>
+                    <p>恭喜你完成 遞迴與回溯探索 訓練！</p>
+                </div>
+            </div>
+
+            <!-- 導航按鈕 -->
+            <div class="lesson-navigation">
+                <a href="../L3/C1.html" class="nav-btn prev-btn" >← 上一課</a>
+                <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
+                <a href="../L3/C3.html" class="nav-btn next-btn" >下一課 →</a>
+            </div>
+        </article>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../../scripts/starfield.js"></script>
+    <script src="../../scripts/lesson.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

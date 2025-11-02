@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E1: 綜合應用與優化 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/lesson.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- 導航欄 -->
+    <nav class="lesson-nav glass">
+        <div class="nav-content">
+            <a href="../../index.html" class="back-btn">
+                <span>←</span>
+                <span>返回課程地圖</span>
+            </a>
+            <div class="lesson-progress">
+                <span class="progress-text">L5 - E1</span>
+            </div>
+            <div class="lesson-nav-buttons">
+                <a href="../L4/D3.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="" class="nav-btn next-btn" style="opacity: 0.5; pointer-events: none;">下一課</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="lesson-container">
+        <!-- 側邊欄目錄 -->
+        <aside class="lesson-sidebar glass">
+            <h3 class="sidebar-title">📋 本課內容</h3>
+            <nav class="sidebar-nav">
+                <a href="#mission" class="sidebar-link active">🚀 任務背景</a>
+                <a href="#knowledge" class="sidebar-link">📚 知識點說明</a>
+                <a href="#examples" class="sidebar-link">💻 範例程式碼</a>
+                <a href="#explanation" class="sidebar-link">🔍 程式碼解說</a>
+                <a href="#quiz" class="sidebar-link">📝 Quiz</a>
+                <a href="#solution" class="sidebar-link">✅ 解答</a>
+            </nav>
+        </aside>
+
+        <!-- 課程內容 -->
+        <article class="lesson-content">
+            <!-- 課程標題 -->
+            <header class="lesson-header">
+                <div class="lesson-badge">
+                    <span class="badge-icon">⭐</span>
+                    <span class="badge-text">L5: 終極挑戰</span>
+                </div>
+                <h1 class="lesson-title text-glow">
+                    E1: 終極挑戰：動態規劃與最佳化
+                </h1>
+                <div class="lesson-meta">
+                    <span class="meta-item">⏱️ 預計時間：8-10 小時</span>
+                    <span class="meta-item">🎯 目標級分：5 級分</span>
+                    <span class="meta-item">📊 難度：⭐⭐⭐⭐⭐</span>
+                </div>
+            </header>
+
+            <!-- 任務背景 -->
+            <section id="mission" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🚀</span>
+                    <span>任務背景</span>
+                </h2>
+                <div class="content-box glass">
+                    <p>你已經完成了從月球到冥王星的漫長旅程！現在面臨最終挑戰：資源最佳化問題。在太空探險中，資源（燃料、氧氣、時間）都極其寶貴，你需要找到「最優解」而不僅僅是「可行解」。</p>
+動態規劃（Dynamic Programming, DP）是解決最佳化問題的終極武器。它的核心思想是：
+<ul>
+<li><strong>記住過去</strong>：避免重複計算</li>
+<li><strong>從小到大</strong>：用小問題的解構建大問題的解</li>
+</ul>
+                </div>
+            </section>
+
+            <!-- 知識點說明 -->
+            <section id="knowledge" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📚</span>
+                    <span>知識點說明</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>什麼是動態規劃？</h3>
+動態規劃適用於具有以下特性的問題：
+<ol>
+<li><strong>最優子結構</strong>：大問題的最優解包含小問題的最優解</li>
+<li><strong>重疊子問題</strong>：相同的子問題會被多次計算</li>
+</ol>
+<h3>DP 的兩種方法</h3>
+<strong>1. Top-Down（記憶化遞迴）</strong>
+<pre><code class="language-python">memo = {}
+def dp(n):
+    if n in memo:
+        return memo[n]
+    
+    # 計算
+    result = ...
+    memo[n] = result
+    return result
+</code></pre>
+<strong>2. Bottom-Up（迭代填表）</strong>
+<pre><code class="language-python">dp = [0] * (n + 1)
+dp[0] = base_case
+for i in range(1, n + 1):
+    dp[i] = ...  # 根據之前的值計算
+</code></pre>
+<h3>經典 DP 問題類型</h3>
+<ol>
+<li><strong>計數型</strong>：有多少種方法？</li>
+<li><strong>最優化</strong>：最大/最小值是多少？</li>
+<li><strong>存在性</strong>：是否可能？</li>
+<li><strong>路徑問題</strong>：最佳路徑是什麼？</li>
+</ul>
+                </div>
+            </section>
+
+            <!-- 範例程式碼 -->
+            <section id="examples" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">💻</span>
+                    <span>範例程式碼</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>範例 1：爬樓梯（入門 DP）</h3>
+<pre><code class="language-python">import sys
+<p>def climb_stairs(n):
+    """
+    爬 n 階樓梯，每次可以爬 1 或 2 階
+    問：有多少種爬法？
+    """
+    if n <= 2:
+        return n
+    
+    # dp[i] = 爬到第 i 階的方法數
+    dp = [0] * (n + 1)
+    dp[1] = 1  # 1 階：1 種方法
+    dp[2] = 2  # 2 階：2 種方法（1+1 或 2）
+    
+    for i in range(3, n + 1):
+        # 可以從第 i-1 階爬 1 階，或從第 i-2 階爬 2 階
+        dp[i] = dp[i-1] + dp[i-2]
+    
+    return dp[n]</p>
+<p># 任務：計算登上太空站的方法數
+n = int(sys.stdin.readline())
+result = climb_stairs(n)</p>
+print(f"登上 {n} 階太空站的方法數：{result}")
+</code></pre>
+<h3>範例 2：背包問題（經典 DP）</h3>
+<pre><code class="language-python">import sys
+<p>def knapsack(weights, values, capacity):
+    """
+    0/1 背包問題：每個物品只能選一次
+    weights: 物品重量列表
+    values: 物品價值列表
+    capacity: 背包容量
+    返回：最大價值
+    """
+    n = len(weights)
+    
+    # dp[i][w] = 前 i 個物品，容量為 w 時的最大價值
+    dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        for w in range(capacity + 1):
+            # 選擇 1：不拿第 i 個物品
+            dp[i][w] = dp[i-1][w]
+            
+            # 選擇 2：拿第 i 個物品（如果放得下）
+            if w >= weights[i-1]:
+                dp[i][w] = max(dp[i][w], 
+                              dp[i-1][w - weights[i-1]] + values[i-1])
+    
+    return dp[n][capacity]</p>
+<p># 任務：選擇要帶上太空船的科學儀器
+n = int(sys.stdin.readline())  # 儀器數量
+capacity = int(sys.stdin.readline())  # 載重限制</p>
+<p>weights = []
+values = []</p>
+<p>print("可用儀器：")
+for i in range(n):
+    w, v = map(int, sys.stdin.readline().strip().split())
+    weights.append(w)
+    values.append(v)
+    print(f"儀器 {i+1}: 重量 {w} kg, 價值 {v}")</p>
+max_value = knapsack(weights, values, capacity)
+print(f"\n載重限制：{capacity} kg")
+print(f"最大總價值：{max_value}")
+</code></pre>
+<h3>範例 3：最長遞增子序列（LIS）</h3>
+<pre><code class="language-python">import sys
+<p>def longest_increasing_subsequence(arr):
+    """
+    找出最長遞增子序列的長度
+    """
+    if not arr:
+        return 0
+    
+    n = len(arr)
+    # dp[i] = 以 arr[i] 結尾的最長遞增子序列長度
+    dp = [1] * n
+    
+    for i in range(1, n):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    
+    return max(dp)</p>
+<p>def lis_with_path(arr):
+    """返回 LIS 長度和實際序列"""
+    if not arr:
+        return 0, []
+    
+    n = len(arr)
+    dp = [1] * n
+    parent = [-1] * n  # 記錄前一個元素的索引
+    
+    for i in range(1, n):
+        for j in range(i):
+            if arr[j] < arr[i] and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1
+                parent[i] = j
+    
+    # 找出最長序列的結尾
+    max_length = max(dp)
+    max_idx = dp.index(max_length)
+    
+    # 重建路徑
+    path = []
+    idx = max_idx
+    while idx != -1:
+        path.append(arr[idx])
+        idx = parent[idx]
+    
+    path.reverse()
+    return max_length, path</p>
+<p># 任務：找出能量讀數的最長上升趨勢
+n = int(sys.stdin.readline())
+readings = list(map(int, sys.stdin.readline().strip().split()))</p>
+<p>length, sequence = lis_with_path(readings)</p>
+print(f"能量讀數：{readings}")
+print(f"最長上升趨勢長度：{length}")
+print(f"趨勢序列：{sequence}")
+</code></pre>
+<h3>範例 4：編輯距離（字串 DP）</h3>
+<pre><code class="language-python">import sys
+<p>def edit_distance(s1, s2):
+    """
+    計算將 s1 轉換為 s2 的最少操作次數
+    操作：插入、刪除、替換
+    """
+    m, n = len(s1), len(s2)
+    
+    # dp[i][j] = s1[0:i] 轉換為 s2[0:j] 的最少操作數
+    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+    
+    # 初始化：空字串的轉換
+    for i in range(m + 1):
+        dp[i][0] = i  # 刪除 i 個字元
+    for j in range(n + 1):
+        dp[0][j] = j  # 插入 j 個字元
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i-1] == s2[j-1]:
+                # 字元相同，不需要操作
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                # 三種操作取最小
+                dp[i][j] = 1 + min(
+                    dp[i-1][j],    # 刪除
+                    dp[i][j-1],    # 插入
+                    dp[i-1][j-1]   # 替換
+                )
+    
+    return dp[m][n]</p>
+<p># 任務：修正損壞的通訊訊號
+original = sys.stdin.readline().strip()
+received = sys.stdin.readline().strip()</p>
+<p>distance = edit_distance(original, received)</p>
+print(f"原始訊號：{original}")
+print(f"接收訊號：{received}")
+print(f"最少需要 {distance} 次修正")
+</code></pre>
+<h3>範例 5：硬幣找零（完全背包）</h3>
+<pre><code class="language-python">import sys
+<p>def coin_change(coins, amount):
+    """
+    給定硬幣面額，找出湊成 amount 的最少硬幣數
+    每種硬幣可以使用無限次
+    """
+    # dp[i] = 湊成金額 i 的最少硬幣數
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0  # 金額 0 需要 0 個硬幣
+    
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if i >= coin:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+    
+    return dp[amount] if dp[amount] != float('inf') else -1</p>
+<p>def coin_change_ways(coins, amount):
+    """計算有多少種湊法"""
+    dp = [0] * (amount + 1)
+    dp[0] = 1  # 湊成 0 有 1 種方法（不選）
+    
+    for coin in coins:
+        for i in range(coin, amount + 1):
+            dp[i] += dp[i - coin]
+    
+    return dp[amount]</p>
+<p># 任務：使用能量晶體為太空船充能
+n = int(sys.stdin.readline())  # 晶體種類
+coins = list(map(int, sys.stdin.readline().strip().split()))
+amount = int(sys.stdin.readline())  # 需要的能量</p>
+<p>min_crystals = coin_change(coins, amount)
+ways = coin_change_ways(coins, amount)</p>
+<p>print(f"晶體面額：{coins}")
+print(f"需要能量：{amount}")</p>
+if min_crystals != -1:
+    print(f"最少需要 {min_crystals} 個晶體")
+    print(f"共有 {ways} 種組合方式")
+else:
+    print("無法湊成所需能量！")
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 程式碼解說 -->
+            <section id="explanation" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🔍</span>
+                    <span>程式碼解說</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>關鍵技術點</h3>
+<ol>
+<li><strong>狀態定義</strong></li>
+<li>DP 最難的部分：定義 <code>dp[i]</code> 或 <code>dp[i][j]</code> 代表什麼</li>
+<li>好的狀態定義讓轉移方程式變簡單</li>
+</ol>
+<ol>
+<li><strong>狀態轉移方程</strong></li>
+</ol>
+   <pre><code class="language-python">   # 爬樓梯
+   dp[i] = dp[i-1] + dp[i-2]
+   
+   # 背包
+   dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight] + value)
+   
+   # LIS
+   dp[i] = max(dp[j] + 1) for all j < i where arr[j] < arr[i]
+   </code></pre>
+<ol>
+<li><strong>初始化</strong></li>
+</ol>
+   <pre><code class="language-python">   # 基礎情況必須正確
+   dp[0] = 0  # 或 1，取決於問題
+   </code></pre>
+<ol>
+<li><strong>空間優化</strong></li>
+</ol>
+   <pre><code class="language-python">   # 如果只需要前一行的數據，可以用滾動陣列
+   # 將 O(N²) 空間優化為 O(N)
+   </code></pre>
+                </div>
+            </section>
+
+            <!-- Quiz -->
+            <section id="quiz" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📝</span>
+                    <span>Quiz: 星際貿易最佳化</span>
+                </h2>
+                <div class="quiz-box glass">
+                    <h3>題目：最大利潤路徑</h3>
+<p>你要從地球（位置 0）飛到冥王星（位置 N-1），途中經過 N 個太空站。每個太空站都有一個「貿易指數」（可能為負，表示需要支付過路費）。</p>
+你可以選擇：
+<ol>
+<li>在當前太空站進行貿易（獲得該站的貿易指數）</li>
+<li>跳過當前太空站</li>
+</ol>
+<p>但有一個限制：<strong>不能連續跳過超過 K 個太空站</strong>（必須定期補給）。</p>
+<p>請找出能獲得的最大總利潤。</p>
+<strong>輸入格式：</strong>
+<ul>
+<li>第一行：N K（太空站數量，最大連續跳過數）</li>
+<li>第二行：N 個整數，代表每個太空站的貿易指數</li>
+</ul>
+<strong>輸入範例：</strong>
+<pre><code class="language-python">6 2
+5 -3 8 -2 6 4
+</code></pre>
+<strong>輸出範例：</strong>
+<pre><code class="language-python">最大利潤：23
+選擇的太空站：[0, 2, 4, 5]
+路徑：5 → (跳過) → 8 → (跳過) → 6 → 4
+</code></pre>
+<h3>💡 提示</h3>
+<ul>
+<li>定義 <code>dp[i]</code> = 到達第 i 個太空站時的最大利潤</li>
+<li>考慮從哪個之前的太空站過來（最多跳過 K 個）</li>
+</ul>
+<p>---</p>
+                    <button class="show-solution-btn" onclick="toggleSolution()">
+                        💡 查看解答
+                    </button>
+                </div>
+            </section>
+
+            <!-- 解答 -->
+            <section id="solution" class="content-section solution-hidden">
+                <h2 class="section-heading">
+                    <span class="heading-icon">✅</span>
+                    <span>Quiz 解答</span>
+                </h2>
+                <div class="solution-box glass">
+                    <pre><code class="language-python">import sys
+<p>def max_profit_path(profits, k):
+    """
+    找出最大利潤路徑
+    profits: 每個太空站的貿易指數
+    k: 最大連續跳過數
+    """
+    n = len(profits)
+    
+    # dp[i] = 到達第 i 個太空站時的最大利潤
+    dp = [float('-inf')] * n
+    parent = [-1] * n  # 記錄路徑
+    
+    # 初始化：第一個太空站
+    dp[0] = profits[0]
+    
+    for i in range(1, n):
+        # 嘗試從之前的 k+1 個太空站過來
+        for j in range(max(0, i - k - 1), i):
+            if dp[j] + profits[i] > dp[i]:
+                dp[i] = dp[j] + profits[i]
+                parent[i] = j
+    
+    # 找出最後一個太空站的最大利潤
+    max_profit = dp[n-1]
+    
+    # 重建路徑
+    path = []
+    idx = n - 1
+    while idx != -1:
+        path.append(idx)
+        idx = parent[idx]
+    path.reverse()
+    
+    return max_profit, path</p>
+<p># 讀取輸入
+n, k = map(int, sys.stdin.readline().strip().split())
+profits = list(map(int, sys.stdin.readline().strip().split()))</p>
+<p>max_profit, path = max_profit_path(profits, k)</p>
+<p>print(f"最大利潤：{max_profit}")
+print(f"選擇的太空站：{path}")</p>
+<p># 顯示路徑
+path_str = []
+for i in range(len(path)):
+    path_str.append(str(profits[path[i]]))
+    if i < len(path) - 1:
+        skipped = path[i+1] - path[i] - 1
+        if skipped > 0:
+            path_str.append(f"(跳過 {skipped} 個)")
+        path_str.append("→")</p>
+print(f"路徑：{' '.join(path_str)}")
+</code></pre>
+<h3>解答說明</h3>
+<ol>
+<li><strong>狀態定義</strong></li>
+</ol>
+   <pre><code class="language-python">   dp[i] = 到達第 i 個太空站時的最大利潤
+   </code></pre>
+<ol>
+<li><strong>轉移方程</strong></li>
+</ol>
+   <pre><code class="language-python">   # 從第 j 個太空站跳到第 i 個
+   # 條件：i - j - 1 <= k（中間跳過的數量不超過 k）
+   dp[i] = max(dp[j] + profits[i]) for all valid j
+   </code></pre>
+<ol>
+<li><strong>路徑重建</strong></li>
+</ol>
+   <pre><code class="language-python">   parent[i] = j  # 記錄是從哪個太空站來的
+   
+   # 從終點回溯到起點
+   while idx != -1:
+       path.append(idx)
+       idx = parent[idx]
+   </code></pre>
+<h3>時間複雜度分析</h3>
+<ul>
+<li>時間複雜度：O(N × K) - 每個位置最多檢查 K+1 個前驅</li>
+<li>空間複雜度：O(N) - 儲存 DP 陣列和路徑</li>
+<li>可以進一步優化為 O(N log K) 使用優先佇列</li>
+</ul>
+<p>---</p>
+                </div>
+            </section>
+
+            <!-- 完成徽章 -->
+            <div class="completion-badge glass">
+                <div class="badge-content">
+                    <span class="badge-icon">🎉</span>
+                    <h3>訓練完成！</h3>
+                    <p>恭喜你完成 綜合應用與優化 訓練！</p>
+                </div>
+            </div>
+
+            <!-- 導航按鈕 -->
+            <div class="lesson-navigation">
+                <a href="../L4/D3.html" class="nav-btn prev-btn" >← 上一課</a>
+                <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
+                <a href="" class="nav-btn next-btn" style="opacity: 0.5; pointer-events: none;">下一課 →</a>
+            </div>
+        </article>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../../scripts/starfield.js"></script>
+    <script src="../../scripts/lesson.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

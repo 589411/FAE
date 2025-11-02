@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A2: 邏輯控制與條件判斷 | APCS 太空探險課程</title>
+    <title>A2: 導航邏輯與條件判斷 | APCS 太空探險課程</title>
     <link rel="stylesheet" href="../../styles/main.css">
     <link rel="stylesheet" href="../../styles/lesson.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
@@ -21,11 +21,11 @@
                 <span>返回課程地圖</span>
             </a>
             <div class="lesson-progress">
-                <span class="progress-text">Level 1 - A2</span>
+                <span class="progress-text">L1 - A2</span>
             </div>
             <div class="lesson-nav-buttons">
-                <a href="A1.html" class="nav-btn prev-btn">上一課</a>
-                <a href="A3.html" class="nav-btn next-btn">下一課</a>
+                <a href="../L1/A1.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="../L1/A3.html" class="nav-btn next-btn" >下一課</a>
             </div>
         </div>
     </nav>
@@ -51,13 +51,13 @@
             <header class="lesson-header">
                 <div class="lesson-badge">
                     <span class="badge-icon">🌙</span>
-                    <span class="badge-text">Level 1: 月球基地訓練</span>
+                    <span class="badge-text">L1: 月球基地訓練</span>
                 </div>
                 <h1 class="lesson-title text-glow">
                     A2: 月球導航系統：邏輯控制與條件判斷
                 </h1>
                 <div class="lesson-meta">
-                    <span class="meta-item">⏱️ 預計時間：2-3 小時</span>
+                    <span class="meta-item">⏱️ 預計時間：3-4 小時</span>
                     <span class="meta-item">🎯 目標級分：1-2 級分</span>
                     <span class="meta-item">📊 難度：⭐⭐☆☆☆</span>
                 </div>
@@ -71,15 +71,12 @@
                 </h2>
                 <div class="content-box glass">
                     <p>在月球表面執行任務時，你的月球車需要根據不同的地形和環境條件做出正確的決策。是繼續前進？轉向？還是停止？這些決策都依賴於精確的邏輯判斷系統。</p>
-                    
-                    <div class="mission-objectives">
-                        <h3>🎯 學習目標</h3>
-                        <ul>
-                            <li>如何根據感測器數據做出決策（條件判斷）</li>
-                            <li>如何處理複雜的多重條件（巢狀判斷）</li>
-                            <li>如何重複執行任務直到達成目標（迴圈控制）</li>
-                        </ul>
-                    </div>
+作為探險隊的導航員，你需要掌握：
+<ul>
+<li>如何根據感測器數據做出決策（條件判斷）</li>
+<li>如何處理複雜的多重條件（巢狀判斷）</li>
+<li>如何重複執行任務直到達成目標（迴圈控制）</li>
+</ul>
                 </div>
             </section>
 
@@ -89,49 +86,38 @@
                     <span class="heading-icon">📚</span>
                     <span>知識點說明</span>
                 </h2>
-                
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">三大控制結構</h3>
-                    <p>在太空任務中，所有的決策系統都基於三種基本結構：</p>
-                    <ol>
-                        <li><strong>循序（Sequence）</strong>：按順序執行指令</li>
-                        <li><strong>選擇（Selection）</strong>：根據條件選擇執行路徑</li>
-                        <li><strong>重複（Repetition）</strong>：重複執行直到滿足條件</li>
-                    </ol>
-                </div>
-
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">條件判斷：if / elif / else</h3>
-                    <pre><code class="language-python"># 🔑 基本結構
-if 條件1:  # ⚡ 條件1為真時執行
-    # 執行區塊1
-elif 條件2:  # ⚡ 條件1為假且條件2為真時執行
-    # 執行區塊2
-else:  # ✅ 所有條件都為假時執行
-    # 執行區塊3</code></pre>
-                </div>
-
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">布林邏輯運算子</h3>
-                    <ul>
-                        <li><code>and</code>：兩個條件都必須為真</li>
-                        <li><code>or</code>：至少一個條件為真</li>
-                        <li><code>not</code>：反轉條件</li>
-                    </ul>
-                </div>
-
-                <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">迴圈結構</h3>
-                    <div style="margin-bottom: 1.5rem;">
-                        <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">for 迴圈：已知次數的重複</h4>
-                        <pre><code class="language-python">for i in range(5):  # 🔑 執行 5 次，i = 0, 1, 2, 3, 4
-    print(i)</code></pre>
-                    </div>
-                    <div>
-                        <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">while 迴圈：條件控制的重複</h4>
-                        <pre><code class="language-python">while 條件:  # ⚡ 當條件為真時持續執行
-    # 執行區塊</code></pre>
-                    </div>
+                <div class="content-box glass">
+                    <h3>三大控制結構</h3>
+<p>在太空任務中，所有的決策系統都基於三種基本結構：</p>
+<ol>
+<li><strong>循序（Sequence）</strong>：按順序執行指令</li>
+<li><strong>選擇（Selection）</strong>：根據條件選擇執行路徑</li>
+<li><strong>重複（Repetition）</strong>：重複執行直到滿足條件</li>
+</ol>
+<h3>條件判斷：if / elif / else</h3>
+<pre><code class="language-python"># 基本結構
+if 條件1:
+    # 條件1為真時執行
+elif 條件2:
+    # 條件1為假且條件2為真時執行
+else:
+    # 所有條件都為假時執行
+</code></pre>
+<h3>布林邏輯運算子</h3>
+<ul>
+<li><code>and</code>：兩個條件都必須為真</li>
+<li><code>or</code>：至少一個條件為真</li>
+<li><code>not</code>：反轉條件</li>
+</ul>
+<h3>迴圈結構</h3>
+<strong>for 迴圈</strong>：已知次數的重複
+<pre><code class="language-python">for i in range(5):  # 執行 5 次，i = 0, 1, 2, 3, 4
+    print(i)
+</code></pre>
+<strong>while 迴圈</strong>：條件控制的重複
+<pre><code class="language-python">while 條件:
+    # 當條件為真時持續執行
+</code></pre>
                 </div>
             </section>
 
@@ -141,19 +127,12 @@ else:  # ✅ 所有條件都為假時執行
                     <span class="heading-icon">💻</span>
                     <span>範例程式碼</span>
                 </h2>
-                
-                                <!-- 範例 1 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 1：月球車地形判斷系統</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：根據地形類型決定行駛速度
-terrain = sys.stdin.readline().strip()  # ⚡ 讀取並清理輸入
-
-if terrain == "平原":  # ✅ 條件判斷
+                <div class="content-box glass">
+                    <h3>範例 1：月球車地形判斷系統</h3>
+<pre><code class="language-python">import sys
+<p># 任務：根據地形類型決定行駛速度
+terrain = sys.stdin.readline().strip()</p>
+if terrain == "平原":
     speed = 50
     print(f"地形：{terrain}，建議速度：{speed} km/h")
 elif terrain == "隕石坑":
@@ -162,107 +141,75 @@ elif terrain == "隕石坑":
 elif terrain == "懸崖":
     speed = 0
     print(f"地形：{terrain}，建議速度：{speed} km/h（停止前進！）")
-else:  # ⚠️ 處理未知情況
+else:
     speed = 30
-    print(f"地形：未知，建議速度：{speed} km/h（謹慎前進）")</code></pre>
-                </div>
-
-                <!-- 範例 2 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 2：氧氣警報系統</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：根據氧氣含量和電池電量發出警報
-oxygen = int(sys.stdin.readline())  # ⚡ 氧氣百分比
-battery = int(sys.stdin.readline())  # ⚡ 電池百分比
-
-print(f"氧氣：{oxygen}%，電池：{battery}%")
-
-if oxygen < 20 and battery < 30:  # ⚠️ 雙重危險
+    print(f"地形：未知，建議速度：{speed} km/h（謹慎前進）")
+</code></pre>
+<h3>範例 2：氧氣警報系統</h3>
+<pre><code class="language-python">import sys
+<p># 任務：根據氧氣含量和電池電量發出警報
+oxygen = int(sys.stdin.readline())  # 氧氣百分比
+battery = int(sys.stdin.readline())  # 電池百分比</p>
+<p>print(f"氧氣：{oxygen}%，電池：{battery}%")</p>
+if oxygen < 20 and battery < 30:
     print("🚨 緊急警報：氧氣和電池都不足！立即返回基地！")
 elif oxygen < 20:
     print("⚠️ 警告：氧氣不足！")
 elif battery < 30:
     print("⚠️ 警告：電池不足！")
-else:  # ✅ 系統正常
-    print("✅ 系統正常，可以繼續任務")</code></pre>
-                </div>
-
-                <!-- 範例 3 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 3：隕石雨倒數系統</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：倒數計時並在特定時刻發出警報
-countdown = int(sys.stdin.readline())
-
-for i in range(countdown, 0, -1):  # ⚡ 從 countdown 倒數到 1
-    if i == 10:  # ✅ 特定時刻觸發
+else:
+    print("✅ 系統正常，可以繼續任務")
+</code></pre>
+<h3>範例 3：隕石雨倒數系統</h3>
+<pre><code class="language-python">import sys
+<p># 任務：倒數計時並在特定時刻發出警報
+countdown = int(sys.stdin.readline())</p>
+<p>for i in range(countdown, 0, -1):  # 從 countdown 倒數到 1
+    if i == 10:
         print(f"{i} - 準備啟動防護罩")
     elif i == 5:
         print(f"{i} - 防護罩充能中")
     elif i == 1:
         print(f"{i} - 防護罩啟動！")
     else:
-        print(i)
-
-print("🛡️ 防護罩已啟動，隕石雨來襲！")</code></pre>
-                </div>
-
-                <!-- 範例 4 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 4：尋找最佳著陸點</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：在 N 個候選點中找到坡度最小的著陸點
+        print(i)</p>
+print("🛡️ 防護罩已啟動，隕石雨來襲！")
+</code></pre>
+<h3>範例 4：尋找最佳著陸點</h3>
+<pre><code class="language-python">import sys
+<p># 任務：在 N 個候選點中找到坡度最小的著陸點
 n = int(sys.stdin.readline())
-best_slope = float('inf')  # ⚠️ 初始化為無限大
-best_location = -1
-
-for i in range(n):  # ⚡ 遍歷所有候選點
+best_slope = float('inf')  # 初始化為無限大
+best_location = -1</p>
+for i in range(n):
     slope = int(sys.stdin.readline())
-    if slope < best_slope:  # ✅ 找到更好的點
+    if slope < best_slope:
         best_slope = slope
         best_location = i + 1  # 位置從 1 開始編號
         
-print(f"最佳著陸點：位置 {best_location}，坡度：{best_slope}°")</code></pre>
-                </div>
-
-                <!-- 範例 5 -->
-                <div class="example-card glass">
-                    <div class="example-header">
-                        <h3 class="example-title">範例 5：進階流程控制 - break 與 continue</h3>
-                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
-                    </div>
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 任務：掃描隕石樣本，找到第一個含有水冰的樣本
-n = int(sys.stdin.readline())
-
-for i in range(1, n + 1):  # ⚡ 從 1 到 n
+print(f"最佳著陸點：位置 {best_location}，坡度：{best_slope}°")
+</code></pre>
+<h3>範例 5：進階流程控制 - break 與 continue</h3>
+<pre><code class="language-python">import sys
+<p># 任務：掃描隕石樣本，找到第一個含有水冰的樣本
+n = int(sys.stdin.readline())</p>
+for i in range(1, n + 1):
     sample_type = sys.stdin.readline().strip()
     
     if sample_type == "空樣本":
-        continue  # ⚠️ 跳過空樣本，繼續下一個
+        continue  # 跳過空樣本，繼續下一個
     
     if sample_type == "水冰":
         print(f"✅ 在樣本 {i} 發現水冰！任務完成！")
-        break  # 🔑 找到目標，立即結束搜索
+        break  # 找到目標，立即結束搜索
     
     print(f"樣本 {i}：{sample_type}（繼續搜索）")
-else:  # ⚡ for...else 結構
+else:
     # 只有在迴圈正常結束（沒有 break）時才執行
-    print("❌ 所有樣本都不含水冰")</code></pre>
+    print("❌ 所有樣本都不含水冰")
+</code></pre>
                 </div>
+            </section>
 
             <!-- 程式碼解說 -->
             <section id="explanation" class="content-section">
@@ -270,43 +217,33 @@ else:  # ⚡ for...else 結構
                     <span class="heading-icon">🔍</span>
                     <span>程式碼解說</span>
                 </h2>
-                
-                <div class="explanation-box glass">
+                <div class="content-box glass">
                     <h3>關鍵技術點</h3>
-                    
-                    <div class="tech-point">
-                        <h4>1. elif 的優勢</h4>
-                        <ul>
-                            <li>比多個獨立的 <code>if</code> 更高效</li>
-                            <li>一旦某個條件為真，後續條件不再檢查</li>
-                            <li>邏輯更清晰，避免重複判斷</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>2. range() 函數</h4>
-                        <pre><code class="language-python">range(5)           # 🔑 0, 1, 2, 3, 4
-range(1, 6)        # ⚡ 1, 2, 3, 4, 5
-range(10, 0, -1)   # ✅ 10, 9, 8, ..., 1</code></pre>
-                        <p style="margin-top: 1rem; color: var(--warning-amber);">⚠️ <strong>注意</strong>：stop 參數本身不包含在序列中！</p>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>3. break vs continue</h4>
-                        <ul>
-                            <li><code>break</code>：立即跳出整個迴圈</li>
-                            <li><code>continue</code>：跳過本次迭代，進入下一次</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>4. for...else 結構</h4>
-                        <ul>
-                            <li><code>else</code> 區塊只在迴圈正常結束時執行</li>
-                            <li>如果迴圈被 <code>break</code> 中斷，<code>else</code> 不執行</li>
-                            <li>非常適合「搜索失敗」的處理</li>
-                        </ul>
-                    </div>
+<ol>
+<li><strong>elif 的優勢</strong></li>
+<li>比多個獨立的 <code>if</code> 更高效</li>
+<li>一旦某個條件為真，後續條件不再檢查</li>
+<li>邏輯更清晰，避免重複判斷</li>
+</ol>
+<ol>
+<li><strong>range() 函數</strong></li>
+</ol>
+   <pre><code class="language-python">   range(5)           # 0, 1, 2, 3, 4
+   range(1, 6)        # 1, 2, 3, 4, 5
+   range(10, 0, -1)   # 10, 9, 8, ..., 1
+   </code></pre>
+   ⚠️ <strong>注意</strong>：stop 參數本身不包含在序列中！
+<ol>
+<li><strong>break vs continue</strong></li>
+<li><code>break</code>：立即跳出整個迴圈</li>
+<li><code>continue</code>：跳過本次迭代，進入下一次</li>
+</ol>
+<ol>
+<li><strong>for...else 結構</strong></li>
+<li><code>else</code> 區塊只在迴圈正常結束時執行</li>
+<li>如果迴圈被 <code>break</code> 中斷，<code>else</code> 不執行</li>
+<li>非常適合「搜索失敗」的處理</li>
+</ul>
                 </div>
             </section>
 
@@ -314,74 +251,54 @@ range(10, 0, -1)   # ✅ 10, 9, 8, ..., 1</code></pre>
             <section id="quiz" class="content-section">
                 <h2 class="section-heading">
                     <span class="heading-icon">📝</span>
-                    <span>Quiz：火星探測器路徑規劃</span>
+                    <span>Quiz: 火星探測器路徑規劃</span>
                 </h2>
-                
                 <div class="quiz-box glass">
                     <h3>題目：障礙物迴避系統</h3>
-                    <p>你的火星探測器正在執行路徑掃描任務。探測器會掃描前方 N 個位置，每個位置可能是：</p>
-                    <ul>
-                        <li><code>0</code>：安全路徑</li>
-                        <li><code>1</code>：小型障礙物（可以繞過）</li>
-                        <li><code>2</code>：大型障礙物（必須停止）</li>
-                    </ul>
-                    
-                    <p style="margin-top: 1.5rem;"><strong>請編寫程式：</strong></p>
-                    <ol>
-                        <li>如果遇到大型障礙物（2），立即停止並報告位置</li>
-                        <li>統計有多少個小型障礙物</li>
-                        <li>如果沒有大型障礙物，報告路徑安全</li>
-                    </ol>
-                    
-                    <div class="quiz-io">
-                        <div class="io-box">
-                            <h4>輸入格式：</h4>
-                            <ul style="margin-left: 1.5rem;">
-                                <li>第一行：整數 N（掃描位置數量，1 ≤ N ≤ 100）</li>
-                                <li>第二行：N 個整數，用空格分隔，每個整數為 0、1 或 2</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="quiz-io">
-                        <div class="io-box">
-                            <h4>輸入範例 1：</h4>
-                            <pre><code>8
-0 1 0 0 1 2 0 1</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例 1：</h4>
-                            <pre><code>⚠️ 在位置 6 發現大型障礙物！
+你的火星探測器正在執行路徑掃描任務。探測器會掃描前方 N 個位置，每個位置可能是：
+<ul>
+<li><code>0</code>：安全路徑</li>
+<li><code>1</code>：小型障礙物（可以繞過）</li>
+<li><code>2</code>：大型障礙物（必須停止）</li>
+</ul>
+請編寫程式：
+<ol>
+<li>如果遇到大型障礙物（2），立即停止並報告位置</li>
+<li>統計有多少個小型障礙物</li>
+<li>如果沒有大型障礙物，報告路徑安全</li>
+</ol>
+<strong>輸入格式：</strong>
+<ul>
+<li>第一行：整數 N（掃描位置數量，1 ≤ N ≤ 100）</li>
+<li>第二行：N 個整數，用空格分隔，每個整數為 0、1 或 2</li>
+</ul>
+<strong>輸入範例 1：</strong>
+<pre><code class="language-python">8
+0 1 0 0 1 2 0 1
+</code></pre>
+<strong>輸出範例 1：</strong>
+<pre><code class="language-python">⚠️ 在位置 6 發現大型障礙物！
 已掃描：5 個位置
-小型障礙物：2 個</code></pre>
-                        </div>
-                    </div>
-                    
-                    <div class="quiz-io">
-                        <div class="io-box">
-                            <h4>輸入範例 2：</h4>
-                            <pre><code>6
-0 1 0 1 0 0</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例 2：</h4>
-                            <pre><code>✅ 路徑安全！
+小型障礙物：2 個
+</code></pre>
+<strong>輸入範例 2：</strong>
+<pre><code class="language-python">6
+0 1 0 1 0 0
+</code></pre>
+<strong>輸出範例 2：</strong>
+<pre><code class="language-python">✅ 路徑安全！
 總掃描：6 個位置
-小型障礙物：2 個</code></pre>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 217, 255, 0.05); border-left: 4px solid var(--energy-cyan); border-radius: 8px;">
-                        <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">💡 提示</h4>
-                        <ul style="margin-left: 1.5rem;">
-                            <li>使用 <code>enumerate()</code> 可以同時獲得索引和值</li>
-                            <li>記得位置編號從 1 開始（對使用者友善）</li>
-                            <li>使用 <code>break</code> 在遇到大型障礙物時立即停止</li>
-                        </ul>
-                    </div>
-                    
+小型障礙物：2 個
+</code></pre>
+<h3>💡 提示</h3>
+<ul>
+<li>使用 <code>enumerate()</code> 可以同時獲得索引和值</li>
+<li>記得位置編號從 1 開始（對使用者友善）</li>
+<li>使用 <code>break</code> 在遇到大型障礙物時立即停止</li>
+</ul>
+<p>---</p>
                     <button class="show-solution-btn" onclick="toggleSolution()">
-                        💡 顯示解答
+                        💡 查看解答
                     </button>
                 </div>
             </section>
@@ -392,84 +309,66 @@ range(10, 0, -1)   # ✅ 10, 9, 8, ..., 1</code></pre>
                     <span class="heading-icon">✅</span>
                     <span>Quiz 解答</span>
                 </h2>
-                
                 <div class="solution-box glass">
-                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
-
-# 讀取掃描位置數量
-n = int(sys.stdin.readline())  # ⚡ 讀取第一行
-
-# 讀取所有位置的障礙物數據
-obstacles = list(map(int, sys.stdin.readline().strip().split()))  # ⚡ 解析數據
-
-# 初始化計數器
-small_obstacles = 0  # ⚠️ 小型障礙物計數
-scanned = 0  # ⚠️ 已掃描位置
-
+                    <pre><code class="language-python">import sys
+<p># 讀取掃描位置數量
+n = int(sys.stdin.readline())</p>
+<p># 讀取所有位置的障礙物數據
+obstacles = list(map(int, sys.stdin.readline().strip().split()))</p>
+<p># 初始化計數器
+small_obstacles = 0
+scanned = 0</p>
 # 掃描每個位置
-for position, obstacle_type in enumerate(obstacles, start=1):  # 🔑 enumerate 從 1 開始
+for position, obstacle_type in enumerate(obstacles, start=1):
     scanned = position  # 記錄已掃描的位置
     
-    if obstacle_type == 1:  # ✅ 小型障礙物
+    if obstacle_type == 1:
         small_obstacles += 1  # 統計小型障礙物
-    elif obstacle_type == 2:  # ⚠️ 大型障礙物
+    elif obstacle_type == 2:
         # 發現大型障礙物，立即停止
         print(f"⚠️ 在位置 {position} 發現大型障礙物！")
         print(f"已掃描：{scanned - 1} 個位置")
         print(f"小型障礙物：{small_obstacles} 個")
-        break  # 🔑 立即跳出迴圈
-else:  # ⚡ for...else 結構
+        break
+else:
     # 迴圈正常結束，沒有遇到大型障礙物
     print("✅ 路徑安全！")
     print(f"總掃描：{scanned} 個位置")
-    print(f"小型障礙物：{small_obstacles} 個")</code></pre>
-                    
-                    <div class="solution-explanation">
-                        <h3>解答說明</h3>
-                        
-                        <div class="tech-point">
-                            <h4>1. enumerate() 的使用</h4>
-                            <pre><code class="language-python">for position, obstacle_type in enumerate(obstacles, start=1):  # 🔑 從 1 開始編號</code></pre>
-                            <ul>
-                                <li><code>enumerate()</code> 同時提供索引和值</li>
-                                <li><code>start=1</code> 讓位置編號從 1 開始（更符合人類習慣）</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="tech-point">
-                            <h4>2. 條件判斷邏輯</h4>
-                            <ul>
-                                <li>先檢查是否為小型障礙物（1），累加計數</li>
-                                <li>再檢查是否為大型障礙物（2），立即 <code>break</code></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="tech-point">
-                            <h4>3. for...else 的妙用</h4>
-                            <ul>
-                                <li>如果迴圈被 <code>break</code> 中斷，<code>else</code> 不執行</li>
-                                <li>如果迴圈正常結束，<code>else</code> 執行，表示路徑安全</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="tech-point">
-                            <h4>4. 變數追蹤</h4>
-                            <ul>
-                                <li><code>scanned</code> 記錄當前掃描到的位置</li>
-                                <li>在 <code>break</code> 時，<code>scanned - 1</code> 是實際完成掃描的位置數</li>
-                            </ul>
-                        </div>
-                        
-                        <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.3); border-radius: 10px;">
-                            <h4 style="color: var(--success-green); margin-bottom: 1rem;">📊 效能分析</h4>
-                            <ul>
-                                <li><strong>時間複雜度</strong>：O(N) - 最多掃描 N 個位置</li>
-                                <li><strong>空間複雜度</strong>：O(N) - 儲存 N 個障礙物數據</li>
-                                <li><strong>最佳情況</strong>：O(1) - 第一個位置就是大型障礙物</li>
-                                <li><strong>最壞情況</strong>：O(N) - 沒有大型障礙物，掃描全部</li>
-                            </ul>
-                        </div>
-                    </div>
+    print(f"小型障礙物：{small_obstacles} 個")
+</code></pre>
+<h3>解答說明</h3>
+<ol>
+<li><strong>enumerate() 的使用</strong></li>
+</ol>
+   <pre><code class="language-python">   for position, obstacle_type in enumerate(obstacles, start=1):
+   </code></pre>
+<ul>
+<li><code>enumerate()</code> 同時提供索引和值</li>
+<li><code>start=1</code> 讓位置編號從 1 開始（更符合人類習慣）</li>
+</ul>
+<ol>
+<li><strong>條件判斷邏輯</strong></li>
+<li>先檢查是否為小型障礙物（1），累加計數</li>
+<li>再檢查是否為大型障礙物（2），立即 <code>break</code></li>
+</ul>
+<ol>
+<li><strong>for...else 的妙用</strong></li>
+<li>如果迴圈被 <code>break</code> 中斷，<code>else</code> 不執行</li>
+<li>如果迴圈正常結束，<code>else</code> 執行，表示路徑安全</li>
+</ol>
+<ol>
+<li><strong>變數追蹤</strong></li>
+<li><code>scanned</code> 記錄當前掃描到的位置</li>
+<li>在 <code>break</code> 時，<code>scanned - 1</code> 是實際完成掃描的位置數</li>
+</ol>
+<h3>效能分析</h3>
+<ul>
+<li>時間複雜度：O(N) - 最多掃描 N 個位置</li>
+<li>空間複雜度：O(N) - 儲存 N 個障礙物數據</li>
+<li>最佳情況：O(1) - 第一個位置就是大型障礙物</li>
+<li>最壞情況：O(N) - 沒有大型障礙物，掃描全部</li>
+</ul>
+<p>---</p>
                 </div>
             </section>
 
@@ -478,35 +377,15 @@ else:  # ⚡ for...else 結構
                 <div class="badge-content">
                     <span class="badge-icon">🎉</span>
                     <h3>訓練完成！</h3>
-                    <p>恭喜你完成月球導航系統訓練！你現在已經掌握：</p>
-                    <div class="completion-skills">
-                        <span class="skill-tag">✅ if / elif / else</span>
-                        <span class="skill-tag">✅ 布林邏輯運算</span>
-                        <span class="skill-tag">✅ for 和 while 迴圈</span>
-                        <span class="skill-tag">✅ break 和 continue</span>
-                        <span class="skill-tag">✅ for...else 進階用法</span>
-                    </div>
-                    <p style="margin-top: 1.5rem; font-size: 1.1rem; color: var(--energy-cyan);">
-                        <strong>下一站：數據容器訓練 - 學習如何管理大量的太空探測數據！</strong>
-                    </p>
+                    <p>恭喜你完成 導航邏輯與條件判斷 訓練！</p>
                 </div>
-            </div>
-
-            <!-- APCS 對應 -->
-            <div class="content-box glass" style="margin-top: 2rem;">
-                <h3 style="color: var(--energy-cyan); margin-bottom: 1rem;">🔗 APCS 對應能力</h3>
-                <ul>
-                    <li><strong>級分目標</strong>：1-2 級分</li>
-                    <li><strong>評量項目</strong>：條件判斷、迴圈、流程控制</li>
-                    <li><strong>對應題型</strong>：g275 (七言對聯)、h026 (猜拳)</li>
-                </ul>
             </div>
 
             <!-- 導航按鈕 -->
             <div class="lesson-navigation">
-                <a href="A1.html" class="nav-btn prev-btn">← 上一課</a>
+                <a href="../L1/A1.html" class="nav-btn prev-btn" >← 上一課</a>
                 <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
-                <a href="A3.html" class="nav-btn next-btn">下一課 →</a>
+                <a href="../L1/A3.html" class="nav-btn next-btn" >下一課 →</a>
             </div>
         </article>
     </main>

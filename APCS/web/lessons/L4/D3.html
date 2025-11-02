@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3: 分治與貪心策略 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/lesson.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- 星空背景 -->
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <!-- 導航欄 -->
+    <nav class="lesson-nav glass">
+        <div class="nav-content">
+            <a href="../../index.html" class="back-btn">
+                <span>←</span>
+                <span>返回課程地圖</span>
+            </a>
+            <div class="lesson-progress">
+                <span class="progress-text">L4 - D3</span>
+            </div>
+            <div class="lesson-nav-buttons">
+                <a href="../L4/D2.html" class="nav-btn prev-btn" >上一課</a>
+                <a href="../L5/E1.html" class="nav-btn next-btn" >下一課</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="lesson-container">
+        <!-- 側邊欄目錄 -->
+        <aside class="lesson-sidebar glass">
+            <h3 class="sidebar-title">📋 本課內容</h3>
+            <nav class="sidebar-nav">
+                <a href="#mission" class="sidebar-link active">🚀 任務背景</a>
+                <a href="#knowledge" class="sidebar-link">📚 知識點說明</a>
+                <a href="#examples" class="sidebar-link">💻 範例程式碼</a>
+                <a href="#explanation" class="sidebar-link">🔍 程式碼解說</a>
+                <a href="#quiz" class="sidebar-link">📝 Quiz</a>
+                <a href="#solution" class="sidebar-link">✅ 解答</a>
+            </nav>
+        </aside>
+
+        <!-- 課程內容 -->
+        <article class="lesson-content">
+            <!-- 課程標題 -->
+            <header class="lesson-header">
+                <div class="lesson-badge">
+                    <span class="badge-icon">🌌</span>
+                    <span class="badge-text">L4: 冥王星邊界</span>
+                </div>
+                <h1 class="lesson-title text-glow">
+                    D3: 進階演算法策略：分治法與貪心法則
+                </h1>
+                <div class="lesson-meta">
+                    <span class="meta-item">⏱️ 預計時間：5-6 小時</span>
+                    <span class="meta-item">🎯 目標級分：5 級分</span>
+                    <span class="meta-item">📊 難度：⭐⭐⭐⭐⭐</span>
+                </div>
+            </header>
+
+            <!-- 任務背景 -->
+            <section id="mission" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🚀</span>
+                    <span>任務背景</span>
+                </h2>
+                <div class="content-box glass">
+                    <p>在冥王星邊界的極端環境中，你需要快速做出最優決策。分治法和貪心法是兩種強大的演算法設計思想，能幫助你在複雜情況下找到高效解法。</p>
+                </div>
+            </section>
+
+            <!-- 知識點說明 -->
+            <section id="knowledge" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📚</span>
+                    <span>知識點說明</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>分治法（Divide and Conquer）</h3>
+<strong>核心思想</strong>：
+<ol>
+<li><strong>分解</strong>：將問題分成若干子問題</li>
+<li><strong>解決</strong>：遞迴解決子問題</li>
+<li><strong>合併</strong>：將子問題的解合併</li>
+</ol>
+<strong>經典範例</strong>：合併排序
+<pre><code class="language-python">def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)
+</code></pre>
+<h3>貪心法（Greedy Method）</h3>
+<strong>核心思想</strong>：每一步都選擇當前最優解，期望得到全域最優解。
+<strong>經典範例</strong>：活動選擇問題
+<pre><code class="language-python">def activity_selection(activities):
+    # 按結束時間排序
+    activities.sort(key=lambda x: x[1])
+    
+    selected = [activities[0]]
+    for activity in activities[1:]:
+        if activity[0] >= selected[-1][1]:
+            selected.append(activity)
+    
+    return selected
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 範例程式碼 -->
+            <section id="examples" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">💻</span>
+                    <span>範例程式碼</span>
+                </h2>
+                <div class="content-box glass">
+                    <h3>範例 1：合併排序</h3>
+<pre><code class="language-python">import sys
+<p>def merge(left, right):
+    result = []
+    i = j = 0
+    
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result</p>
+<p>def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)</p>
+<p>n = int(sys.stdin.readline())
+arr = list(map(int, sys.stdin.readline().split()))</p>
+sorted_arr = merge_sort(arr)
+print(' '.join(map(str, sorted_arr)))
+</code></pre>
+<h3>範例 2：找最大子陣列和</h3>
+<pre><code class="language-python">import sys
+<p>def max_subarray_sum(arr):
+    """
+    使用 Kadane's 演算法（貪心法）
+    """
+    max_sum = current_sum = arr[0]
+    
+    for num in arr[1:]:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+    
+    return max_sum</p>
+<p>n = int(sys.stdin.readline())
+arr = list(map(int, sys.stdin.readline().split()))</p>
+result = max_subarray_sum(arr)
+print(f"最大子陣列和：{result}")
+</code></pre>
+<h2>📝 Quiz：任務調度</h2>
+<p>給定 N 個任務，每個任務有開始時間和結束時間。選擇最多不重疊的任務。</p>
+<strong>輸入範例</strong>：
+<pre><code class="language-python">4
+1 3
+2 5
+4 6
+5 7
+</code></pre>
+<strong>輸出</strong>：最多可執行 3 個任務
+<h2>✅ Quiz 解答</h2>
+<pre><code class="language-python">import sys
+<p>def max_tasks(tasks):
+    tasks.sort(key=lambda x: x[1])
+    
+    count = 1
+    last_end = tasks[0][1]
+    
+    for start, end in tasks[1:]:
+        if start >= last_end:
+            count += 1
+            last_end = end
+    
+    return count</p>
+<p>n = int(sys.stdin.readline())
+tasks = []
+for _ in range(n):
+    s, e = map(int, sys.stdin.readline().split())
+    tasks.append((s, e))</p>
+result = max_tasks(tasks)
+print(f"最多可執行 {result} 個任務")
+</code></pre>
+<h2>🎯 APCS 對應能力</h2>
+<ul>
+<li><strong>分治法</strong>：APCS 5 級分</li>
+<li><strong>貪心法</strong>：APCS 4-5 級分</li>
+</ul>
+                </div>
+            </section>
+
+            <!-- 程式碼解說 -->
+            <section id="explanation" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">🔍</span>
+                    <span>程式碼解說</span>
+                </h2>
+                <div class="content-box glass">
+                    
+                </div>
+            </section>
+
+            <!-- Quiz -->
+            <section id="quiz" class="content-section">
+                <h2 class="section-heading">
+                    <span class="heading-icon">📝</span>
+                    <span>Quiz: 任務調度</span>
+                </h2>
+                <div class="quiz-box glass">
+                    <p>給定 N 個任務，每個任務有開始時間和結束時間。選擇最多不重疊的任務。</p>
+<strong>輸入範例</strong>：
+<pre><code class="language-python">4
+1 3
+2 5
+4 6
+5 7
+</code></pre>
+<strong>輸出</strong>：最多可執行 3 個任務
+                    <button class="show-solution-btn" onclick="toggleSolution()">
+                        💡 查看解答
+                    </button>
+                </div>
+            </section>
+
+            <!-- 解答 -->
+            <section id="solution" class="content-section solution-hidden">
+                <h2 class="section-heading">
+                    <span class="heading-icon">✅</span>
+                    <span>Quiz 解答</span>
+                </h2>
+                <div class="solution-box glass">
+                    <pre><code class="language-python">import sys
+<p>def max_tasks(tasks):
+    tasks.sort(key=lambda x: x[1])
+    
+    count = 1
+    last_end = tasks[0][1]
+    
+    for start, end in tasks[1:]:
+        if start >= last_end:
+            count += 1
+            last_end = end
+    
+    return count</p>
+<p>n = int(sys.stdin.readline())
+tasks = []
+for _ in range(n):
+    s, e = map(int, sys.stdin.readline().split())
+    tasks.append((s, e))</p>
+result = max_tasks(tasks)
+print(f"最多可執行 {result} 個任務")
+</code></pre>
+                </div>
+            </section>
+
+            <!-- 完成徽章 -->
+            <div class="completion-badge glass">
+                <div class="badge-content">
+                    <span class="badge-icon">🎉</span>
+                    <h3>訓練完成！</h3>
+                    <p>恭喜你完成 分治與貪心策略 訓練！</p>
+                </div>
+            </div>
+
+            <!-- 導航按鈕 -->
+            <div class="lesson-navigation">
+                <a href="../L4/D2.html" class="nav-btn prev-btn" >← 上一課</a>
+                <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
+                <a href="../L5/E1.html" class="nav-btn next-btn" >下一課 →</a>
+            </div>
+        </article>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../../scripts/starfield.js"></script>
+    <script src="../../scripts/lesson.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>
