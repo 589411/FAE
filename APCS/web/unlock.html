@@ -103,6 +103,12 @@
             color: #f44336;
         }
         
+        .message.info {
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid #2196f3;
+            color: #2196f3;
+        }
+        
         .help-text {
             margin-top: 2rem;
             padding-top: 2rem;
@@ -153,42 +159,48 @@
     </div>
     
     <script src="scripts/starfield.js"></script>
+    <script src="scripts/api-client.js"></script>
     <script>
-        // 有效的兌換碼列表（實際使用時應該從後端 API 驗證）
-        const validCodes = [
-            'APCS2024-DEMO01',
-            'APCS2024-DEMO02',
-            'APCS2024-DEMO03',
-            // 更多兌換碼...
-        ];
-        
-        function unlockCourse() {
+        async function unlockCourse() {
             const input = document.getElementById('codeInput');
             const code = input.value.trim().toUpperCase();
             const messageDiv = document.getElementById('message');
+            const btn = document.querySelector('.unlock-btn');
             
             if (!code) {
                 showMessage('請輸入兌換碼', 'error');
                 return;
             }
             
-            // 驗證兌換碼
-            if (validCodes.includes(code)) {
-                // 儲存解鎖狀態
-                localStorage.setItem('courseUnlocked', 'true');
-                localStorage.setItem('unlockCode', code);
-                localStorage.setItem('unlockDate', new Date().toISOString());
+            // 禁用按鈕，顯示載入中
+            btn.disabled = true;
+            showMessage('🔄 驗證中...', 'info');
+            
+            try {
+                // 使用 API 驗證兌換碼
+                const result = await window.courseAPI.validateCode(code);
                 
-                showMessage('✅ 解鎖成功！正在跳轉...', 'success');
-                
-                // 3 秒後跳轉到首頁
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
-            } else {
-                showMessage('❌ 兌換碼無效，請檢查後重試', 'error');
-                input.value = '';
-                input.focus();
+                if (result.success) {
+                    showMessage('✅ ' + result.message, 'success');
+                    
+                    // 顯示設備資訊
+                    console.log('設備 ID:', window.courseAPI.deviceId);
+                    console.log('Token ID:', window.courseAPI.tokenId);
+                    
+                    // 2 秒後跳轉到首頁
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    showMessage('❌ ' + result.message, 'error');
+                    input.value = '';
+                    input.focus();
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error('解鎖失敗:', error);
+                showMessage('❌ 網絡錯誤，請稍後再試', 'error');
+                btn.disabled = false;
             }
         }
         
@@ -207,7 +219,7 @@
         });
         
         // 檢查是否已解鎖
-        if (localStorage.getItem('courseUnlocked') === 'true') {
+        if (localStorage.getItem('accessToken') && localStorage.getItem('tokenId')) {
             showMessage('您已經解鎖了完整課程！', 'success');
             setTimeout(() => {
                 window.location.href = 'index.html';

@@ -347,8 +347,8 @@ async function verifyToken(token, expectedTokenId, expectedDeviceId, env) {
     const dataString = atob(parts[0]);
     const data = JSON.parse(dataString);
     
-    // 驗證 tokenId 和 deviceId
-    if (data.tokenId !== expectedTokenId || data.deviceId !== expectedDeviceId) {
+    // 只驗證 tokenId（deviceId 在後續檢查設備列表時驗證）
+    if (data.tokenId !== expectedTokenId) {
       return false;
     }
     
