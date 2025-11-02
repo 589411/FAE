@@ -22,6 +22,18 @@ export default {
 
     try {
       // 路由處理
+      
+      // 健康檢查
+      if (path === '/api/health' && request.method === 'GET') {
+        return new Response(JSON.stringify({ 
+          status: 'ok',
+          timestamp: new Date().toISOString(),
+          version: '1.0.0'
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
       if (path === '/api/validate-code' && request.method === 'POST') {
         return await handleValidateCode(request, env, corsHeaders);
       }
@@ -32,6 +44,10 @@ export default {
       
       if (path === '/api/check-lesson' && request.method === 'POST') {
         return await handleCheckLesson(request, env, corsHeaders);
+      }
+      
+      if (path === '/api/verify-token' && request.method === 'POST') {
+        return await handleVerifyToken(request, env, corsHeaders);
       }
 
       return new Response('Not Found', { status: 404 });
@@ -167,6 +183,52 @@ async function handleCheckLesson(request, env, corsHeaders) {
   return new Response(JSON.stringify({ 
     canAccess: !!accessData && accessData.unlocked,
     reason: accessData ? 'unlocked' : 'invalid_token'
+  }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+  });
+}
+
+/**
+ * 驗證 Token
+ */
+async function handleVerifyToken(request, env, corsHeaders) {
+  const { token } = await request.json();
+  
+  if (!token) {
+    return new Response(JSON.stringify({ 
+      valid: false,
+      message: '未提供 Token'
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+  
+  // 從 KV 查詢 token
+  const accessData = await env.COURSE_ACCESS.get(`token:${token}`, 'json');
+  
+  if (!accessData) {
+    return new Response(JSON.stringify({ 
+      valid: false,
+      message: 'Token 無效'
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+  
+  // 檢查是否過期
+  if (accessData.expiresAt < Date.now()) {
+    return new Response(JSON.stringify({ 
+      valid: false,
+      message: 'Token 已過期'
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+  
+  return new Response(JSON.stringify({ 
+    valid: true,
+    message: 'Token 有效',
+    unlockDate: new Date(accessData.timestamp).toISOString()
   }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' }
   });
