@@ -70,14 +70,14 @@
                     <span>任務背景</span>
                 </h2>
                 <div class="content-box glass">
-                    <p>歡迎來到月球基地！你是太空探險預備隊的一員，正在接受基礎訓練。在太空中，通訊延遲可能致命，因此我們的通訊系統必須以最高效率運作。你的第一個任務是學習如何使用高速通訊協議與地球指揮中心進行數據傳輸。</p>
+                    <p>在月球表面執行任務時，你的月球車需要根據不同的地形和環境條件做出正確的決策。是繼續前進？轉向？還是停止？這些決策都依賴於精確的邏輯判斷系統。</p>
                     
                     <div class="mission-objectives">
                         <h3>🎯 學習目標</h3>
                         <ul>
-                            <li>如何接收來自地球的指令（標準輸入）</li>
-                            <li>如何快速回傳任務數據（標準輸出）</li>
-                            <li>為什麼傳統的通訊方式在大量數據傳輸時會失敗</li>
+                            <li>如何根據感測器數據做出決策（條件判斷）</li>
+                            <li>如何處理複雜的多重條件（巢狀判斷）</li>
+                            <li>如何重複執行任務直到達成目標（迴圈控制）</li>
                         </ul>
                     </div>
                 </div>
@@ -91,24 +91,46 @@
                 </h2>
                 
                 <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">為什麼需要高速 I/O？</h3>
-                    <p>想像你正在月球基地接收來自地球的 100 萬筆感測器數據。如果使用慢速通訊協議，可能需要數小時才能完成傳輸。但在太空任務中，時間就是生命！</p>
-                    
-                    <div class="comparison-box">
-                        <div class="comparison-item danger">
-                            <h4>❌ 慢速路徑（危險）</h4>
-                            <pre><code class="language-python"># 使用 input() - 適合小型任務，但大量數據時會超時
-data = input()</code></pre>
-                            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">⚠️ 在處理大量數據時可能超時</p>
-                        </div>
-                        
-                        <div class="comparison-item success">
-                            <h4>✅ 高速路徑（專業）</h4>
-                            <pre><code class="language-python">import sys
-# 使用 sys.stdin.readline() - 專業太空人的選擇
-data = sys.stdin.readline()</code></pre>
-                            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">✨ 速度是 input() 的數倍</p>
-                        </div>
+                    <h3 class="knowledge-title">三大控制結構</h3>
+                    <p>在太空任務中，所有的決策系統都基於三種基本結構：</p>
+                    <ol>
+                        <li><strong>循序（Sequence）</strong>：按順序執行指令</li>
+                        <li><strong>選擇（Selection）</strong>：根據條件選擇執行路徑</li>
+                        <li><strong>重複（Repetition）</strong>：重複執行直到滿足條件</li>
+                    </ol>
+                </div>
+
+                <div class="knowledge-card glass">
+                    <h3 class="knowledge-title">條件判斷：if / elif / else</h3>
+                    <pre><code class="language-python"># 🔑 基本結構
+if 條件1:  # ⚡ 條件1為真時執行
+    # 執行區塊1
+elif 條件2:  # ⚡ 條件1為假且條件2為真時執行
+    # 執行區塊2
+else:  # ✅ 所有條件都為假時執行
+    # 執行區塊3</code></pre>
+                </div>
+
+                <div class="knowledge-card glass">
+                    <h3 class="knowledge-title">布林邏輯運算子</h3>
+                    <ul>
+                        <li><code>and</code>：兩個條件都必須為真</li>
+                        <li><code>or</code>：至少一個條件為真</li>
+                        <li><code>not</code>：反轉條件</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-card glass">
+                    <h3 class="knowledge-title">迴圈結構</h3>
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">for 迴圈：已知次數的重複</h4>
+                        <pre><code class="language-python">for i in range(5):  # 🔑 執行 5 次，i = 0, 1, 2, 3, 4
+    print(i)</code></pre>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">while 迴圈：條件控制的重複</h4>
+                        <pre><code class="language-python">while 條件:  # ⚡ 當條件為真時持續執行
+    # 執行區塊</code></pre>
                     </div>
                 </div>
             </section>
