@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A3: 月球基地數據陣列：感測器管理系統 | APCS 太空探險課程</title>
+    <title>A3: 數據陣列與感測器管理 | APCS 太空探險課程</title>
     <link rel="stylesheet" href="../../styles/main.css">
     <link rel="stylesheet" href="../../styles/lesson.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
                     <span class="badge-text">Level 1: 月球基地訓練</span>
                 </div>
                 <h1 class="lesson-title text-glow">
-                    A3: 月球基地數據陣列：感測器管理系統
+                    A3: 月球感測器陣列：數據容器與列表操作
                 </h1>
                 <div class="lesson-meta">
                     <span class="meta-item">⏱️ 預計時間：2-3 小時</span>
@@ -70,14 +70,15 @@
                     <span>任務背景</span>
                 </h2>
                 <div class="content-box glass">
-                    <p>歡迎來到月球基地！你是太空探險預備隊的一員，正在接受基礎訓練。在太空中，通訊延遲可能致命，因此我們的通訊系統必須以最高效率運作。你的第一個任務是學習如何使用高速通訊協議與地球指揮中心進行數據傳輸。</p>
+                    <p>月球基地配備了數百個感測器，監測溫度、輻射、氣壓等各種數據。作為數據分析員，你需要處理這些大量的感測器讀數。單一變數已經不夠用了，你需要學會使用「數據容器」來管理成批的資訊。</p>
                     
                     <div class="mission-objectives">
                         <h3>🎯 學習目標</h3>
                         <ul>
-                            <li>如何接收來自地球的指令（標準輸入）</li>
-                            <li>如何快速回傳任務數據（標準輸出）</li>
-                            <li>為什麼傳統的通訊方式在大量數據傳輸時會失敗</li>
+                            <li>如何使用列表（List）儲存多個數據</li>
+                            <li>如何遍歷和操作列表中的元素</li>
+                            <li>如何使用內建函數進行數據分析</li>
+                            <li>列表操作的效能考量</li>
                         </ul>
                     </div>
                 </div>
@@ -91,25 +92,86 @@
                 </h2>
                 
                 <div class="knowledge-card glass">
-                    <h3 class="knowledge-title">為什麼需要高速 I/O？</h3>
-                    <p>想像你正在月球基地接收來自地球的 100 萬筆感測器數據。如果使用慢速通訊協議，可能需要數小時才能完成傳輸。但在太空任務中，時間就是生命！</p>
-                    
-                    <div class="comparison-box">
-                        <div class="comparison-item danger">
-                            <h4>❌ 慢速路徑（危險）</h4>
-                            <pre><code class="language-python"># 使用 input() - 適合小型任務，但大量數據時會超時
-data = input()</code></pre>
-                            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">⚠️ 在處理大量數據時可能超時</p>
-                        </div>
-                        
-                        <div class="comparison-item success">
-                            <h4>✅ 高速路徑（專業）</h4>
-                            <pre><code class="language-python">import sys
-# 使用 sys.stdin.readline() - 專業太空人的選擇
-data = sys.stdin.readline()</code></pre>
-                            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">✨ 速度是 input() 的數倍</p>
-                        </div>
-                    </div>
+                    <h3 class="knowledge-title">什麼是列表（List）？</h3>
+                    <p>列表是 Python 中最常用的數據容器，可以儲存多個相關的資料項。想像它是一排編號的儲物櫃，每個櫃子都可以放入一個數據。</p>
+                    <pre><code class="language-python"># 🔑 創建列表
+temperatures = [15, 18, 20, 17, 19]</code></pre>
+                </div>
+
+                <div class="knowledge-card glass">
+                    <h3 class="knowledge-title">零基索引（Zero-based Indexing）</h3>
+                    <p style="color: var(--warning-amber); font-weight: bold;">⚠️ 重要概念：在程式設計中，索引從 0 開始！</p>
+                    <pre><code class="language-python">sensors = [100, 200, 300, 400]  # ⚡ 列表範例
+#          ↑    ↑    ↑    ↑
+#          0    1    2    3
+
+print(sensors[0])  # ✅ 100 (第一個元素)
+print(sensors[3])  # ✅ 400 (第四個元素)</code></pre>
+                </div>
+
+                <div class="knowledge-card glass">
+                    <h3 class="knowledge-title">列表的創建方式</h3>
+                    <pre><code class="language-python"># 🔑 方法 1：直接賦值
+data = [1, 2, 3, 4, 5]
+
+# ⚡ 方法 2：創建 N 個相同值
+zeros = [0] * 10  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+# ✅ 方法 3：列表生成式（List Comprehension）
+squares = [i**2 for i in range(5)]  # [0, 1, 4, 9, 16]</code></pre>
+                </div>
+
+                <div class="knowledge-card glass">
+                    <h3 class="knowledge-title">列表的基本操作</h3>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="background: rgba(0, 217, 255, 0.1);">
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">操作</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">語法</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">說明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">存取</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>lst[i]</code></td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">讀取索引 i 的元素</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">修改</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>lst[i] = value</code></td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">修改索引 i 的元素</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">長度</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>len(lst)</code></td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">獲取列表長度</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">添加</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>lst.append(x)</code></td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">在尾部添加元素</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem;">移除</td>
+                                <td style="padding: 0.75rem;"><code>lst.pop()</code></td>
+                                <td style="padding: 0.75rem;">移除並返回最後一個元素</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="knowledge-card glass">
+                    <h3 class="knowledge-title">遍歷列表的兩種方式</h3>
+                    <pre><code class="language-python">data = [10, 20, 30, 40]
+
+# 🔑 方式 1：基於索引（需要索引時使用）
+for i in range(len(data)):
+    print(f"索引 {i}：{data[i]}")
+
+# ⚡ 方式 2：基於值（語法更簡潔）
+for value in data:
+    print(value)</code></pre>
                 </div>
             </section>
 
@@ -120,91 +182,142 @@ data = sys.stdin.readline()</code></pre>
                     <span>範例程式碼</span>
                 </h2>
                 
-                <!-- 範例 1 -->
+                                <!-- 範例 1 -->
                 <div class="example-card glass">
                     <div class="example-header">
-                        <h3 class="example-title">範例 1：接收單一指令</h3>
+                        <h3 class="example-title">範例 1：溫度感測器數據分析</h3>
                         <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
                     </div>
                     <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
-# 任務：接收地球發來的火箭發射倒數秒數
-countdown = int(sys.stdin.readline())  # ⚡ 使用高速 I/O 讀取
-print(f"火箭將在 {countdown} 秒後發射！")  # ✅ 格式化輸出</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸入範例：</h4>
-                            <pre><code>10</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>火箭將在 10 秒後發射！</code></pre>
-                        </div>
-                    </div>
+# 任務：分析一天中各時段的溫度數據
+n = int(sys.stdin.readline())  # ⚡ 感測器數量
+temperatures = list(map(int, sys.stdin.readline().strip().split()))  # ⚡ 讀取溫度數據
+
+# 基本統計
+total = sum(temperatures)  # ✅ 使用內建函數
+average = total / n
+minimum = min(temperatures)  # ✅ 找最小值
+maximum = max(temperatures)  # ✅ 找最大值
+
+print(f"感測器數量：{n}")
+print(f"平均溫度：{average:.1f}°C")
+print(f"最低溫度：{minimum}°C")
+print(f"最高溫度：{maximum}°C")
+print(f"溫差：{maximum - minimum}°C")</code></pre>
                 </div>
 
                 <!-- 範例 2 -->
                 <div class="example-card glass">
                     <div class="example-header">
-                        <h3 class="example-title">範例 2：接收多筆感測器數據</h3>
+                        <h3 class="example-title">範例 2：輻射警報系統</h3>
                         <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
                     </div>
                     <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
-# 任務：接收一行包含多個溫度讀數的數據
-# 輸入格式：5 個用空格分隔的溫度值
-# 範例輸入：-120 -85 20 15 -100
+# 任務：檢查哪些區域的輻射值超過安全標準
+n = int(sys.stdin.readline())
+radiation_levels = list(map(int, sys.stdin.readline().strip().split()))
+safe_limit = 50  # ⚠️ 安全標準
 
-temperatures = list(map(int, sys.stdin.readline().strip().split()))  # ⚡ 讀取並解析數據
-print(f"收到 {len(temperatures)} 筆溫度數據")
-print(f"最低溫度：{min(temperatures)}°C")  # ✅ 使用內建函數
-print(f"最高溫度：{max(temperatures)}°C")  # ✅ 使用內建函數</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸入範例：</h4>
-                            <pre><code>-120 -85 20 15 -100</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>收到 5 筆溫度數據
-最低溫度：-120°C
-最高溫度：20°C</code></pre>
-                        </div>
-                    </div>
+print("輻射監測報告：")
+danger_zones = []  # ⚡ 儲存危險區域
+
+for i in range(len(radiation_levels)):  # 🔑 基於索引遍歷
+    level = radiation_levels[i]
+    zone = i + 1  # 區域編號從 1 開始
+    
+    if level > safe_limit:
+        print(f"⚠️ 區域 {zone}：{level} (超標 {level - safe_limit})")
+        danger_zones.append(zone)  # ✅ 添加到列表
+    else:
+        print(f"✅ 區域 {zone}：{level} (安全)")
+
+if danger_zones:
+    print(f"
+危險區域：{danger_zones}")
+else:
+    print("
+所有區域安全！")</code></pre>
                 </div>
 
                 <!-- 範例 3 -->
                 <div class="example-card glass">
                     <div class="example-header">
-                        <h3 class="example-title">範例 3：高速輸出任務報告</h3>
+                        <h3 class="example-title">範例 3：能量收集優化</h3>
                         <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
                     </div>
-                    <pre><code class="language-python">import sys
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
-# 任務：快速輸出多行任務狀態報告
-mission_status = [
-    "引擎系統：正常",
-    "生命維持系統：正常",
-    "通訊系統：正常",
-    "導航系統：正常"
-]
+# 任務：找出連續 3 個太陽能板中能量收集最多的組合
+n = int(sys.stdin.readline())
+energy = list(map(int, sys.stdin.readline().strip().split()))
 
-for status in mission_status:
-    sys.stdout.write(status + '\n')</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>引擎系統：正常
-生命維持系統：正常
-通訊系統：正常
-導航系統：正常</code></pre>
-                        </div>
-                    </div>
+max_energy = 0  # ⚠️ 初始化最大值
+best_start = 0
+
+# 滑動窗口：檢查每個連續 3 個板子的組合
+for i in range(n - 2):  # ⚡ 注意：要留出空間給後面 2 個元素
+    window_sum = energy[i] + energy[i+1] + energy[i+2]  # 🔑 計算窗口總和
+    
+    if window_sum > max_energy:
+        max_energy = window_sum
+        best_start = i
+
+print(f"最佳位置：板子 {best_start+1} 到 {best_start+3}")
+print(f"總能量：{max_energy} 單位")
+print(f"板子編號：{energy[best_start]}, {energy[best_start+1]}, {energy[best_start+2]}")</code></pre>
                 </div>
-            </section>
+
+                <!-- 範例 4 -->
+                <div class="example-card glass">
+                    <div class="example-header">
+                        <h3 class="example-title">範例 4：數據過濾與轉換</h3>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
+                    </div>
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
+
+# 任務：過濾掉異常讀數（負值），並將其他讀數轉換為攝氏度
+n = int(sys.stdin.readline())
+kelvin_readings = list(map(int, sys.stdin.readline().strip().split()))
+
+# 過濾並轉換
+celsius_readings = []  # ⚡ 建立新列表
+for k in kelvin_readings:
+    if k >= 0:  # ⚠️ 只處理有效讀數
+        c = k - 273  # 開氏溫度轉攝氏溫度
+        celsius_readings.append(c)  # ✅ 添加到新列表
+
+print(f"有效讀數：{len(celsius_readings)}/{n}")
+print(f"攝氏溫度：{celsius_readings}")</code></pre>
+                </div>
+
+                <!-- 範例 5 -->
+                <div class="example-card glass">
+                    <div class="example-header">
+                        <h3 class="example-title">範例 5：列表生成式的威力</h3>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
+                    </div>
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
+
+# 任務：快速生成平方數列表
+n = int(sys.stdin.readline())
+
+# ⚠️ 傳統方法
+squares_old = []
+for i in range(1, n+1):
+    squares_old.append(i ** 2)
+
+# ✅ 列表生成式（更簡潔）
+squares_new = [i**2 for i in range(1, n+1)]  # 🔑 一行完成
+
+print(f"1 到 {n} 的平方數：")
+print(squares_new)
+
+# ⚡ 條件過濾：只要偶數的平方
+even_squares = [i**2 for i in range(1, n+1) if i % 2 == 0]
+print(f"偶數的平方：{even_squares}")</code></pre>
+                </div>
 
             <!-- 程式碼解說 -->
             <section id="explanation" class="content-section">
@@ -217,42 +330,84 @@ for status in mission_status:
                     <h3>關鍵技術點</h3>
                     
                     <div class="tech-point">
-                        <h4>1. sys.stdin.readline()</h4>
-                        <ul>
-                            <li>直接從輸入緩衝區讀取，速度是 <code>input()</code> 的數倍</li>
-                            <li>會包含行末的換行符號 <code>\n</code>，需要用 <code>.strip()</code> 移除</li>
-                        </ul>
+                        <h4>1. 內建函數的效能優勢</h4>
+                        <pre><code class="language-python"># ⚠️ 慢速方法（手動計算）
+total = 0
+for x in data:
+    total += x
+
+# ✅ 快速方法（內建函數）
+total = sum(data)  # 更快、更簡潔</code></pre>
                     </div>
                     
                     <div class="tech-point">
-                        <h4>2. strip()</h4>
-                        <ul>
-                            <li>移除字串前後的空白字元（包括空格、換行符號）</li>
-                            <li>確保數據乾淨，避免解析錯誤</li>
-                        </ul>
+                        <h4>2. 索引邊界問題</h4>
+                        <pre><code class="language-python">data = [1, 2, 3, 4, 5]  # 🔑 長度為 5
+# 有效索引：0, 1, 2, 3, 4
+
+# ❌ 錯誤：索引超出範圍
+# print(data[5])  # IndexError!
+
+# ✅ 正確：使用 len() 確保安全
+for i in range(len(data)):  # ⚡ range(5) = 0,1,2,3,4
+    print(data[i])</code></pre>
                     </div>
                     
                     <div class="tech-point">
-                        <h4>3. split()</h4>
-                        <ul>
-                            <li>將字串按空格分割成列表</li>
-                            <li>例如："1 2 3" → ["1", "2", "3"]</li>
-                        </ul>
+                        <h4>3. 列表操作的時間複雜度</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                            <thead>
+                                <tr style="background: rgba(0, 217, 255, 0.1);">
+                                    <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">操作</th>
+                                    <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">時間複雜度</th>
+                                    <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--energy-cyan);">說明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>lst[i]</code></td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">O(1)</td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">直接存取</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>lst.append(x)</code></td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">O(1)</td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">尾部添加</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>lst.pop()</code></td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">O(1)</td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">尾部移除</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>lst.pop(0)</code></td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">O(N)</td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">頭部移除（慢！）</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);"><code>x in lst</code></td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">O(N)</td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">成員測試</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem;"><code>sum(lst)</code></td>
+                                    <td style="padding: 0.75rem;">O(N)</td>
+                                    <td style="padding: 0.75rem;">遍歷求和</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     
                     <div class="tech-point">
-                        <h4>4. map(int, ...)</h4>
+                        <h4>4. 列表生成式的優勢</h4>
                         <ul>
-                            <li>將列表中的每個字串元素轉換為整數</li>
-                            <li>配合 <code>list()</code> 轉換為列表</li>
+                            <li>語法簡潔，一行完成</li>
+                            <li>執行速度通常更快</li>
+                            <li>可讀性更好（對熟練者）</li>
                         </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>📊 數據流程圖</h4>
-                        <div style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 10px; margin-top: 1rem; font-family: 'Fira Code', monospace; font-size: 0.9rem; overflow-x: auto;">
-                            <pre style="margin: 0; background: none; padding: 0; border: none;">地球指令 → sys.stdin → readline() → strip() → split() → map(int) → list() → 處理</pre>
-                        </div>
+                        <pre><code class="language-python"># ✅ 列表生成式範例
+squares = [i**2 for i in range(10)]  # 🔑 簡潔
+evens = [x for x in data if x % 2 == 0]  # ⚡ 帶條件過濾</code></pre>
                     </div>
                 </div>
             </section>
@@ -261,42 +416,51 @@ for status in mission_status:
             <section id="quiz" class="content-section">
                 <h2 class="section-heading">
                     <span class="heading-icon">📝</span>
-                    <span>Quiz：月球基地通訊測試</span>
+                    <span>Quiz：隕石撞擊預警系統</span>
                 </h2>
                 
                 <div class="quiz-box glass">
-                    <h3>題目：氧氣補給計算</h3>
-                    <p>月球基地收到一批氧氣補給資料。第一行是補給次數 N，接下來 N 行每行包含一個整數，代表該次補給的氧氣量（公升）。請計算：</p>
+                    <h3>題目：危險隕石識別</h3>
+                    <p>月球基地的雷達偵測到 N 顆接近的隕石。每顆隕石都有一個「危險指數」（整數）。你需要：</p>
                     <ol>
-                        <li>總補給量</li>
-                        <li>平均每次補給量（四捨五入到整數）</li>
-                        <li>最大單次補給量</li>
+                        <li>找出危險指數最高的隕石（及其編號）</li>
+                        <li>計算平均危險指數（四捨五入到整數）</li>
+                        <li>統計有多少顆隕石的危險指數高於平均值</li>
+                        <li>列出所有高於平均值的隕石編號</li>
                     </ol>
                     
                     <div class="quiz-io">
                         <div class="io-box">
+                            <h4>輸入格式：</h4>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>第一行：整數 N（隕石數量，1 ≤ N ≤ 100）</li>
+                                <li>第二行：N 個整數，用空格分隔，代表每顆隕石的危險指數（0-100）</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-io">
+                        <div class="io-box">
                             <h4>輸入範例：</h4>
-                            <pre><code>5
-150
-200
-180
-220
-190</code></pre>
+                            <pre><code>7
+45 78 23 89 56 34 67</code></pre>
                         </div>
                         <div class="io-box">
                             <h4>輸出範例：</h4>
-                            <pre><code>總補給量：940 公升
-平均補給量：188 公升
-最大補給量：220 公升</code></pre>
+                            <pre><code>隕石總數：7
+最危險隕石：編號 4，危險指數 89
+平均危險指數：56
+高於平均值：4 顆
+高危隕石編號：[2, 4, 5, 7]</code></pre>
                         </div>
                     </div>
                     
                     <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 217, 255, 0.05); border-left: 4px solid var(--energy-cyan); border-radius: 8px;">
                         <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">💡 提示</h4>
                         <ul style="margin-left: 1.5rem;">
-                            <li>使用 <code>sys.stdin.readline()</code> 讀取每一行</li>
-                            <li>使用 <code>sum()</code> 計算總和</li>
-                            <li>使用 <code>round()</code> 進行四捨五入</li>
+                            <li>使用 <code>enumerate()</code> 可以同時獲得索引和值</li>
+                            <li>先計算平均值，再進行第二次遍歷</li>
+                            <li>記得編號從 1 開始（使用者友善）</li>
                         </ul>
                     </div>
                     
@@ -316,48 +480,95 @@ for status in mission_status:
                 <div class="solution-box glass">
                     <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
-# 讀取補給次數
+# 讀取隕石數量
 n = int(sys.stdin.readline())  # ⚡ 讀取第一行
 
-# 讀取所有補給數據
-supplies = []  # ⚠️ 建立空列表儲存數據
-for i in range(n):  # ⚡ 迴圈讀取 N 次
-    amount = int(sys.stdin.readline())
-    supplies.append(amount)
+# 讀取所有隕石的危險指數
+danger_indices = list(map(int, sys.stdin.readline().strip().split()))  # ⚡ 解析數據
 
-# 計算統計數據
-total = sum(supplies)  # ✅ 使用 sum() 計算總和
-average = round(total / n)  # ✅ 使用 round() 四捨五入
-maximum = max(supplies)  # ✅ 使用 max() 找最大值
+# 1. 找出最危險的隕石
+max_danger = max(danger_indices)  # ✅ 使用 max() 找最大值
+max_position = danger_indices.index(max_danger) + 1  # 🔑 編號從 1 開始
+
+# 2. 計算平均危險指數
+average = round(sum(danger_indices) / n)  # ⚡ 計算平均值並四捨五入
+
+# 3 & 4. 統計並列出高於平均值的隕石
+high_danger_meteors = []  # ⚠️ 建立列表儲存高危隕石編號
+for i, danger in enumerate(danger_indices, start=1):  # 🔑 enumerate 從 1 開始
+    if danger > average:
+        high_danger_meteors.append(i)  # ✅ 添加編號
 
 # 輸出結果
-print(f"總補給量：{total} 公升")
-print(f"平均補給量：{average} 公升")
-print(f"最大補給量：{maximum} 公升")</code></pre>
+print(f"隕石總數：{n}")
+print(f"最危險隕石：編號 {max_position}，危險指數 {max_danger}")
+print(f"平均危險指數：{average}")
+print(f"高於平均值：{len(high_danger_meteors)} 顆")
+print(f"高危隕石編號：{high_danger_meteors}")</code></pre>
                     
                     <div class="solution-explanation">
                         <h3>解答說明</h3>
-                        <ol>
-                            <li><strong>讀取次數</strong>：先讀取 N，知道要處理多少筆數據</li>
-                            <li><strong>迴圈讀取</strong>：使用 <code>for</code> 迴圈逐行讀取每次補給量</li>
-                            <li><strong>累積數據</strong>：將每次讀取的數據 <code>append</code> 到列表中</li>
-                            <li><strong>統計計算</strong>：
-                                <ul>
-                                    <li><code>sum(supplies)</code>：計算總和</li>
-                                    <li><code>round(total / n)</code>：計算平均值並四捨五入</li>
-                                    <li><code>max(supplies)</code>：找出最大值</li>
-                                </ul>
-                            </li>
-                            <li><strong>格式化輸出</strong>：使用 f-string 讓輸出更清晰易讀</li>
-                        </ol>
+                        
+                        <div class="tech-point">
+                            <h4>1. 找出最大值及其位置</h4>
+                            <pre><code class="language-python">max_danger = max(danger_indices)  # 🔑 找出最大值
+max_position = danger_indices.index(max_danger)  # ⚡ 找出第一次出現的索引</code></pre>
+                            <ul>
+                                <li><code>index()</code> 方法返回元素第一次出現的索引</li>
+                                <li>加 1 轉換為使用者友善的編號</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-point">
+                            <h4>2. 計算平均值</h4>
+                            <pre><code class="language-python">average = round(sum(danger_indices) / n)  # ✅ 四捨五入</code></pre>
+                            <ul>
+                                <li><code>sum()</code> 計算總和</li>
+                                <li>除以 N 得到平均值</li>
+                                <li><code>round()</code> 四捨五入到整數</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-point">
+                            <h4>3. 使用 enumerate 進行過濾</h4>
+                            <pre><code class="language-python">for i, danger in enumerate(danger_indices, start=1):  # 🔑 從 1 開始
+    if danger > average:
+        high_danger_meteors.append(i)</code></pre>
+                            <ul>
+                                <li><code>enumerate(..., start=1)</code> 讓索引從 1 開始</li>
+                                <li>同時獲得編號和危險指數</li>
+                                <li>符合條件的編號加入列表</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-point">
+                            <h4>4. 列表生成式的替代寫法</h4>
+                            <pre><code class="language-python"># ⚡ 更簡潔的寫法
+high_danger_meteors = [i for i, d in enumerate(danger_indices, start=1) 
+                       if d > average]</code></pre>
+                        </div>
                         
                         <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.3); border-radius: 10px;">
                             <h4 style="color: var(--success-green); margin-bottom: 1rem;">📊 效能分析</h4>
                             <ul>
-                                <li><strong>時間複雜度</strong>：O(N) - 需要讀取 N 筆數據</li>
-                                <li><strong>空間複雜度</strong>：O(N) - 需要儲存 N 筆數據</li>
-                                <li><strong>I/O 效率</strong>：使用 <code>sys.stdin.readline()</code>，即使 N = 100,000 也能快速完成</li>
+                                <li><strong>時間複雜度</strong>：O(N) - 需要遍歷列表 2-3 次</li>
+                                <li><strong>空間複雜度</strong>：O(N) - 儲存 N 個隕石數據</li>
+                                <li><strong>最壞情況</strong>：所有隕石都高於平均值，需要儲存 N 個編號</li>
                             </ul>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255, 59, 48, 0.1); border-left: 4px solid var(--warning-amber); border-radius: 8px;">
+                            <h4 style="color: var(--warning-amber); margin-bottom: 0.5rem;">⚠️ 常見錯誤</h4>
+                            <p><strong>錯誤 1：索引從 1 開始</strong></p>
+                            <pre><code class="language-python"># ❌ 錯誤：Python 索引從 0 開始
+print(danger_indices[1])  # 這是第二個元素！</code></pre>
+                            <p style="margin-top: 1rem;"><strong>錯誤 2：修改正在遍歷的列表</strong></p>
+                            <pre><code class="language-python"># ❌ 危險：可能導致跳過元素或錯誤
+for i in range(len(lst)):
+    lst.pop(0)  # 不要這樣做！
+    
+# ✅ 正確做法：創建新列表
+new_lst = [x for x in lst if condition]</code></pre>
                         </div>
                     </div>
                 </div>
@@ -368,15 +579,18 @@ print(f"最大補給量：{maximum} 公升")</code></pre>
                 <div class="badge-content">
                     <span class="badge-icon">🎉</span>
                     <h3>訓練完成！</h3>
-                    <p>恭喜你完成月球基地通訊系統訓練！你現在已經掌握：</p>
+                    <p>恭喜你完成月球感測器陣列訓練！你現在已經掌握：</p>
                     <div class="completion-skills">
-                        <span class="skill-tag">✅ 高速 I/O</span>
-                        <span class="skill-tag">✅ sys.stdin.readline()</span>
-                        <span class="skill-tag">✅ 數據解析</span>
-                        <span class="skill-tag">✅ 統計計算</span>
+                        <span class="skill-tag">✅ 列表的創建與初始化</span>
+                        <span class="skill-tag">✅ 索引存取與修改</span>
+                        <span class="skill-tag">✅ 列表遍歷的兩種方式</span>
+                        <span class="skill-tag">✅ 內建函數：len(), sum(), min(), max()</span>
+                        <span class="skill-tag">✅ 列表方法：append(), pop(), index()</span>
+                        <span class="skill-tag">✅ 列表生成式</span>
+                        <span class="skill-tag">✅ 時間複雜度的基本概念</span>
                     </div>
                     <p style="margin-top: 1.5rem; font-size: 1.1rem; color: var(--energy-cyan);">
-                        <strong>下一站：邏輯控制訓練 - 學習如何在複雜的太空環境中做出正確決策！</strong>
+                        <strong>下一站：木星軌道站 - 進階數據處理與字串操作！</strong>
                     </p>
                 </div>
             </div>
@@ -386,14 +600,15 @@ print(f"最大補給量：{maximum} 公升")</code></pre>
                 <h3 style="color: var(--energy-cyan); margin-bottom: 1rem;">🔗 APCS 對應能力</h3>
                 <ul>
                     <li><strong>級分目標</strong>：1-2 級分</li>
-                    <li><strong>評量項目</strong>：輸入與輸出、算術運算</li>
-                    <li><strong>對應題型</strong>：i399 (數字遊戲)、o076 (特技表演)</li>
+                    <li><strong>評量項目</strong>：陣列操作、序列資料結構</li>
+                    <li><strong>對應題型</strong>：h081 (程式交易)、g595 (修補圍籬)</li>
+                    <li><strong>核心技能</strong>：一維陣列的建立、遍歷、統計分析</li>
                 </ul>
             </div>
 
             <!-- 導航按鈕 -->
             <div class="lesson-navigation">
-                <a href="#" class="nav-btn prev-btn" style="opacity: 0.5; pointer-events: none;">← 上一課</a>
+                <a href="A2.html" class="nav-btn prev-btn">← 上一課</a>
                 <a href="../../index.html" class="nav-btn home-btn">🏠 課程地圖</a>
                 <a href="#" class="nav-btn next-btn" style="opacity: 0.5; pointer-events: none;">下一課 →</a>
             </div>
