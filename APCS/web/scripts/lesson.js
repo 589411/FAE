@@ -159,7 +159,7 @@ function processCodeBlock(block) {
         }
         
         // 將所有元素放在同一行，避免換行
-        const codeLine = `<div class="code-line ${highlightClass}"><span class="line-number">${lineNum}</span><span class="code-content">${escapeHtml(line)}${annotation}</span></div>`;
+        const codeLine = `<div class="code-line ${highlightClass}"><span class="line-number">${lineNum}</span> <span class="code-content">${escapeHtml(line)}${annotation}</span></div>`;
         
         processedLines.push(codeLine);
     });
