@@ -4,7 +4,7 @@
  */
 
 // API 端點（部署後需要更新）
-const API_BASE_URL = 'https://apcs-auth.your-worker.workers.dev';
+const API_BASE_URL = 'https://apcs-auth-api.589411.workers.dev';
 
 class CourseAPI {
     constructor() {
