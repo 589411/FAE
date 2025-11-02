@@ -216,8 +216,8 @@
             
             <!-- 標籤切換 -->
             <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchTab('login')">登入</button>
-                <button class="auth-tab" onclick="switchTab('register')">註冊</button>
+                <button class="auth-tab active" onclick="switchTab('login', event)">登入</button>
+                <button class="auth-tab" onclick="switchTab('register', event)">註冊</button>
             </div>
             
             <!-- 登入表單 -->
@@ -317,7 +317,7 @@
         let currentVerificationCode = '';
         
         // 切換標籤
-        function switchTab(tab) {
+        function switchTab(tab, event) {
             // 更新標籤樣式
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
@@ -357,16 +357,20 @@
         // 處理註冊
         async function handleRegister(event) {
             event.preventDefault();
+            console.log('開始註冊流程...');
             
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
             const btn = event.target.querySelector('.form-button');
             
+            console.log('註冊資料:', { name, email, password: '***' });
+            
             btn.disabled = true;
             showMessage('註冊中...', 'info');
             
             const result = await window.authClient.register(email, password, name);
+            console.log('註冊結果:', result);
             
             if (result.success) {
                 currentEmail = email;
