@@ -164,7 +164,7 @@ function processCodeBlock(block) {
         processedLines.push(codeLine);
     });
     
-    block.innerHTML = processedLines.join('');
+    block.innerHTML = processedLines.join('\n');
 }
 
 // HTML 轉義函數
