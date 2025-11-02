@@ -19,7 +19,7 @@
         <nav class="nav-bar glass">
             <div class="nav-content">
                 <div class="nav-logo">
-                    <img src="../../../FAEBot.png" alt="FAE Logo" class="logo-img">
+                    <img src="images/FAEBot.png" alt="FAE Logo" class="logo-img">
                     <span class="logo-text">FAE Academy</span>
                 </div>
                 <div class="nav-links">
@@ -52,13 +52,13 @@
                 </p>
                 
                 <div class="hero-buttons">
-                    <a href="#curriculum" class="btn-primary">
-                        <span class="btn-icon">🌙</span>
-                        <span>開始探險</span>
-                    </a>
-                    <a href="#quick-start" class="btn-secondary">
+                    <a href="#curriculum" class="btn btn-primary">
                         <span class="btn-icon">📖</span>
                         <span>快速開始</span>
+                    </a>
+                    <a href="pricing.html" class="btn btn-secondary">
+                        <span class="btn-icon">🔓</span>
+                        <span>解鎖完整課程</span>
                     </a>
                 </div>
                 
@@ -105,7 +105,7 @@
                     </div>
                     
                     <div class="level-modules">
-                        <a href="lessons/L1/A1.html" class="module-card glass">
+                        <a href="lessons/L1/A1.html" class="module-card glass" data-course-id="A1">
                             <div class="module-header">
                                 <span class="module-icon">📡</span>
                                 <h4 class="module-title">A1: 通訊系統與高速 I/O</h4>
@@ -117,7 +117,7 @@
                             </div>
                         </a>
                         
-                        <a href="lessons/L1/A2.html" class="module-card glass">
+                        <a href="lessons/L1/A2.html" class="module-card glass" data-course-id="A2">
                             <div class="module-header">
                                 <span class="module-icon">🧭</span>
                                 <h4 class="module-title">A2: 導航邏輯與條件判斷</h4>
@@ -130,7 +130,7 @@
                             </div>
                         </a>
                         
-                        <a href="lessons/L1/A3.html" class="module-card glass">
+                        <a href="lessons/L1/A3.html" class="module-card glass" data-course-id="A3">
                             <div class="module-header">
                                 <span class="module-icon">📊</span>
                                 <h4 class="module-title">A3: 數據陣列與感測器管理</h4>
@@ -158,7 +158,7 @@
                     </div>
                     
                     <div class="level-modules">
-                        <a href="lessons/L2/B1.html" class="module-card glass">
+                        <a href="lessons/L2/B1.html" class="module-card glass" data-course-id="B1">
                             <div class="module-header">
                                 <span class="module-icon">🔐</span>
                                 <h4 class="module-title">B1: 加密通訊與字串處理</h4>
@@ -170,7 +170,7 @@
                             </div>
                         </a>
                         
-                        <a href="lessons/L2/B2.html" class="module-card glass">
+                        <a href="lessons/L2/B2.html" class="module-card glass" data-course-id="B2">
                             <div class="module-header">
                                 <span class="module-icon">🪐</span>
                                 <h4 class="module-title">B2: 土星環模擬與二維陣列</h4>
@@ -198,7 +198,7 @@
                     </div>
                     
                     <div class="level-modules">
-                        <a href="lessons/L3/C1.html" class="module-card glass">
+                        <a href="lessons/L3/C1.html" class="module-card glass" data-course-id="C1">
                             <div class="module-header">
                                 <span class="module-icon">📦</span>
                                 <h4 class="module-title">C1: 堆疊與佇列系統</h4>
@@ -210,7 +210,7 @@
                             </div>
                         </a>
                         
-                        <a href="lessons/L3/C2.html" class="module-card glass">
+                        <a href="lessons/L3/C2.html" class="module-card glass" data-course-id="C2">
                             <div class="module-header">
                                 <span class="module-icon">🔄</span>
                                 <h4 class="module-title">C2: 遞迴與回溯探索</h4>
@@ -238,7 +238,7 @@
                     </div>
                     
                     <div class="level-modules">
-                        <a href="lessons/L4/D1.html" class="module-card glass">
+                        <a href="lessons/L4/D1.html" class="module-card glass" data-course-id="D1">
                             <div class="module-header">
                                 <span class="module-icon">🕸️</span>
                                 <h4 class="module-title">D1: 星際網絡與圖論</h4>
@@ -250,7 +250,7 @@
                             </div>
                         </a>
                         
-                        <a href="lessons/L5/E1.html" class="module-card glass">
+                        <a href="lessons/L5/E1.html" class="module-card glass" data-course-id="E1">
                             <div class="module-header">
                                 <span class="module-icon">💎</span>
                                 <h4 class="module-title">E1: 動態規劃與優化</h4>
@@ -322,5 +322,6 @@
     <!-- JavaScript -->
     <script src="scripts/starfield.js"></script>
     <script src="scripts/main.js"></script>
+    <script src="scripts/course-access.js"></script>
 </body>
 </html>
