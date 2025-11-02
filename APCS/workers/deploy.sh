@@ -71,7 +71,7 @@ read -p "是否創建新的 KV 命名空間？(y/n) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "正在創建 KV 命名空間 'COURSE_ACCESS'..."
-    wrangler kv:namespace create "COURSE_ACCESS"
+    wrangler kv namespace create "COURSE_ACCESS"
     
     echo ""
     echo -e "${YELLOW}⚠️  重要：請複製上面的 KV namespace id${NC}"
