@@ -3,6 +3,14 @@
  * 部署到 Cloudflare Workers，配合 Pages 使用
  */
 
+import {
+  handleRegister,
+  handleLogin,
+  handleVerifyEmail,
+  handleGoogleLogin,
+  handleGoogleCallback
+} from './auth-handlers.js';
+
 export default {
   async fetch(request, env) {
     // CORS 設置
@@ -28,12 +36,34 @@ export default {
         return new Response(JSON.stringify({ 
           status: 'ok',
           timestamp: new Date().toISOString(),
-          version: '1.0.0'
+          version: '2.0.0'
         }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
       
+      // 認證相關路由
+      if (path === '/api/auth/register' && request.method === 'POST') {
+        return await handleRegister(request, env, corsHeaders);
+      }
+      
+      if (path === '/api/auth/login' && request.method === 'POST') {
+        return await handleLogin(request, env, corsHeaders);
+      }
+      
+      if (path === '/api/auth/verify-email' && request.method === 'POST') {
+        return await handleVerifyEmail(request, env, corsHeaders);
+      }
+      
+      if (path === '/api/auth/google/login' && request.method === 'GET') {
+        return await handleGoogleLogin(request, env, corsHeaders);
+      }
+      
+      if (path === '/api/auth/google/callback' && request.method === 'GET') {
+        return await handleGoogleCallback(request, env, corsHeaders);
+      }
+      
+      // 原有的兌換碼相關路由
       if (path === '/api/validate-code' && request.method === 'POST') {
         return await handleValidateCode(request, env, corsHeaders);
       }
