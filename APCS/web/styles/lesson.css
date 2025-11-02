@@ -273,25 +273,25 @@ code {
 
 /* 程式碼行號樣式 */
 .code-line {
-    display: flex;
-    align-items: flex-start;
+    display: block;
     position: relative;
     padding-left: 0;
+    line-height: 1.8;
 }
 
 .line-number {
     display: inline-block;
     min-width: 3rem;
-    margin-right: 1.5rem;
+    margin-right: 1ch;  /* 使用 1ch 單位，剛好一個字元寬度 */
     text-align: right;
     color: rgba(255, 255, 255, 0.3);
     user-select: none;
-    flex-shrink: 0;
     font-weight: 500;
+    vertical-align: top;
 }
 
 .code-content {
-    flex: 1;
+    display: inline;
     white-space: pre-wrap;
     word-break: break-word;
 }
@@ -343,17 +343,15 @@ code {
 
 /* 程式碼註解標籤 */
 .code-annotation {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.75rem;
+    display: inline-block;
+    margin-left: 1rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
     font-weight: 600;
     white-space: nowrap;
-    pointer-events: none;
     opacity: 0.9;
+    vertical-align: middle;
 }
 
 .code-annotation.key {
