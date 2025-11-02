@@ -142,91 +142,127 @@ else:  # ✅ 所有條件都為假時執行
                     <span>範例程式碼</span>
                 </h2>
                 
-                <!-- 範例 1 -->
+                                <!-- 範例 1 -->
                 <div class="example-card glass">
                     <div class="example-header">
-                        <h3 class="example-title">範例 1：接收單一指令</h3>
+                        <h3 class="example-title">範例 1：月球車地形判斷系統</h3>
                         <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
                     </div>
                     <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
-# 任務：接收地球發來的火箭發射倒數秒數
-countdown = int(sys.stdin.readline())  # ⚡ 使用高速 I/O 讀取
-print(f"火箭將在 {countdown} 秒後發射！")  # ✅ 格式化輸出</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸入範例：</h4>
-                            <pre><code>10</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>火箭將在 10 秒後發射！</code></pre>
-                        </div>
-                    </div>
+# 任務：根據地形類型決定行駛速度
+terrain = sys.stdin.readline().strip()  # ⚡ 讀取並清理輸入
+
+if terrain == "平原":  # ✅ 條件判斷
+    speed = 50
+    print(f"地形：{terrain}，建議速度：{speed} km/h")
+elif terrain == "隕石坑":
+    speed = 20
+    print(f"地形：{terrain}，建議速度：{speed} km/h（小心駕駛）")
+elif terrain == "懸崖":
+    speed = 0
+    print(f"地形：{terrain}，建議速度：{speed} km/h（停止前進！）")
+else:  # ⚠️ 處理未知情況
+    speed = 30
+    print(f"地形：未知，建議速度：{speed} km/h（謹慎前進）")</code></pre>
                 </div>
 
                 <!-- 範例 2 -->
                 <div class="example-card glass">
                     <div class="example-header">
-                        <h3 class="example-title">範例 2：接收多筆感測器數據</h3>
+                        <h3 class="example-title">範例 2：氧氣警報系統</h3>
                         <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
                     </div>
                     <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
-# 任務：接收一行包含多個溫度讀數的數據
-# 輸入格式：5 個用空格分隔的溫度值
-# 範例輸入：-120 -85 20 15 -100
+# 任務：根據氧氣含量和電池電量發出警報
+oxygen = int(sys.stdin.readline())  # ⚡ 氧氣百分比
+battery = int(sys.stdin.readline())  # ⚡ 電池百分比
 
-temperatures = list(map(int, sys.stdin.readline().strip().split()))  # ⚡ 讀取並解析數據
-print(f"收到 {len(temperatures)} 筆溫度數據")
-print(f"最低溫度：{min(temperatures)}°C")  # ✅ 使用內建函數
-print(f"最高溫度：{max(temperatures)}°C")  # ✅ 使用內建函數</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸入範例：</h4>
-                            <pre><code>-120 -85 20 15 -100</code></pre>
-                        </div>
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>收到 5 筆溫度數據
-最低溫度：-120°C
-最高溫度：20°C</code></pre>
-                        </div>
-                    </div>
+print(f"氧氣：{oxygen}%，電池：{battery}%")
+
+if oxygen < 20 and battery < 30:  # ⚠️ 雙重危險
+    print("🚨 緊急警報：氧氣和電池都不足！立即返回基地！")
+elif oxygen < 20:
+    print("⚠️ 警告：氧氣不足！")
+elif battery < 30:
+    print("⚠️ 警告：電池不足！")
+else:  # ✅ 系統正常
+    print("✅ 系統正常，可以繼續任務")</code></pre>
                 </div>
 
                 <!-- 範例 3 -->
                 <div class="example-card glass">
                     <div class="example-header">
-                        <h3 class="example-title">範例 3：高速輸出任務報告</h3>
+                        <h3 class="example-title">範例 3：隕石雨倒數系統</h3>
                         <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
                     </div>
-                    <pre><code class="language-python">import sys
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
-# 任務：快速輸出多行任務狀態報告
-mission_status = [
-    "引擎系統：正常",
-    "生命維持系統：正常",
-    "通訊系統：正常",
-    "導航系統：正常"
-]
+# 任務：倒數計時並在特定時刻發出警報
+countdown = int(sys.stdin.readline())
 
-for status in mission_status:
-    sys.stdout.write(status + '\n')</code></pre>
-                    
-                    <div class="example-io">
-                        <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>引擎系統：正常
-生命維持系統：正常
-通訊系統：正常
-導航系統：正常</code></pre>
-                        </div>
-                    </div>
+for i in range(countdown, 0, -1):  # ⚡ 從 countdown 倒數到 1
+    if i == 10:  # ✅ 特定時刻觸發
+        print(f"{i} - 準備啟動防護罩")
+    elif i == 5:
+        print(f"{i} - 防護罩充能中")
+    elif i == 1:
+        print(f"{i} - 防護罩啟動！")
+    else:
+        print(i)
+
+print("🛡️ 防護罩已啟動，隕石雨來襲！")</code></pre>
                 </div>
-            </section>
+
+                <!-- 範例 4 -->
+                <div class="example-card glass">
+                    <div class="example-header">
+                        <h3 class="example-title">範例 4：尋找最佳著陸點</h3>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
+                    </div>
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
+
+# 任務：在 N 個候選點中找到坡度最小的著陸點
+n = int(sys.stdin.readline())
+best_slope = float('inf')  # ⚠️ 初始化為無限大
+best_location = -1
+
+for i in range(n):  # ⚡ 遍歷所有候選點
+    slope = int(sys.stdin.readline())
+    if slope < best_slope:  # ✅ 找到更好的點
+        best_slope = slope
+        best_location = i + 1  # 位置從 1 開始編號
+        
+print(f"最佳著陸點：位置 {best_location}，坡度：{best_slope}°")</code></pre>
+                </div>
+
+                <!-- 範例 5 -->
+                <div class="example-card glass">
+                    <div class="example-header">
+                        <h3 class="example-title">範例 5：進階流程控制 - break 與 continue</h3>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
+                    </div>
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
+
+# 任務：掃描隕石樣本，找到第一個含有水冰的樣本
+n = int(sys.stdin.readline())
+
+for i in range(1, n + 1):  # ⚡ 從 1 到 n
+    sample_type = sys.stdin.readline().strip()
+    
+    if sample_type == "空樣本":
+        continue  # ⚠️ 跳過空樣本，繼續下一個
+    
+    if sample_type == "水冰":
+        print(f"✅ 在樣本 {i} 發現水冰！任務完成！")
+        break  # 🔑 找到目標，立即結束搜索
+    
+    print(f"樣本 {i}：{sample_type}（繼續搜索）")
+else:  # ⚡ for...else 結構
+    # 只有在迴圈正常結束（沒有 break）時才執行
+    print("❌ 所有樣本都不含水冰")</code></pre>
+                </div>
 
             <!-- 程式碼解說 -->
             <section id="explanation" class="content-section">
@@ -239,42 +275,37 @@ for status in mission_status:
                     <h3>關鍵技術點</h3>
                     
                     <div class="tech-point">
-                        <h4>1. sys.stdin.readline()</h4>
+                        <h4>1. elif 的優勢</h4>
                         <ul>
-                            <li>直接從輸入緩衝區讀取，速度是 <code>input()</code> 的數倍</li>
-                            <li>會包含行末的換行符號 <code>\n</code>，需要用 <code>.strip()</code> 移除</li>
+                            <li>比多個獨立的 <code>if</code> 更高效</li>
+                            <li>一旦某個條件為真，後續條件不再檢查</li>
+                            <li>邏輯更清晰，避免重複判斷</li>
                         </ul>
                     </div>
                     
                     <div class="tech-point">
-                        <h4>2. strip()</h4>
+                        <h4>2. range() 函數</h4>
+                        <pre><code class="language-python">range(5)           # 🔑 0, 1, 2, 3, 4
+range(1, 6)        # ⚡ 1, 2, 3, 4, 5
+range(10, 0, -1)   # ✅ 10, 9, 8, ..., 1</code></pre>
+                        <p style="margin-top: 1rem; color: var(--warning-amber);">⚠️ <strong>注意</strong>：stop 參數本身不包含在序列中！</p>
+                    </div>
+                    
+                    <div class="tech-point">
+                        <h4>3. break vs continue</h4>
                         <ul>
-                            <li>移除字串前後的空白字元（包括空格、換行符號）</li>
-                            <li>確保數據乾淨，避免解析錯誤</li>
+                            <li><code>break</code>：立即跳出整個迴圈</li>
+                            <li><code>continue</code>：跳過本次迭代，進入下一次</li>
                         </ul>
                     </div>
                     
                     <div class="tech-point">
-                        <h4>3. split()</h4>
+                        <h4>4. for...else 結構</h4>
                         <ul>
-                            <li>將字串按空格分割成列表</li>
-                            <li>例如："1 2 3" → ["1", "2", "3"]</li>
+                            <li><code>else</code> 區塊只在迴圈正常結束時執行</li>
+                            <li>如果迴圈被 <code>break</code> 中斷，<code>else</code> 不執行</li>
+                            <li>非常適合「搜索失敗」的處理</li>
                         </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>4. map(int, ...)</h4>
-                        <ul>
-                            <li>將列表中的每個字串元素轉換為整數</li>
-                            <li>配合 <code>list()</code> 轉換為列表</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-point">
-                        <h4>📊 數據流程圖</h4>
-                        <div style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 10px; margin-top: 1rem; font-family: 'Fira Code', monospace; font-size: 0.9rem; overflow-x: auto;">
-                            <pre style="margin: 0; background: none; padding: 0; border: none;">地球指令 → sys.stdin → readline() → strip() → split() → map(int) → list() → 處理</pre>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -283,42 +314,69 @@ for status in mission_status:
             <section id="quiz" class="content-section">
                 <h2 class="section-heading">
                     <span class="heading-icon">📝</span>
-                    <span>Quiz：月球基地通訊測試</span>
+                    <span>Quiz：火星探測器路徑規劃</span>
                 </h2>
                 
                 <div class="quiz-box glass">
-                    <h3>題目：氧氣補給計算</h3>
-                    <p>月球基地收到一批氧氣補給資料。第一行是補給次數 N，接下來 N 行每行包含一個整數，代表該次補給的氧氣量（公升）。請計算：</p>
+                    <h3>題目：障礙物迴避系統</h3>
+                    <p>你的火星探測器正在執行路徑掃描任務。探測器會掃描前方 N 個位置，每個位置可能是：</p>
+                    <ul>
+                        <li><code>0</code>：安全路徑</li>
+                        <li><code>1</code>：小型障礙物（可以繞過）</li>
+                        <li><code>2</code>：大型障礙物（必須停止）</li>
+                    </ul>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>請編寫程式：</strong></p>
                     <ol>
-                        <li>總補給量</li>
-                        <li>平均每次補給量（四捨五入到整數）</li>
-                        <li>最大單次補給量</li>
+                        <li>如果遇到大型障礙物（2），立即停止並報告位置</li>
+                        <li>統計有多少個小型障礙物</li>
+                        <li>如果沒有大型障礙物，報告路徑安全</li>
                     </ol>
                     
                     <div class="quiz-io">
                         <div class="io-box">
-                            <h4>輸入範例：</h4>
-                            <pre><code>5
-150
-200
-180
-220
-190</code></pre>
+                            <h4>輸入格式：</h4>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>第一行：整數 N（掃描位置數量，1 ≤ N ≤ 100）</li>
+                                <li>第二行：N 個整數，用空格分隔，每個整數為 0、1 或 2</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-io">
+                        <div class="io-box">
+                            <h4>輸入範例 1：</h4>
+                            <pre><code>8
+0 1 0 0 1 2 0 1</code></pre>
                         </div>
                         <div class="io-box">
-                            <h4>輸出範例：</h4>
-                            <pre><code>總補給量：940 公升
-平均補給量：188 公升
-最大補給量：220 公升</code></pre>
+                            <h4>輸出範例 1：</h4>
+                            <pre><code>⚠️ 在位置 6 發現大型障礙物！
+已掃描：5 個位置
+小型障礙物：2 個</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-io">
+                        <div class="io-box">
+                            <h4>輸入範例 2：</h4>
+                            <pre><code>6
+0 1 0 1 0 0</code></pre>
+                        </div>
+                        <div class="io-box">
+                            <h4>輸出範例 2：</h4>
+                            <pre><code>✅ 路徑安全！
+總掃描：6 個位置
+小型障礙物：2 個</code></pre>
                         </div>
                     </div>
                     
                     <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 217, 255, 0.05); border-left: 4px solid var(--energy-cyan); border-radius: 8px;">
                         <h4 style="color: var(--energy-cyan); margin-bottom: 0.5rem;">💡 提示</h4>
                         <ul style="margin-left: 1.5rem;">
-                            <li>使用 <code>sys.stdin.readline()</code> 讀取每一行</li>
-                            <li>使用 <code>sum()</code> 計算總和</li>
-                            <li>使用 <code>round()</code> 進行四捨五入</li>
+                            <li>使用 <code>enumerate()</code> 可以同時獲得索引和值</li>
+                            <li>記得位置編號從 1 開始（對使用者友善）</li>
+                            <li>使用 <code>break</code> 在遇到大型障礙物時立即停止</li>
                         </ul>
                     </div>
                     
@@ -338,47 +396,77 @@ for status in mission_status:
                 <div class="solution-box glass">
                     <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
-# 讀取補給次數
+# 讀取掃描位置數量
 n = int(sys.stdin.readline())  # ⚡ 讀取第一行
 
-# 讀取所有補給數據
-supplies = []  # ⚠️ 建立空列表儲存數據
-for i in range(n):  # ⚡ 迴圈讀取 N 次
-    amount = int(sys.stdin.readline())
-    supplies.append(amount)
+# 讀取所有位置的障礙物數據
+obstacles = list(map(int, sys.stdin.readline().strip().split()))  # ⚡ 解析數據
 
-# 計算統計數據
-total = sum(supplies)  # ✅ 使用 sum() 計算總和
-average = round(total / n)  # ✅ 使用 round() 四捨五入
-maximum = max(supplies)  # ✅ 使用 max() 找最大值
+# 初始化計數器
+small_obstacles = 0  # ⚠️ 小型障礙物計數
+scanned = 0  # ⚠️ 已掃描位置
 
-# 輸出結果
-print(f"總補給量：{total} 公升")
-print(f"平均補給量：{average} 公升")
-print(f"最大補給量：{maximum} 公升")</code></pre>
+# 掃描每個位置
+for position, obstacle_type in enumerate(obstacles, start=1):  # 🔑 enumerate 從 1 開始
+    scanned = position  # 記錄已掃描的位置
+    
+    if obstacle_type == 1:  # ✅ 小型障礙物
+        small_obstacles += 1  # 統計小型障礙物
+    elif obstacle_type == 2:  # ⚠️ 大型障礙物
+        # 發現大型障礙物，立即停止
+        print(f"⚠️ 在位置 {position} 發現大型障礙物！")
+        print(f"已掃描：{scanned - 1} 個位置")
+        print(f"小型障礙物：{small_obstacles} 個")
+        break  # 🔑 立即跳出迴圈
+else:  # ⚡ for...else 結構
+    # 迴圈正常結束，沒有遇到大型障礙物
+    print("✅ 路徑安全！")
+    print(f"總掃描：{scanned} 個位置")
+    print(f"小型障礙物：{small_obstacles} 個")</code></pre>
                     
                     <div class="solution-explanation">
                         <h3>解答說明</h3>
-                        <ol>
-                            <li><strong>讀取次數</strong>：先讀取 N，知道要處理多少筆數據</li>
-                            <li><strong>迴圈讀取</strong>：使用 <code>for</code> 迴圈逐行讀取每次補給量</li>
-                            <li><strong>累積數據</strong>：將每次讀取的數據 <code>append</code> 到列表中</li>
-                            <li><strong>統計計算</strong>：
-                                <ul>
-                                    <li><code>sum(supplies)</code>：計算總和</li>
-                                    <li><code>round(total / n)</code>：計算平均值並四捨五入</li>
-                                    <li><code>max(supplies)</code>：找出最大值</li>
-                                </ul>
-                            </li>
-                            <li><strong>格式化輸出</strong>：使用 f-string 讓輸出更清晰易讀</li>
-                        </ol>
+                        
+                        <div class="tech-point">
+                            <h4>1. enumerate() 的使用</h4>
+                            <pre><code class="language-python">for position, obstacle_type in enumerate(obstacles, start=1):  # 🔑 從 1 開始編號</code></pre>
+                            <ul>
+                                <li><code>enumerate()</code> 同時提供索引和值</li>
+                                <li><code>start=1</code> 讓位置編號從 1 開始（更符合人類習慣）</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-point">
+                            <h4>2. 條件判斷邏輯</h4>
+                            <ul>
+                                <li>先檢查是否為小型障礙物（1），累加計數</li>
+                                <li>再檢查是否為大型障礙物（2），立即 <code>break</code></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-point">
+                            <h4>3. for...else 的妙用</h4>
+                            <ul>
+                                <li>如果迴圈被 <code>break</code> 中斷，<code>else</code> 不執行</li>
+                                <li>如果迴圈正常結束，<code>else</code> 執行，表示路徑安全</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-point">
+                            <h4>4. 變數追蹤</h4>
+                            <ul>
+                                <li><code>scanned</code> 記錄當前掃描到的位置</li>
+                                <li>在 <code>break</code> 時，<code>scanned - 1</code> 是實際完成掃描的位置數</li>
+                            </ul>
+                        </div>
                         
                         <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.3); border-radius: 10px;">
                             <h4 style="color: var(--success-green); margin-bottom: 1rem;">📊 效能分析</h4>
                             <ul>
-                                <li><strong>時間複雜度</strong>：O(N) - 需要讀取 N 筆數據</li>
-                                <li><strong>空間複雜度</strong>：O(N) - 需要儲存 N 筆數據</li>
-                                <li><strong>I/O 效率</strong>：使用 <code>sys.stdin.readline()</code>，即使 N = 100,000 也能快速完成</li>
+                                <li><strong>時間複雜度</strong>：O(N) - 最多掃描 N 個位置</li>
+                                <li><strong>空間複雜度</strong>：O(N) - 儲存 N 個障礙物數據</li>
+                                <li><strong>最佳情況</strong>：O(1) - 第一個位置就是大型障礙物</li>
+                                <li><strong>最壞情況</strong>：O(N) - 沒有大型障礙物，掃描全部</li>
                             </ul>
                         </div>
                     </div>
@@ -390,15 +478,16 @@ print(f"最大補給量：{maximum} 公升")</code></pre>
                 <div class="badge-content">
                     <span class="badge-icon">🎉</span>
                     <h3>訓練完成！</h3>
-                    <p>恭喜你完成月球基地通訊系統訓練！你現在已經掌握：</p>
+                    <p>恭喜你完成月球導航系統訓練！你現在已經掌握：</p>
                     <div class="completion-skills">
-                        <span class="skill-tag">✅ 高速 I/O</span>
-                        <span class="skill-tag">✅ sys.stdin.readline()</span>
-                        <span class="skill-tag">✅ 數據解析</span>
-                        <span class="skill-tag">✅ 統計計算</span>
+                        <span class="skill-tag">✅ if / elif / else</span>
+                        <span class="skill-tag">✅ 布林邏輯運算</span>
+                        <span class="skill-tag">✅ for 和 while 迴圈</span>
+                        <span class="skill-tag">✅ break 和 continue</span>
+                        <span class="skill-tag">✅ for...else 進階用法</span>
                     </div>
                     <p style="margin-top: 1.5rem; font-size: 1.1rem; color: var(--energy-cyan);">
-                        <strong>下一站：邏輯控制訓練 - 學習如何在複雜的太空環境中做出正確決策！</strong>
+                        <strong>下一站：數據容器訓練 - 學習如何管理大量的太空探測數據！</strong>
                     </p>
                 </div>
             </div>
@@ -408,8 +497,8 @@ print(f"最大補給量：{maximum} 公升")</code></pre>
                 <h3 style="color: var(--energy-cyan); margin-bottom: 1rem;">🔗 APCS 對應能力</h3>
                 <ul>
                     <li><strong>級分目標</strong>：1-2 級分</li>
-                    <li><strong>評量項目</strong>：輸入與輸出、算術運算</li>
-                    <li><strong>對應題型</strong>：i399 (數字遊戲)、o076 (特技表演)</li>
+                    <li><strong>評量項目</strong>：條件判斷、迴圈、流程控制</li>
+                    <li><strong>對應題型</strong>：g275 (七言對聯)、h026 (猜拳)</li>
                 </ul>
             </div>
 
