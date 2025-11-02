@@ -126,11 +126,11 @@ data = sys.stdin.readline()</code></pre>
                         <h3 class="example-title">範例 1：接收單一指令</h3>
                         <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
                     </div>
-                    <pre><code class="language-python">import sys
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
 # 任務：接收地球發來的火箭發射倒數秒數
-countdown = int(sys.stdin.readline())
-print(f"火箭將在 {countdown} 秒後發射！")</code></pre>
+countdown = int(sys.stdin.readline())  # ⚡ 使用高速 I/O 讀取
+print(f"火箭將在 {countdown} 秒後發射！")  # ✅ 格式化輸出</code></pre>
                     
                     <div class="example-io">
                         <div class="io-box">
@@ -150,16 +150,16 @@ print(f"火箭將在 {countdown} 秒後發射！")</code></pre>
                         <h3 class="example-title">範例 2：接收多筆感測器數據</h3>
                         <button class="copy-btn" onclick="copyCode(this)">📋 複製</button>
                     </div>
-                    <pre><code class="language-python">import sys
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
 # 任務：接收一行包含多個溫度讀數的數據
 # 輸入格式：5 個用空格分隔的溫度值
 # 範例輸入：-120 -85 20 15 -100
 
-temperatures = list(map(int, sys.stdin.readline().strip().split()))
+temperatures = list(map(int, sys.stdin.readline().strip().split()))  # ⚡ 讀取並解析數據
 print(f"收到 {len(temperatures)} 筆溫度數據")
-print(f"最低溫度：{min(temperatures)}°C")
-print(f"最高溫度：{max(temperatures)}°C")</code></pre>
+print(f"最低溫度：{min(temperatures)}°C")  # ✅ 使用內建函數
+print(f"最高溫度：{max(temperatures)}°C")  # ✅ 使用內建函數</code></pre>
                     
                     <div class="example-io">
                         <div class="io-box">
@@ -314,21 +314,21 @@ for status in mission_status:
                 </h2>
                 
                 <div class="solution-box glass">
-                    <pre><code class="language-python">import sys
+                    <pre><code class="language-python">import sys  # 🔑 匯入系統模組
 
 # 讀取補給次數
-n = int(sys.stdin.readline())
+n = int(sys.stdin.readline())  # ⚡ 讀取第一行
 
 # 讀取所有補給數據
-supplies = []
-for i in range(n):
+supplies = []  # ⚠️ 建立空列表儲存數據
+for i in range(n):  # ⚡ 迴圈讀取 N 次
     amount = int(sys.stdin.readline())
     supplies.append(amount)
 
 # 計算統計數據
-total = sum(supplies)
-average = round(total / n)
-maximum = max(supplies)
+total = sum(supplies)  # ✅ 使用 sum() 計算總和
+average = round(total / n)  # ✅ 使用 round() 四捨五入
+maximum = max(supplies)  # ✅ 使用 max() 找最大值
 
 # 輸出結果
 print(f"總補給量：{total} 公升")

@@ -261,12 +261,123 @@ pre {
     overflow-x: auto;
     font-family: 'Fira Code', monospace;
     font-size: 0.9rem;
-    line-height: 1.6;
+    line-height: 1.8;
     border: 1px solid rgba(0, 217, 255, 0.2);
+    position: relative;
 }
 
 code {
     font-family: 'Fira Code', monospace;
+    display: block;
+}
+
+/* 程式碼行號樣式 */
+.code-line {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding-left: 0;
+}
+
+.line-number {
+    display: inline-block;
+    min-width: 3rem;
+    margin-right: 1.5rem;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.3);
+    user-select: none;
+    flex-shrink: 0;
+    font-weight: 500;
+}
+
+.code-content {
+    flex: 1;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* 重點行樣式 */
+.code-line.highlight-key {
+    background: rgba(0, 217, 255, 0.08);
+    border-left: 3px solid var(--energy-cyan);
+    padding-left: 0.5rem;
+}
+
+.code-line.highlight-key .line-number {
+    color: var(--energy-cyan);
+    font-weight: 700;
+}
+
+.code-line.highlight-important {
+    background: rgba(168, 85, 247, 0.08);
+    border-left: 3px solid var(--energy-purple);
+    padding-left: 0.5rem;
+}
+
+.code-line.highlight-important .line-number {
+    color: var(--energy-purple);
+    font-weight: 700;
+}
+
+.code-line.highlight-warning {
+    background: rgba(255, 184, 0, 0.08);
+    border-left: 3px solid var(--warning-amber);
+    padding-left: 0.5rem;
+}
+
+.code-line.highlight-warning .line-number {
+    color: var(--warning-amber);
+    font-weight: 700;
+}
+
+.code-line.highlight-success {
+    background: rgba(0, 255, 136, 0.08);
+    border-left: 3px solid var(--success-green);
+    padding-left: 0.5rem;
+}
+
+.code-line.highlight-success .line-number {
+    color: var(--success-green);
+    font-weight: 700;
+}
+
+/* 程式碼註解標籤 */
+.code-annotation {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.code-annotation.key {
+    background: rgba(0, 217, 255, 0.2);
+    color: var(--energy-cyan);
+    border: 1px solid var(--energy-cyan);
+}
+
+.code-annotation.important {
+    background: rgba(168, 85, 247, 0.2);
+    color: var(--energy-purple);
+    border: 1px solid var(--energy-purple);
+}
+
+.code-annotation.warning {
+    background: rgba(255, 184, 0, 0.2);
+    color: var(--warning-amber);
+    border: 1px solid var(--warning-amber);
+}
+
+.code-annotation.success {
+    background: rgba(0, 255, 136, 0.2);
+    color: var(--success-green);
+    border: 1px solid var(--success-green);
 }
 
 /* 範例卡片 */

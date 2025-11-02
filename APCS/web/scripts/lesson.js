@@ -106,18 +106,78 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // 添加行號
+    // 添加行號和重點標示
     document.querySelectorAll('pre code.language-python').forEach((block) => {
-        const lines = block.textContent.split('\n');
-        const numberedLines = lines.map((line, index) => {
-            if (index < lines.length - 1 || line.trim() !== '') {
-                return `<span class="line-number">${index + 1}</span>${line}`;
-            }
-            return line;
-        }).join('\n');
-        block.innerHTML = numberedLines;
+        processCodeBlock(block);
     });
 });
+
+// 處理程式碼區塊，添加行號和重點標示
+function processCodeBlock(block) {
+    const lines = block.textContent.split('\n');
+    const processedLines = [];
+    
+    lines.forEach((line, index) => {
+        if (index >= lines.length - 1 && line.trim() === '') {
+            return; // 跳過最後的空行
+        }
+        
+        const lineNum = index + 1;
+        let highlightClass = '';
+        let annotation = '';
+        
+        // 檢測重點行（根據註解標記）
+        if (line.includes('# 🔑')) {
+            highlightClass = 'highlight-key';
+            annotation = '<span class="code-annotation key">核心概念</span>';
+            line = line.replace('# 🔑', '#');
+        } else if (line.includes('# ⚡')) {
+            highlightClass = 'highlight-important';
+            annotation = '<span class="code-annotation important">重要</span>';
+            line = line.replace('# ⚡', '#');
+        } else if (line.includes('# ⚠️')) {
+            highlightClass = 'highlight-warning';
+            annotation = '<span class="code-annotation warning">注意</span>';
+            line = line.replace('# ⚠️', '#');
+        } else if (line.includes('# ✅')) {
+            highlightClass = 'highlight-success';
+            annotation = '<span class="code-annotation success">最佳實踐</span>';
+            line = line.replace('# ✅', '#');
+        }
+        
+        // 自動檢測關鍵字
+        if (!highlightClass) {
+            if (line.includes('import sys') || line.includes('sys.stdin.readline')) {
+                highlightClass = 'highlight-key';
+                annotation = '<span class="code-annotation key">高速 I/O</span>';
+            } else if (line.includes('def ') && line.includes(':')) {
+                highlightClass = 'highlight-important';
+                annotation = '<span class="code-annotation important">函式定義</span>';
+            } else if (line.trim().startsWith('return ')) {
+                highlightClass = 'highlight-success';
+            }
+        }
+        
+        const codeLine = `
+            <div class="code-line ${highlightClass}">
+                <span class="line-number">${lineNum}</span>
+                <span class="code-content">${escapeHtml(line)}</span>
+                ${annotation}
+            </div>
+        `;
+        
+        processedLines.push(codeLine);
+    });
+    
+    block.innerHTML = processedLines.join('');
+}
+
+// HTML 轉義函數
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
 
 // 進度追蹤
 function trackProgress() {
