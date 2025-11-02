@@ -1,10 +1,10 @@
-# Future Ark Project (FAP)
+# Future Ark Exploration (FAE)
 
 A space adventure game built with HTML, CSS, and JavaScript.
 
 ## Description
 
-Future Ark Project is an interactive web-based game that takes players on a space exploration adventure. The game features multiple stages including:
+Future Ark Exploration is an interactive web-based game that takes players on a space exploration adventure. The game features multiple stages including:
 
 1. Welcome Screen
 2. Password Challenge
@@ -13,7 +13,7 @@ Future Ark Project is an interactive web-based game that takes players on a spac
 
 ## Play Online
 
-Visit [https://589411.github.io/FAP](https://589411.github.io/FAP) to play the game.
+Visit [https://589411.github.io/FAE](https://589411.github.io/FAE) to play the game.
 
 ## Local Development
 

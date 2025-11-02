@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>月球著陸點選擇器 - AI輔助任務</title>
+    <meta name="tags-ai_topic" content="computer_vision,machine_learning">
+    <meta name="tags-steam_topic-science" content="physics,astronomy">
+    <meta name="tags-steam_topic-technology" content="programming">
+    <meta name="tags-skill_focus" content="problem_solving,data_analysis">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>月球著陸點選擇器</h1>
+        <div class="mission-brief">
+            <h2>任務簡介</h2>
+            <p>歡迎加入 Artemis 計畫！你的任務是訓練 AI 系統識別月球表面最適合著陸的位置。</p>
+        </div>
+
+        <div class="steps">
+            <!-- 步驟1：認識月球地形 -->
+            <div id="step1" class="step active">
+                <h2>第一步：認識月球地形特徵</h2>
+                <div class="terrain-types">
+                    <div class="terrain-card">
+                        <img src="images/flat.jpg" alt="平坦地形">
+                        <h3>平坦地形</h3>
+                        <p>最適合著陸的地形，坡度小於 10 度</p>
+                    </div>
+                    <div class="terrain-card">
+                        <img src="images/crater.jpg" alt="隕石坑">
+                        <h3>隕石坑</h3>
+                        <p>需要避開的危險地形</p>
+                    </div>
+                    <div class="terrain-card">
+                        <img src="images/boulder.jpg" alt="岩石區">
+                        <h3>岩石區</h3>
+                        <p>可能影響著陸安全的地形</p>
+                    </div>
+                </div>
+                <button onclick="showNextStep(2)">下一步</button>
+            </div>
+
+            <!-- 步驟2：AI訓練區 -->
+            <div id="step2" class="step">
+                <h2>第二步：訓練 AI 識別安全著陸點</h2>
+                <div class="training-area">
+                    <div class="moon-map">
+                        <canvas id="moonCanvas"></canvas>
+                        <div class="tools">
+                            <button onclick="setTool('safe')">標記安全區域</button>
+                            <button onclick="setTool('unsafe')">標記危險區域</button>
+                            <button onclick="clearMarkers()">清除標記</button>
+                        </div>
+                    </div>
+                    <div class="ai-feedback">
+                        <h3>AI 學習狀態</h3>
+                        <div id="learningProgress"></div>
+                        <div id="aiConfidence"></div>
+                    </div>
+                </div>
+                <button onclick="showNextStep(3)">下一步</button>
+            </div>
+
+            <!-- 步驟3：實際任務 -->
+            <div id="step3" class="step">
+                <h2>第三步：執行著陸點選擇任務</h2>
+                <div class="mission-area">
+                    <div class="new-terrain">
+                        <canvas id="missionCanvas"></canvas>
+                    </div>
+                    <div class="mission-controls">
+                        <button onclick="analyzeTerrain()">分析地形</button>
+                        <button onclick="selectLandingSpot()">選擇著陸點</button>
+                        <div id="analysis-results"></div>
+                    </div>
+                </div>
+                <button onclick="showNextStep(4)">下一步</button>
+            </div>
+
+            <!-- 步驟4：任務評估 -->
+            <div id="step4" class="step">
+                <h2>任務評估</h2>
+                <div class="evaluation">
+                    <div id="score"></div>
+                    <div id="feedback"></div>
+                    
+                    <div class="summary-section">
+                        <h3>學習總結與延伸思考</h3>
+                        
+                        <div class="key-concepts">
+                            <h4>關鍵概念</h4>
+                            <ul>
+                                <li>月球地形分析
+                                    <ul>
+                                        <li>地形特徵識別與分類</li>
+                                        <li>安全著陸條件評估</li>
+                                        <li>地形數據的收集與處理</li>
+                                    </ul>
+                                </li>
+                                <li>人工智慧應用
+                                    <ul>
+                                        <li>機器學習模型訓練原理</li>
+                                        <li>數據標記與分類</li>
+                                        <li>AI 輔助決策系統</li>
+                                    </ul>
+                                </li>
+                                <li>太空探索技術
+                                    <ul>
+                                        <li>著陸點選擇策略</li>
+                                        <li>任務安全評估</li>
+                                        <li>太空任務規劃</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="thinking-questions">
+                            <h4>思考問題</h4>
+                            <ol>
+                                <li>為什麼選擇著陸點時需要考慮多個地形特徵？這些特徵之間有什麼關聯？</li>
+                                <li>AI 模型在訓練過程中可能會遇到哪些限制？如何改進訓練效果？</li>
+                                <li>在實際的月球任務中，還需要考慮哪些我們遊戲中沒有涵蓋的因素？</li>
+                                <li>如何將這個 AI 輔助系統應用到其他太空探索任務中？</li>
+                                <li>如果要在火星上使用類似的系統，需要做出哪些調整？</li>
+                            </ol>
+                        </div>
+
+                        <div class="real-world-connection">
+                            <h4>實際應用連結</h4>
+                            <ul>
+                                <li>NASA 的阿提米斯計畫如何選擇月球著陸點？</li>
+                                <li>現代太空任務中 AI 技術的應用案例</li>
+                                <li>自動駕駛技術與地形識別的關聯</li>
+                                <li>地理資訊系統(GIS)在地形分析中的應用</li>
+                            </ul>
+                            <p>延伸閱讀：<a href="https://www.nasa.gov/artemis" target="_blank">NASA Artemis Program</a></p>
+                        </div>
+
+                        <div class="future-exploration">
+                            <h4>未來探索方向</h4>
+                            <ul>
+                                <li>開發更精確的地形識別算法</li>
+                                <li>結合實時氣象數據進行決策</li>
+                                <li>建立多目標最佳化的著陸點選擇系統</li>
+                                <li>整合虛擬實境(VR)進行著陸模擬</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="game.js"></script>
+</body>
+</html>
