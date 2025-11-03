@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入成功 | APCS 太空探險課程</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .success-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .success-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .success-title {
+            color: var(--energy-cyan);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .success-message {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 217, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--energy-cyan);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: #f44336;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield" class="starfield"></canvas>
+    
+    <div class="success-container">
+        <div class="success-box">
+            <div class="success-icon">🚀</div>
+            <h1 class="success-title">登入成功！</h1>
+            <p class="success-message">
+                正在為您準備太空探險之旅...
+                <br><br>
+                <span class="loading"></span>
+            </p>
+            <p id="errorMessage" class="error-message" style="display: none;"></p>
+        </div>
+    </div>
+    
+    <script src="scripts/starfield.js"></script>
+    <script>
+        // 從 URL 獲取 Session Token
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        if (!token) {
+            document.querySelector('.success-message').innerHTML = '❌ 登入失敗';
+            document.getElementById('errorMessage').textContent = '未收到登入憑證，請重試';
+            document.getElementById('errorMessage').style.display = 'block';
+            
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 3000);
+        } else {
+            // 儲存 Session Token
+            localStorage.setItem('sessionToken', token);
+            
+            // 獲取用戶資訊
+            fetch('https://apcs-auth-api.589411.workers.dev/api/auth/verify-session', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionToken: token })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.valid && data.user) {
+                    // 儲存用戶資訊
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    // 跳轉到 Dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    throw new Error('無法獲取用戶資訊');
+                }
+            })
+            .catch(error => {
+                console.error('驗證失敗:', error);
+                document.querySelector('.success-message').innerHTML = '❌ 驗證失敗';
+                document.getElementById('errorMessage').textContent = error.message;
+                document.getElementById('errorMessage').style.display = 'block';
+                
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+            });
+        }
+    </script>
+</body>
+</html>

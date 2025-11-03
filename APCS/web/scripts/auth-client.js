@@ -163,6 +163,86 @@ class AuthClient {
     getCurrentUser() {
         return this.user;
     }
+
+    /**
+     * 會員兌換課程碼
+     */
+    async redeemCode(code) {
+        if (!this.sessionToken) {
+            return { success: false, message: '請先登入' };
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/auth/redeem-code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    code: code,
+                    sessionToken: this.sessionToken
+                })
+            });
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('兌換失敗:', error);
+            return { success: false, message: '網絡錯誤，請稍後再試' };
+        }
+    }
+
+    /**
+     * 查詢我的課程
+     */
+    async getMyCourses() {
+        if (!this.sessionToken) {
+            return { success: false, message: '請先登入' };
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/auth/my-courses`, {
+                method: 'GET',
+                headers: { 
+                    'Authorization': `Bearer ${this.sessionToken}`
+                }
+            });
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('查詢課程失敗:', error);
+            return { success: false, message: '網絡錯誤，請稍後再試' };
+        }
+    }
+
+    /**
+     * 驗證 Session 是否有效
+     */
+    async verifySession() {
+        if (!this.sessionToken) {
+            return { valid: false };
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/auth/verify-session`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionToken: this.sessionToken })
+            });
+
+            const data = await response.json();
+            
+            if (data.valid && data.user) {
+                // 更新本地用戶資訊
+                this.user = data.user;
+                localStorage.setItem('user', JSON.stringify(data.user));
+            }
+            
+            return data;
+        } catch (error) {
+            console.error('驗證 Session 失敗:', error);
+            return { valid: false };
+        }
+    }
 }
 
 // 創建全局實例

@@ -14,6 +14,9 @@ id = "0c7142f28e5d48bbbf3b7485029cfd13"
 [vars]
 ALLOWED_ORIGINS = "https://apcs-space-course.pages.dev,http://localhost:8000"
 
+# 自訂域名已在 Cloudflare Dashboard 中設置
+# Custom Domain: api.apcs.launchdock.app
+
 # Google OAuth 設定（需要在 Cloudflare Dashboard 設置 secrets）
 # wrangler secret put GOOGLE_CLIENT_ID
 # wrangler secret put GOOGLE_CLIENT_SECRET

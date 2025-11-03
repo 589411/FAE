@@ -4,6 +4,207 @@
  */
 
 /**
+ * 發送驗證 Email（使用 Resend API）
+ * 需要設置環境變數: RESEND_API_KEY
+ */
+async function sendVerificationEmail(email, code, name, env) {
+  const emailContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; 
+      line-height: 1.6; 
+      color: #333; 
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container { 
+      max-width: 600px; 
+      margin: 40px auto; 
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header { 
+      background: linear-gradient(135deg, #00d9ff, #7b2cbf); 
+      padding: 40px 30px; 
+      text-align: center; 
+      color: white; 
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    .header p {
+      margin: 10px 0 0 0;
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    .content { 
+      padding: 40px 30px;
+      background: white;
+    }
+    .content h2 {
+      color: #333;
+      margin-top: 0;
+      font-size: 22px;
+    }
+    .content p {
+      color: #666;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    .code-container {
+      background: linear-gradient(135deg, #00d9ff, #00b8e6);
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      margin: 30px 0;
+      box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
+    }
+    .code { 
+      color: white; 
+      font-size: 36px; 
+      font-weight: bold; 
+      letter-spacing: 8px;
+      font-family: 'Courier New', monospace;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .code-label {
+      color: white;
+      font-size: 14px;
+      margin-bottom: 10px;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .info-box {
+      background: #f8f9fa;
+      border-left: 4px solid #00d9ff;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .info-box p {
+      margin: 5px 0;
+      color: #555;
+    }
+    .footer { 
+      text-align: center; 
+      padding: 30px; 
+      background: #f8f9fa;
+      color: #999; 
+      font-size: 13px;
+      border-top: 1px solid #e9ecef;
+    }
+    .footer p {
+      margin: 5px 0;
+    }
+    .emoji {
+      font-size: 24px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><span class="emoji">🚀</span>APCS 太空探險課程</h1>
+      <p>Future Astronaut Education</p>
+    </div>
+    <div class="content">
+      <h2>👋 歡迎，${name || '太空探險家'}！</h2>
+      <p>感謝您註冊 APCS 太空探險課程！我們很高興您加入我們的學習旅程。</p>
+      <p>請使用以下驗證碼完成您的帳號驗證：</p>
+      
+      <div class="code-container">
+        <div class="code-label">您的驗證碼</div>
+        <div class="code">${code}</div>
+      </div>
+      
+      <div class="info-box">
+        <p><strong>⏰ 重要提醒：</strong></p>
+        <p>• 此驗證碼將在 <strong>30 分鐘</strong>後過期</p>
+        <p>• 請勿將驗證碼分享給任何人</p>
+        <p>• 如果您沒有註冊此帳號，請忽略此郵件</p>
+      </div>
+      
+      <p>完成驗證後，您將可以：</p>
+      <p>✨ 訪問完整的課程內容<br>
+      🎮 參與互動式學習任務<br>
+      📊 追蹤您的學習進度<br>
+      🏆 獲得成就徽章</p>
+    </div>
+    <div class="footer">
+      <p><strong>© 2024 APCS 太空探險課程</strong></p>
+      <p>這是一封自動發送的郵件，請勿回覆。</p>
+      <p style="margin-top: 15px; color: #bbb;">Powered by Future Astronaut Education</p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+
+  try {
+    // 檢查是否有 Resend API Key
+    if (!env.RESEND_API_KEY) {
+      console.error('❌ RESEND_API_KEY 未設置');
+      return { success: false, error: 'Email service not configured' };
+    }
+
+    console.log(`📧 準備發送 Email 至: ${email}`);
+    console.log(`🔑 API Key 存在: ${env.RESEND_API_KEY ? 'Yes' : 'No'}`);
+
+    const emailPayload = {
+      from: 'APCS 太空探險課程 <noreply@apcs.launchdock.app>',
+      to: [email],
+      subject: '🚀 驗證您的 APCS 帳號',
+      html: emailContent,
+    };
+
+    console.log(`📦 Email payload:`, JSON.stringify(emailPayload, null, 2));
+
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(emailPayload),
+    });
+
+    console.log(`📡 Resend API 響應狀態: ${response.status}`);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ Resend API error:', response.status, errorText);
+      let errorData;
+      try {
+        errorData = JSON.parse(errorText);
+      } catch (e) {
+        errorData = { message: errorText };
+      }
+      throw new Error(`Failed to send email: ${response.status} - ${errorData.message || errorText}`);
+    }
+
+    const result = await response.json();
+    console.log(`✅ 驗證 Email 已發送至: ${email}, ID: ${result.id}`);
+    return { success: true, emailId: result.id };
+  } catch (error) {
+    console.error('❌ Email 發送錯誤:', error.message);
+    console.error('❌ 錯誤堆棧:', error.stack);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
  * Email 註冊
  */
 export async function handleRegister(request, env, corsHeaders) {
@@ -76,15 +277,21 @@ export async function handleRegister(request, env, corsHeaders) {
     'INSERT INTO email_verifications (email, verification_code, expires_at) VALUES (?, ?, ?)'
   ).bind(email, verificationCode, expiresAt).run();
   
-  // TODO: 發送驗證 Email（需要 Email 服務）
-  console.log(`驗證碼: ${verificationCode} (Email: ${email})`);
+  // 發送驗證 Email
+  const emailResult = await sendVerificationEmail(email, verificationCode, name, env);
+  
+  if (!emailResult.success) {
+    console.error('❌ Email 發送失敗:', emailResult.error);
+    // 不影響註冊流程，只記錄錯誤
+    // 用戶仍然可以使用驗證碼（如果有其他方式獲取）
+  }
   
   return new Response(JSON.stringify({ 
     success: true, 
     message: '註冊成功！請查收驗證 Email',
     userId: userId,
-    // 開發環境下返回驗證碼（生產環境應移除）
-    verificationCode: verificationCode
+    emailSent: emailResult.success
+    // 生產環境：已移除 verificationCode 返回
   }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' }
   });

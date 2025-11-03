@@ -374,17 +374,15 @@
             
             if (result.success) {
                 currentEmail = email;
-                currentVerificationCode = result.verificationCode; // 開發環境
-                
-                showMessage('✅ 註冊成功！請驗證您的 Email', 'success');
                 
                 // 顯示驗證區域
                 document.getElementById('verificationSection').classList.add('active');
                 
-                // 開發環境：自動填入驗證碼
-                if (result.verificationCode) {
-                    document.getElementById('verificationCode').value = result.verificationCode;
-                    showMessage(`✅ 註冊成功！驗證碼：${result.verificationCode}`, 'success');
+                // 提示用戶查收 Email
+                if (result.emailSent) {
+                    showMessage('✅ 註冊成功！驗證碼已發送到您的 Email，請查收', 'success');
+                } else {
+                    showMessage('✅ 註冊成功！但 Email 發送失敗，請聯繫管理員', 'warning');
                 }
                 
                 btn.disabled = false;

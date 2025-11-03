@@ -189,6 +189,12 @@
                     <span class="stat-value">0 / 13</span>
                 </div>
             </div>
+            
+            <!-- 我的課程 -->
+            <div class="dashboard-card" id="myCoursesCard" style="display: none;">
+                <h3>🎓 我的課程</h3>
+                <div id="coursesList"></div>
+            </div>
         </div>
     </div>
     
@@ -225,15 +231,72 @@
         }
         
         // 檢查已解鎖課程
-        function checkUnlockedCourses() {
-            const hasToken = localStorage.getItem('accessToken');
-            const hasTokenId = localStorage.getItem('tokenId');
+        async function checkUnlockedCourses() {
+            // 查詢用戶的課程
+            const result = await window.authClient.getMyCourses();
             
-            if (hasToken && hasTokenId) {
-                document.getElementById('unlockedCourses').textContent = '全部課程 (13)';
+            if (result.success && result.courses) {
+                if (result.courses.length > 0) {
+                    // 有兌換課程
+                    if (result.hasFullAccess) {
+                        document.getElementById('unlockedCourses').textContent = '全部課程 (13)';
+                    } else {
+                        document.getElementById('unlockedCourses').textContent = `部分課程 (${result.courses.length})`;
+                    }
+                    
+                    // 顯示課程列表
+                    displayCourses(result.courses);
+                } else {
+                    // 沒有兌換課程
+                    document.getElementById('unlockedCourses').textContent = '免費課程 (3)';
+                }
             } else {
-                document.getElementById('unlockedCourses').textContent = '免費課程 (3)';
+                // 查詢失敗，檢查舊系統
+                const hasToken = localStorage.getItem('accessToken');
+                const hasTokenId = localStorage.getItem('tokenId');
+                
+                if (hasToken && hasTokenId) {
+                    document.getElementById('unlockedCourses').textContent = '全部課程 (13)';
+                } else {
+                    document.getElementById('unlockedCourses').textContent = '免費課程 (3)';
+                }
             }
+        }
+        
+        // 顯示課程列表
+        function displayCourses(courses) {
+            const card = document.getElementById('myCoursesCard');
+            const list = document.getElementById('coursesList');
+            
+            if (courses.length === 0) {
+                card.style.display = 'none';
+                return;
+            }
+            
+            card.style.display = 'block';
+            
+            list.innerHTML = courses.map(course => {
+                const redeemedDate = new Date(course.redeemedAt).toLocaleDateString('zh-TW');
+                const expiresDate = new Date(course.expiresAt).toLocaleDateString('zh-TW');
+                const planName = course.plan === 'full' ? '完整方案' : course.plan;
+                
+                return `
+                    <div class="stat-item">
+                        <div>
+                            <div class="stat-label">${planName}</div>
+                            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.5);">
+                                兌換日期: ${redeemedDate}
+                            </div>
+                        </div>
+                        <div class="stat-value">
+                            <div>✅ 已啟用</div>
+                            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.5);">
+                                到期: ${expiresDate}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
         
         // 登出

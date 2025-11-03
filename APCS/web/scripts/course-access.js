@@ -13,6 +13,21 @@ const ALL_LESSONS = ['A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C2', 'D1', 'E1'];
  * 檢查用戶是否已解鎖完整課程
  */
 function isUnlocked() {
+    // 方式 1：檢查會員系統（Session Token）
+    const sessionToken = localStorage.getItem('sessionToken');
+    if (sessionToken) {
+        // 有 Session Token，需要異步檢查課程權限
+        // 這裡返回 true，實際檢查在 canAccessLesson 中進行
+        return true;
+    }
+    
+    // 方式 2：檢查舊系統（Access Token）
+    const hasAccessToken = localStorage.getItem('accessToken') && localStorage.getItem('tokenId');
+    if (hasAccessToken) {
+        return true;
+    }
+    
+    // 方式 3：檢查更舊的系統
     return localStorage.getItem('courseUnlocked') === 'true';
 }
 
@@ -27,6 +42,44 @@ function canAccessLesson(lessonId) {
     
     // 檢查是否已解鎖
     return isUnlocked();
+}
+
+/**
+ * 異步檢查課程訪問權限（使用 API）
+ */
+async function checkLessonAccessAPI(lessonId) {
+    // 免費課程
+    if (FREE_LESSONS.includes(lessonId)) {
+        return { canAccess: true, reason: 'free' };
+    }
+    
+    const sessionToken = localStorage.getItem('sessionToken');
+    const accessToken = localStorage.getItem('accessToken');
+    const tokenId = localStorage.getItem('tokenId');
+    const deviceId = localStorage.getItem('deviceId');
+    
+    try {
+        const API_BASE_URL = 'https://apcs-auth-api.589411.workers.dev';
+        
+        const response = await fetch(`${API_BASE_URL}/api/check-lesson`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                lessonId: lessonId,
+                sessionToken: sessionToken,
+                token: accessToken,
+                tokenId: tokenId,
+                deviceId: deviceId
+            })
+        });
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('檢查課程權限失敗:', error);
+        // 錯誤時，使用本地檢查
+        return { canAccess: isUnlocked(), reason: 'local' };
+    }
 }
 
 /**
@@ -219,6 +272,7 @@ if (document.readyState === 'loading') {
 window.CourseAccess = {
     isUnlocked,
     canAccessLesson,
+    checkLessonAccessAPI,
     getUnlockInfo,
     getLearningProgress,
     markLessonComplete,

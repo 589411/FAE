@@ -160,7 +160,17 @@
     
     <script src="scripts/starfield.js"></script>
     <script src="scripts/api-client.js"></script>
+    <script src="scripts/auth-client.js"></script>
     <script>
+        // 檢查登入狀態
+        const isLoggedIn = window.authClient && window.authClient.isLoggedIn();
+        
+        // 更新頁面提示
+        if (isLoggedIn) {
+            const user = window.authClient.getCurrentUser();
+            document.querySelector('.unlock-box p').textContent = `歡迎回來，${user.name}！請輸入您的兌換碼`;
+        }
+        
         async function unlockCourse() {
             const input = document.getElementById('codeInput');
             const code = input.value.trim().toUpperCase();
@@ -177,25 +187,46 @@
             showMessage('🔄 驗證中...', 'info');
             
             try {
-                // 使用 API 驗證兌換碼
-                const result = await window.courseAPI.validateCode(code);
+                let result;
                 
-                if (result.success) {
-                    showMessage('✅ ' + result.message, 'success');
+                // 如果已登入，使用會員系統兌換
+                if (isLoggedIn) {
+                    result = await window.authClient.redeemCode(code);
                     
-                    // 顯示設備資訊
-                    console.log('設備 ID:', window.courseAPI.deviceId);
-                    console.log('Token ID:', window.courseAPI.tokenId);
-                    
-                    // 2 秒後跳轉到首頁
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 2000);
+                    if (result.success) {
+                        showMessage('✅ ' + result.message, 'success');
+                        
+                        // 2 秒後跳轉到 Dashboard
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 2000);
+                    } else {
+                        showMessage('❌ ' + result.message, 'error');
+                        input.value = '';
+                        input.focus();
+                        btn.disabled = false;
+                    }
                 } else {
-                    showMessage('❌ ' + result.message, 'error');
-                    input.value = '';
-                    input.focus();
-                    btn.disabled = false;
+                    // 未登入，使用舊的兌換碼系統（向後兼容）
+                    result = await window.courseAPI.validateCode(code);
+                    
+                    if (result.success) {
+                        showMessage('✅ ' + result.message, 'success');
+                        
+                        // 顯示設備資訊
+                        console.log('設備 ID:', window.courseAPI.deviceId);
+                        console.log('Token ID:', window.courseAPI.tokenId);
+                        
+                        // 2 秒後跳轉到首頁
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 2000);
+                    } else {
+                        showMessage('❌ ' + result.message, 'error');
+                        input.value = '';
+                        input.focus();
+                        btn.disabled = false;
+                    }
                 }
             } catch (error) {
                 console.error('解鎖失敗:', error);
@@ -218,12 +249,26 @@
             }
         });
         
-        // 檢查是否已解鎖
+        // 檢查是否已解鎖（舊系統）
         if (localStorage.getItem('accessToken') && localStorage.getItem('tokenId')) {
             showMessage('您已經解鎖了完整課程！', 'success');
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 2000);
+        }
+        
+        // 如果已登入，添加登出連結
+        if (isLoggedIn) {
+            const helpText = document.querySelector('.help-text');
+            const loginInfo = document.createElement('p');
+            loginInfo.innerHTML = '<a href="dashboard.html">返回 Dashboard</a> | <a href="#" onclick="window.authClient.logout(); window.location.href=\'login.html\';">登出</a>';
+            helpText.insertBefore(loginInfo, helpText.firstChild);
+        } else {
+            // 未登入，顯示登入連結
+            const helpText = document.querySelector('.help-text');
+            const loginInfo = document.createElement('p');
+            loginInfo.innerHTML = '已有帳號？<a href="login.html">登入</a>以管理您的課程';
+            helpText.insertBefore(loginInfo, helpText.firstChild);
         }
     </script>
 </body>
